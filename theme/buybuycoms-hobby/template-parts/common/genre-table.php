@@ -1,0 +1,205 @@
+<?php
+/**
+ * Static first-stage template part: genre-table.
+ *
+ * @package BuyBuyComs_Hobby
+ */
+?>
+<div class="hb__p-categories">
+  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
+    <img
+      class="hb__p-cat__image"
+      src="<?php echo esc_url( get_theme_file_uri( '/images/01.gumdom.webp' ) ); ?>"
+      alt="機動戦士ガンダム(ガンプラ)"
+      width="300"
+      height="225"
+    />
+    <div class="hb__p-cat__foot">
+      <span>機動戦士ガンダム(ガンプラ)</span>
+      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
+    </div>
+    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
+  </a>
+  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
+    <img
+      class="hb__p-cat__image"
+      src="<?php echo esc_url( get_theme_file_uri( '/images/02.chougoukin.webp' ) ); ?>"
+      alt="超合金/メタルビルド"
+      width="300"
+      height="225"
+    />
+    <div class="hb__p-cat__foot">
+      <span>超合金/メタルビルド</span>
+      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
+    </div>
+    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
+  </a>
+  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
+    <img
+      class="hb__p-cat__image"
+      src="<?php echo esc_url( get_theme_file_uri( '/images/03.lego.webp' ) ); ?>"
+      alt="LEGO"
+      width="300"
+      height="225"
+    />
+    <div class="hb__p-cat__foot">
+      <span>LEGO</span>
+      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
+    </div>
+    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
+  </a>
+  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
+    <img
+      class="hb__p-cat__image"
+      src="<?php echo esc_url( get_theme_file_uri( '/images/04.puramoderu.webp' ) ); ?>"
+      alt="プラモデル"
+      width="300"
+      height="225"
+    />
+    <div class="hb__p-cat__foot">
+      <span>プラモデル</span>
+      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
+    </div>
+    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
+  </a>
+  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
+    <img
+      class="hb__p-cat__image"
+      src="<?php echo esc_url( get_theme_file_uri( '/images/05.tetudou.webp' ) ); ?>"
+      alt="鉄道模型"
+      width="300"
+      height="225"
+    />
+    <div class="hb__p-cat__foot">
+      <span>鉄道模型</span>
+      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
+    </div>
+    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
+  </a>
+  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
+    <img
+      class="hb__p-cat__image"
+      src="<?php echo esc_url( get_theme_file_uri( '/images/06.sohubi.webp' ) ); ?>"
+      alt="ソフビ"
+      width="300"
+      height="225"
+    />
+    <div class="hb__p-cat__foot">
+      <span>ソフビ</span>
+      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
+    </div>
+    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
+  </a>
+  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
+    <img
+      class="hb__p-cat__image"
+      src="<?php echo esc_url( get_theme_file_uri( '/images/07.retoro.webp' ) ); ?>"
+      alt="レトロ玩具/昭和玩具"
+      width="300"
+      height="225"
+    />
+    <div class="hb__p-cat__foot">
+      <span>レトロ玩具/昭和玩具</span>
+      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
+    </div>
+    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
+  </a>
+  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
+    <img
+      class="hb__p-cat__image"
+      src="<?php echo esc_url( get_theme_file_uri( '/images/08.tokusatsu.webp' ) ); ?>"
+      alt="特撮グッズ"
+      width="300"
+      height="225"
+    />
+    <div class="hb__p-cat__foot">
+      <span>特撮グッズ</span>
+      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
+    </div>
+    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
+  </a>
+  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
+    <img
+      class="hb__p-cat__image"
+      src="<?php echo esc_url( get_theme_file_uri( '/images/09.retoro-game.webp' ) ); ?>"
+      alt="レトロゲーム"
+      width="300"
+      height="225"
+    />
+    <div class="hb__p-cat__foot">
+      <span>レトロゲーム</span>
+      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
+    </div>
+    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
+  </a>
+  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
+    <img
+      class="hb__p-cat__image"
+      src="<?php echo esc_url( get_theme_file_uri( '/images/10.mini-car.webp' ) ); ?>"
+      alt="ミニカー"
+      width="300"
+      height="225"
+    />
+    <div class="hb__p-cat__foot">
+      <span>ミニカー</span>
+      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
+    </div>
+    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
+  </a>
+  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
+    <img
+      class="hb__p-cat__image"
+      src="<?php echo esc_url( get_theme_file_uri( '/images/11.figure.webp' ) ); ?>"
+      alt="フィギュア"
+      width="300"
+      height="225"
+    />
+    <div class="hb__p-cat__foot">
+      <span>フィギュア</span>
+      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
+    </div>
+    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
+  </a>
+  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
+    <img
+      class="hb__p-cat__image"
+      src="<?php echo esc_url( get_theme_file_uri( '/images/12.musenki.webp' ) ); ?>"
+      alt="無線機"
+      width="300"
+      height="225"
+    />
+    <div class="hb__p-cat__foot">
+      <span>無線機</span>
+      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
+    </div>
+    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
+  </a>
+  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
+    <img
+      class="hb__p-cat__image"
+      src="<?php echo esc_url( get_theme_file_uri( '/images/13.deago.webp' ) ); ?>"
+      alt="デアゴスティーニ"
+      width="300"
+      height="225"
+    />
+    <div class="hb__p-cat__foot">
+      <span>デアゴスティーニ</span>
+      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
+    </div>
+    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
+  </a>
+  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
+    <img
+      class="hb__p-cat__image"
+      src="<?php echo esc_url( get_theme_file_uri( '/images/14.asheeto.webp' ) ); ?>"
+      alt="アシェット"
+      width="300"
+      height="225"
+    />
+    <div class="hb__p-cat__foot">
+      <span>アシェット</span>
+      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
+    </div>
+    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
+  </a>
+</div>

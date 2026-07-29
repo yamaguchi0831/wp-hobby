@@ -1,0 +1,30 @@
+.editor-styles-wrapper {
+  color: var(--hb-color-neutral-900);
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: var(--hb-font-size-body);
+  line-height: 1.8;
+}
+
+.editor-styles-wrapper > * {
+  max-width: var(--hb-container);
+}
+
+.editor-styles-wrapper a {
+  color: var(--hb-color-primary-600);
+}
+
+.editor-styles-wrapper img {
+  height: auto;
+  max-width: 100%;
+}
+
+.editor-styles-wrapper table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.editor-styles-wrapper th,
+.editor-styles-wrapper td {
+  border: 1px solid var(--hb-color-border-muted);
+  padding: var(--hb-space-sm);
+}
