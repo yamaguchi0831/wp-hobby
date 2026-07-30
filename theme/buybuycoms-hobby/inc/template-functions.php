@@ -13,7 +13,8 @@
 function buybuycoms_hobby_primary_menu_fallback() {
 	$links = array(
 		'/flow/'       => __( '買取方法', 'buybuycoms-hobby' ),
-		'/genre-list/' => __( '買取品目', 'buybuycoms-hobby' ),
+		'/reason/'     => __( '選ばれる理由', 'buybuycoms-hobby' ),
+		'/genre-list/' => __( 'カテゴリー一覧', 'buybuycoms-hobby' ),
 		'/faq/'        => __( 'よくある質問', 'buybuycoms-hobby' ),
 		'/company/'    => __( '会社概要', 'buybuycoms-hobby' ),
 	);

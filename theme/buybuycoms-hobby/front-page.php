@@ -697,70 +697,67 @@
                         </h2>
                     </header>
 
+                    <?php
+                    $news_query = new WP_Query(
+                        array(
+                            'post_type'           => 'post',
+                            'post_status'         => 'publish',
+                            'posts_per_page'      => 5,
+                            'orderby'             => 'date',
+                            'order'               => 'DESC',
+                            'ignore_sticky_posts' => true,
+                            'no_found_rows'       => true,
+                        )
+                    );
+                    ?>
                     <ul class="hb-front__p-news" role="list">
-                        <li class="hb-front__p-news__item">
-                            <time
-                                class="hb-front__p-news__date"
-                                datetime="2026-05-15"
-                                >2026.05.15</time
-                            >
-                            <span class="hb-front__p-news__cat">買取強化</span>
-                            <a class="hb-front__p-news__link" href="<?php echo esc_url( home_url( '/info/' ) ); ?>"
-                                >METAL BUILD / METAL ROBOT魂シリーズ
-                                買取強化キャンペーンのお知らせ</a
-                            >
-                        </li>
-                        <li class="hb-front__p-news__item">
-                            <time
-                                class="hb-front__p-news__date"
-                                datetime="2026-05-08"
-                                >2026.05.08</time
-                            >
-                            <span class="hb-front__p-news__cat">コラム</span>
-                            <a class="hb-front__p-news__link" href="<?php echo esc_url( home_url( '/info/' ) ); ?>"
-                                >ガンプラの「未組立」と「組立済」、買取査定はどれくらい違う？</a
-                            >
-                        </li>
-                        <li class="hb-front__p-news__item">
-                            <time
-                                class="hb-front__p-news__date"
-                                datetime="2026-04-28"
-                                >2026.04.28</time
-                            >
-                            <span class="hb-front__p-news__cat">お知らせ</span>
-                            <a class="hb-front__p-news__link" href="<?php echo esc_url( home_url( '/info/' ) ); ?>"
-                                >GW期間中（5/3〜5/6）の宅配買取スケジュールについて</a
-                            >
-                        </li>
-                        <li class="hb-front__p-news__item">
-                            <time
-                                class="hb-front__p-news__date"
-                                datetime="2026-04-12"
-                                >2026.04.12</time
-                            >
-                            <span class="hb-front__p-news__cat">コラム</span>
-                            <a class="hb-front__p-news__link" href="<?php echo esc_url( home_url( '/info/' ) ); ?>"
-                                >ポケモンカード相場2026春 ―
-                                高騰中のカードと買取のタイミング</a
-                            >
-                        </li>
-                        <li class="hb-front__p-news__item">
-                            <time
-                                class="hb-front__p-news__date"
-                                datetime="2026-03-30"
-                                >2026.03.30</time
-                            >
-                            <span class="hb-front__p-news__cat">サービス</span>
-                            <a class="hb-front__p-news__link" href="<?php echo esc_url( home_url( '/info/' ) ); ?>"
-                                >出張買取の対応エリアに、長野県・新潟県を追加しました</a
-                            >
-                        </li>
+                        <?php if ( $news_query->have_posts() ) : ?>
+                            <?php
+                            while ( $news_query->have_posts() ) :
+                                $news_query->the_post();
+                                $news_categories = get_the_category();
+                                $news_category   = $news_categories
+                                    ? $news_categories[0]->name
+                                    : __( 'お知らせ', 'buybuycoms-hobby' );
+                                ?>
+                                <li class="hb-front__p-news__item">
+                                    <time
+                                        class="hb-front__p-news__date"
+                                        datetime="<?php echo esc_attr( get_the_date( 'Y-m-d' ) ); ?>"
+                                    >
+                                        <?php echo esc_html( get_the_date( 'Y.m.d' ) ); ?>
+                                    </time>
+                                    <span class="hb-front__p-news__cat">
+                                        <?php echo esc_html( $news_category ); ?>
+                                    </span>
+                                    <a
+                                        class="hb-front__p-news__link"
+                                        href="<?php echo esc_url( get_permalink() ); ?>"
+                                    >
+                                        <?php echo esc_html( get_the_title() ); ?>
+                                    </a>
+                                </li>
+                            <?php endwhile; ?>
+                        <?php else : ?>
+                            <li class="hb-front__p-news__item">
+                                <span class="hb-front__p-news__empty">
+                                    <?php esc_html_e( 'まだお知らせはありません', 'buybuycoms-hobby' ); ?>
+                                </span>
+                            </li>
+                        <?php endif; ?>
                     </ul>
+                    <?php wp_reset_postdata(); ?>
 
                     <div
                         class="hb-front__c-section-more hb-front__c-section-more--left"
                     >
-                        <a href="<?php echo esc_url( home_url( '/info/' ) ); ?>" class="hb-front__c-link"
+                        <?php
+                        $posts_page_id   = (int) get_option( 'page_for_posts' );
+                        $news_archive_url = $posts_page_id
+                            ? get_permalink( $posts_page_id )
+                            : home_url( '/info/' );
+                        ?>
+                        <a href="<?php echo esc_url( $news_archive_url ); ?>" class="hb-front__c-link"
                             >お知らせをもっと見る →</a
                         >
                     </div>

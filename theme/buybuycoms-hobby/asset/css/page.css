@@ -1072,12 +1072,14 @@
 .hb-front__p-news__link {
     font-weight: 500;
     color: var(--hb-color-text-deep);
-    border-bottom: 1px solid transparent;
 }
 .hb-front__p-news__link:hover {
     color: var(--hb-color-primary-600);
-    border-bottom-color: currentColor;
     opacity: 1;
+}
+.hb-front__p-news__empty {
+    grid-column: 1 / -1;
+    color: var(--hb-color-text-muted);
 }
 
 @media (max-width: 640px) {

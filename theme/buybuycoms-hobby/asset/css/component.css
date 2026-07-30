@@ -121,16 +121,31 @@
 .hb__p-header__nav {
   display: flex;
   align-items: center;
-  gap: var(--hb-space-lg);
   flex: 1;
   justify-content: center;
 }
+.hb__p-header__nav-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--hb-space-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.hb__p-header__nav-list > li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 .hb__p-header__nav a {
+  display: block;
   font-size: 14px;
   font-weight: 500;
   color: var(--hb-color-text-deep);
   padding: 6px 2px;
   position: relative;
+  white-space: nowrap;
 }
 .hb__p-header__nav a::after {
   content: "";

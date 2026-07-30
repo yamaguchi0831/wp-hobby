@@ -11,3 +11,18 @@ document
               isOpen ? "－" : "＋";
           });
         });
+
+const genreFaqMoreButton = document.querySelector("[data-hb-genre-faq-more]");
+
+if (genreFaqMoreButton) {
+  genreFaqMoreButton.addEventListener("click", () => {
+    document
+      .querySelectorAll("#genre-faq-list .hb-item-genre__p-faq-item[hidden]")
+      .forEach((item) => {
+        item.hidden = false;
+      });
+
+    genreFaqMoreButton.setAttribute("aria-expanded", "true");
+    genreFaqMoreButton.closest(".hb-item-genre__p-faq-more").hidden = true;
+  });
+}

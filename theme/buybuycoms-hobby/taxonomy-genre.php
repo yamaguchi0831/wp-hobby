@@ -7,15 +7,85 @@
 ?>
 <?php get_header(); ?>
 
+<?php
+$genre_term    = get_queried_object();
+$genre_term_id = $genre_term instanceof WP_Term ? $genre_term->term_id : 0;
+$genre_context = $genre_term_id ? 'genre_' . $genre_term_id : '';
+
+$genre_get_field = static function ( $field_name, $fallback = '' ) use ( $genre_context, $genre_term_id ) {
+	$value = false;
+
+	if ( $genre_context && function_exists( 'get_field' ) ) {
+		$value = get_field( $field_name, $genre_context );
+	}
+
+	if ( ( false === $value || '' === $value || null === $value ) && $genre_term_id ) {
+		$value = get_term_meta( $genre_term_id, $field_name, true );
+	}
+
+	return ( false === $value || '' === $value || null === $value ) ? $fallback : $value;
+};
+
+$genre_title      = $genre_term instanceof WP_Term ? $genre_term->name : 'XXXXX買取';
+$genre_copy_text  = $genre_get_field( 'genre-copy-text', 'XXXも、XXXも' );
+$genre_subtext1   = $genre_get_field( 'genre-subtext1', 'ココにテキストが入ります' );
+$genre_subtext2   = $genre_get_field( 'genre-subtext2', 'ココにテキストが入ります' );
+$genre_badge_text = $genre_get_field( 'genre-badge-text', "TEXT\nTEXTTEXT\nTEXT" );
+$genre_mv         = $genre_get_field( 'genre-mv' );
+$genre_mv_url     = get_theme_file_uri( '/images/mv01.webp' );
+$genre_mv_alt     = $genre_title . 'のイメージ';
+$genre_faq_json   = $genre_get_field( 'genre-faq' );
+$genre_faq_items  = array();
+
+if ( is_array( $genre_mv ) ) {
+	$genre_mv_url = ! empty( $genre_mv['url'] ) ? $genre_mv['url'] : $genre_mv_url;
+	$genre_mv_alt = ! empty( $genre_mv['alt'] ) ? $genre_mv['alt'] : $genre_mv_alt;
+} elseif ( is_numeric( $genre_mv ) ) {
+	$genre_mv_id  = (int) $genre_mv;
+	$genre_mv_url = wp_get_attachment_image_url( $genre_mv_id, 'full' ) ?: $genre_mv_url;
+	$genre_mv_alt = get_post_meta( $genre_mv_id, '_wp_attachment_image_alt', true ) ?: $genre_mv_alt;
+} elseif ( is_string( $genre_mv ) && '' !== $genre_mv ) {
+	$genre_mv_url = $genre_mv;
+}
+
+if ( is_string( $genre_faq_json ) && '' !== trim( $genre_faq_json ) ) {
+	$genre_faq_data = json_decode( $genre_faq_json, true );
+
+	if ( JSON_ERROR_NONE === json_last_error() && is_array( $genre_faq_data ) ) {
+		foreach ( $genre_faq_data as $genre_faq_item ) {
+			if ( ! is_array( $genre_faq_item ) ) {
+				continue;
+			}
+
+			$genre_faq_question = isset( $genre_faq_item['question'] )
+				? trim( wp_strip_all_tags( (string) $genre_faq_item['question'] ) )
+				: '';
+			$genre_faq_answer   = isset( $genre_faq_item['answer'] )
+				? trim( wp_strip_all_tags( (string) $genre_faq_item['answer'] ) )
+				: '';
+
+			if ( '' === $genre_faq_question || '' === $genre_faq_answer ) {
+				continue;
+			}
+
+			$genre_faq_items[] = array(
+				'question' => $genre_faq_question,
+				'answer'   => $genre_faq_answer,
+			);
+		}
+	}
+}
+?>
+
     <main id="main-content">
       <section class="hb-item-genre__p-hero" data-screen-label="02 Hero">
         <div class="hb-item-genre__p-hero__bg" aria-hidden="true"></div>
         <div class="hb__l-container hb-item-genre__p-hero__inner">
           <div class="hb-item-genre__p-hero__copy">
             <div class="hb-item-genre__p-hero__ribbon">
-              <strong>XXXXX買取</strong>
+              <strong><?php echo esc_html( sprintf( '%s買取', $genre_title ) ); ?></strong>
             </div>
-            <p class="hb-item-genre__p-hero__subcopy">XXXも、XXXも</p>
+            <p class="hb-item-genre__p-hero__subcopy"><?php echo esc_html( $genre_copy_text ); ?></p>
             <h1 class="hb-item-genre__p-hero__title">
               <span>
                 <em class="hb-item-genre__p-hero__title-accent">まとめて</em
@@ -24,19 +94,19 @@
               <span>買取ります！</span>
             </h1>
             <div class="hb-item-genre__p-hero__badge">
-              TEXT<br />TEXTTEXT<br />TEXT
+              <?php echo nl2br( esc_html( $genre_badge_text ) ); ?>
             </div>
             <p class="hb-item-genre__p-hero__lead">
-              <span>ココにテキストが入ります</span>
-              <span>ココにテキストが入ります</span>
+              <span><?php echo esc_html( $genre_subtext1 ); ?></span>
+              <span><?php echo esc_html( $genre_subtext2 ); ?></span>
             </p>
           </div>
 
           <div class="hb-item-genre__p-hero__visual">
             <img
               class="hb-item-genre__p-hero__visual-img"
-              src="<?php echo esc_url( get_theme_file_uri( '/images/mv01.webp' ) ); ?>"
-              alt="ホビー商品の集合イメージ"
+              src="<?php echo esc_url( $genre_mv_url ); ?>"
+              alt="<?php echo esc_attr( $genre_mv_alt ); ?>"
               width="980"
               height="720"
             />
@@ -463,7 +533,9 @@
       <section class="hb__l-section hb-item-genre__p-tips" id="tips">
         <div class="hb__l-container">
           <div class="hb-item-genre__p-split-body">
-            <h2 class="hb-item-genre__p-split-title">XXXを高く売るコツ</h2>
+            <h2 class="hb-item-genre__p-split-title">
+              <?php echo esc_html( sprintf( '%sを高く売るコツ', $genre_title ) ); ?>
+            </h2>
             <ol class="hb-item-genre__p-tip-list">
               <li class="hb-item-genre__p-tip-item">
                 <figure class="hb-item-genre__p-tip-image">
@@ -575,157 +647,48 @@
           <div class="hb-item-genre__p-section-head">
             <h2 class="hb-item-genre__p-section-title">買取のよくある質問</h2>
           </div>
-          <div class="hb-item-genre__p-faq-list">
-            <article class="hb-item-genre__p-faq-item">
-              <button
-                class="hb-item-genre__p-faq-question"
-                type="button"
-                aria-expanded="false"
-              >
-                <span
-                  class="hb-item-genre__p-faq-icon hb-item-genre__p-faq-icon--q"
-                  >Q</span
+          <div class="hb-item-genre__p-faq-list" id="genre-faq-list">
+            <?php if ( $genre_faq_items ) : ?>
+              <?php foreach ( $genre_faq_items as $genre_faq_index => $genre_faq_item ) : ?>
+                <article
+                  class="hb-item-genre__p-faq-item"
+                  <?php if ( $genre_faq_index >= 5 ) : ?>hidden<?php endif; ?>
                 >
-                <span
-                  >箱なし・開封済みのアイテムでも買取してもらえますか？</span
-                >
-                <span class="hb-item-genre__p-faq-toggle">＋</span>
-              </button>
-              <div class="hb-item-genre__p-faq-answer">
-                <span
-                  class="hb-item-genre__p-faq-icon hb-item-genre__p-faq-icon--a"
-                  >A</span
-                >
-                <p class="hb-item-genre__p-card-text">
-                  はい、買取可能です。専門バイヤーが状態を1点ずつ確認し、開封済み・箱なしでも適正な金額をご提示します。
-                </p>
-                <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
-              </div>
-            </article>
-            <article class="hb-item-genre__p-faq-item">
-              <button
-                class="hb-item-genre__p-faq-question"
-                type="button"
-                aria-expanded="false"
-              >
-                <span
-                  class="hb-item-genre__p-faq-icon hb-item-genre__p-faq-icon--q"
-                  >Q</span
-                >
-                <span>パーツや台座が欠品していても査定可能ですか？</span>
-                <span class="hb-item-genre__p-faq-toggle">＋</span>
-              </button>
-              <div class="hb-item-genre__p-faq-answer">
-                <span
-                  class="hb-item-genre__p-faq-icon hb-item-genre__p-faq-icon--a"
-                  >A</span
-                >
-                <p class="hb-item-genre__p-card-text">
-                  はい、問題ございません。一部欠損などがある場合でも可能な限りお値段をつけさせていただきます。
-                </p>
-                <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
-              </div>
-            </article>
-            <article class="hb-item-genre__p-faq-item">
-              <button
-                class="hb-item-genre__p-faq-question"
-                type="button"
-                aria-expanded="false"
-              >
-                <span
-                  class="hb-item-genre__p-faq-icon hb-item-genre__p-faq-icon--q"
-                  >Q</span
-                >
-                <span>海外限定品は買取可能ですか？</span>
-                <span class="hb-item-genre__p-faq-toggle">＋</span>
-              </button>
-              <div class="hb-item-genre__p-faq-answer">
-                <span
-                  class="hb-item-genre__p-faq-icon hb-item-genre__p-faq-icon--a"
-                  >A</span
-                >
-                <p class="hb-item-genre__p-card-text">
-                  はい、買取可能です。ただし、保証書・ギャランティー・メーカーの販売証明書などがない場合は、査定額が下がったり、買取が出来ない場合もございます。
-                </p>
-                <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
-              </div>
-            </article>
-            <article class="hb-item-genre__p-faq-item">
-              <button
-                class="hb-item-genre__p-faq-question"
-                type="button"
-                aria-expanded="false"
-              >
-                <span
-                  class="hb-item-genre__p-faq-icon hb-item-genre__p-faq-icon--q"
-                  >Q</span
-                >
-                <span>家の中が散らかっていても大丈夫ですか？</span>
-                <span class="hb-item-genre__p-faq-toggle">＋</span>
-              </button>
-              <div class="hb-item-genre__p-faq-answer">
-                <span
-                  class="hb-item-genre__p-faq-icon hb-item-genre__p-faq-icon--a"
-                  >A</span
-                >
-                <p class="hb-item-genre__p-card-text">
-                  はい、問題ございません。1点1点確認させていただき、丁寧に査定をさせていただきます。
-                </p>
-                <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
-              </div>
-            </article>
-            <article class="hb-item-genre__p-faq-item">
-              <button
-                class="hb-item-genre__p-faq-question"
-                type="button"
-                aria-expanded="false"
-              >
-                <span
-                  class="hb-item-genre__p-faq-icon hb-item-genre__p-faq-icon--q"
-                  >Q</span
-                >
-                <span>何点から買取可能ですか？</span>
-                <span class="hb-item-genre__p-faq-toggle">＋</span>
-              </button>
-              <div class="hb-item-genre__p-faq-answer">
-                <span
-                  class="hb-item-genre__p-faq-icon hb-item-genre__p-faq-icon--a"
-                  >A</span
-                >
-                <p class="hb-item-genre__p-card-text">
-                  1点からお売りいただけます。売却予定点数が1点～9点の場合は事前査定をお願いいたします。
-                </p>
-                <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
-              </div>
-            </article>
-            <article class="hb-item-genre__p-faq-item">
-              <button
-                class="hb-item-genre__p-faq-question"
-                type="button"
-                aria-expanded="false"
-              >
-                <span
-                  class="hb-item-genre__p-faq-icon hb-item-genre__p-faq-icon--q"
-                  >Q</span
-                >
-                <span>プライズ商品も買取してもらえますか？</span>
-                <span class="hb-item-genre__p-faq-toggle">＋</span>
-              </button>
-              <div class="hb-item-genre__p-faq-answer">
-                <span
-                  class="hb-item-genre__p-faq-icon hb-item-genre__p-faq-icon--a"
-                  >A</span
-                >
-                <p class="hb-item-genre__p-card-text">
-                  プライズ商品は単価が低いため、1点のみの場合はお買取りが難しいケースがございます。他の商品とまとめてご依頼いただくとおまとめアップ査定が可能です。
-                </p>
-                <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
-              </div>
-            </article>
+                  <button
+                    class="hb-item-genre__p-faq-question"
+                    type="button"
+                    aria-expanded="false"
+                  >
+                    <span class="hb-item-genre__p-faq-icon hb-item-genre__p-faq-icon--q">Q</span>
+                    <span><?php echo esc_html( $genre_faq_item['question'] ); ?></span>
+                    <span class="hb-item-genre__p-faq-toggle">＋</span>
+                  </button>
+                  <div class="hb-item-genre__p-faq-answer">
+                    <span class="hb-item-genre__p-faq-icon hb-item-genre__p-faq-icon--a">A</span>
+                    <p class="hb-item-genre__p-card-text">
+                      <?php echo wp_kses_post( nl2br( esc_html( $genre_faq_item['answer'] ) ) ); ?>
+                    </p>
+                    <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
+                  </div>
+                </article>
+              <?php endforeach; ?>
+            <?php else : ?>
+              <p class="hb-item-genre__p-card-text">よくある質問がありません</p>
+            <?php endif; ?>
           </div>
-          <div class="hb-item-genre__p-faq-more">
-            <a class="hb__c-btn hb__c-btn--ghost" href="#faq">もっと見る</a>
-          </div>
+          <?php if ( count( $genre_faq_items ) > 5 ) : ?>
+            <div class="hb-item-genre__p-faq-more">
+              <button
+                class="hb__c-btn hb__c-btn--ghost"
+                type="button"
+                data-hb-genre-faq-more
+                aria-controls="genre-faq-list"
+                aria-expanded="false"
+              >
+                もっと見る
+              </button>
+            </div>
+          <?php endif; ?>
         </div>
       </section>
     </main>
