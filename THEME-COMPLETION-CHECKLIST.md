@@ -15,43 +15,43 @@
 
 ## 検収情報
 
-- テーマ名:
-- テーマスラッグ:
-- テキストドメイン:
-- テーマバージョン:
+- テーマ名: バイバイコムズ ホビー買取
+- テーマスラッグ: `buybuycoms-hobby`
+- テキストドメイン: `buybuycoms-hobby`
+- テーマバージョン: `0.1.0`
 - 検収対象コミット:
 - WordPressバージョン:
 - PHPバージョン:
 - 検証URL:
-- 検証日:
+- 検証日: 2026-07-31（進捗資料更新時点）
 - 検証担当:
 - 対象ブラウザ／端末:
 - 必須プラグインとバージョン:
-- 備考:
+- 備考: リポジトリのコード確認と作業ログに基づく途中確認。実環境、境界値、複数ブラウザ、公開前検証は未完了。
 
 ---
 
 ## 1. 完了条件と仕様
 
-- [ ] テーマ化の対象ページ、投稿タイプ、タクソノミー、機能が一覧化されている
-- [ ] 静的HTMLのどの部分をWordPressで動的化したか記録されている
+- [x] テーマ化の対象ページ、投稿タイプ、タクソノミー、機能が一覧化されている
+- [x] 静的HTMLのどの部分をWordPressで動的化したか記録されている
 - [ ] 管理画面から編集する項目と、テーマ内に固定する項目が整理されている
 - [ ] 必須プラグイン、推奨プラグイン、プラグインなしで動作する範囲が明記されている
 - [ ] カスタム投稿タイプ、タクソノミー、カスタムフィールドの登録場所と責務が明確である
 - [ ] テーマ切替後も保持すべき業務機能を、テーマへ不適切に実装していない
 - [ ] 対応するWordPress、PHP、ブラウザのバージョン範囲が決まっている
-- [ ] ユーザーから受けた仕様と、実装上の判断・保留事項が記録されている
+- [x] ユーザーから受けた仕様と、実装上の判断・保留事項が記録されている
 
 ## 2. テーマ基本ファイル
 
-- [ ] PHPテンプレートを主体とするクラシックテーマとして構成されている
-- [ ] ブロックテーマ用の `templates/*.html` や `parts/*.html` を意図せず混在させていない
-- [ ] `style.css` がテーマ直下に存在する
-- [ ] `style.css` のTheme Name、Version、Text Domain等のヘッダーが正しい
-- [ ] テキストドメインがテーマスラッグと一致している
+- [x] PHPテンプレートを主体とするクラシックテーマとして構成されている
+- [x] ブロックテーマ用の `templates/*.html` や `parts/*.html` を意図せず混在させていない
+- [x] `style.css` がテーマ直下に存在する
+- [x] `style.css` のTheme Name、Version、Text Domain等のヘッダーが正しい
+- [x] テキストドメインがテーマスラッグと一致している
 - [ ] `index.php` が存在し、フォールバックとして致命的な表示崩れなく機能する
-- [ ] `functions.php` が存在し、責務が大きい処理は `inc/` 等へ分割されている
-- [ ] `header.php`、`footer.php` が存在し、共通表示が各テンプレートに重複していない
+- [x] `functions.php` が存在し、責務が大きい処理は `inc/` 等へ分割されている
+- [x] `header.php`、`footer.php` が存在し、共通表示が各テンプレートに重複していない
 - [ ] `screenshot.png` が実際のテーマデザインを表している
 - [ ] `theme.json` の採用有無と、クラシックテーマ内で利用する目的が明確である
 - [ ] `theme.json` を採用する場合、JSON構文と使用スキーマが検証されている
@@ -62,23 +62,23 @@
 
 ## 3. WordPress必須フック・テーマサポート
 
-- [ ] 各テンプレートが `get_header()`、`get_footer()` 等で共通テンプレートを呼び出している
-- [ ] `wp_head()` が `</head>` の直前で呼ばれている
-- [ ] `wp_body_open()` が `<body>` の直後で呼ばれている
-- [ ] `wp_footer()` が `</body>` の直前で呼ばれている
-- [ ] `language_attributes()` が使用されている
-- [ ] `bloginfo( 'charset' )` が使用されている
-- [ ] `body_class()` が使用されている
+- [x] 各テンプレートが `get_header()`、`get_footer()` 等で共通テンプレートを呼び出している
+- [x] `wp_head()` が `</head>` の直前で呼ばれている
+- [x] `wp_body_open()` が `<body>` の直後で呼ばれている
+- [x] `wp_footer()` が `</body>` の直前で呼ばれている
+- [x] `language_attributes()` が使用されている
+- [x] `bloginfo( 'charset' )` が使用されている
+- [x] `body_class()` が使用されている
 - [ ] `post_class()` が投稿単位の適切な要素で使用されている
-- [ ] `title-tag` のテーマサポートが登録され、固定 `<title>` と二重出力になっていない
-- [ ] `post-thumbnails` が必要な投稿タイプで利用できる
-- [ ] 必要なHTML5サポートが登録されている
-- [ ] `responsive-embeds`、`align-wide`、`wp-block-styles` の採用要否を確認している
-- [ ] カスタムロゴを使用する場合、`custom-logo` が適切に設定されている
-- [ ] メニュー位置が `register_nav_menus()` で登録されている
+- [x] `title-tag` のテーマサポートが登録され、固定 `<title>` と二重出力になっていない
+- [x] `post-thumbnails` が必要な投稿タイプで利用できる
+- [x] 必要なHTML5サポートが登録されている
+- [x] `responsive-embeds`、`align-wide`、`wp-block-styles` の採用要否を確認している
+- [x] カスタムロゴを使用する場合、`custom-logo` が適切に設定されている
+- [x] メニュー位置が `register_nav_menus()` で登録されている
 - [ ] ウィジェットエリアを使用する場合、`register_sidebar()` と `dynamic_sidebar()` が適切に実装されている
 - [ ] テーマ設定が必要な場合、WordPress標準のカスタマイザーや設定API等を優先している
-- [ ] テーマセットアップ処理が `after_setup_theme` など適切なフックで実行されている
+- [x] テーマセットアップ処理が `after_setup_theme` など適切なフックで実行されている
 - [ ] 翻訳ファイルを同梱する場合、テキストドメインが適切に読み込まれている
 - [ ] 不要なWordPress標準機能を理由なく解除していない
 
@@ -86,10 +86,10 @@
 
 ### エディターCSS
 
-- [ ] `add_theme_support( 'editor-styles' )` と `add_editor_style()` が適切に設定されている
-- [ ] エディター用CSSが `after_setup_theme` のタイミングで登録されている
-- [ ] `asset/css/tokens.css` の必要なカスタムプロパティがエディター内でも利用できる
-- [ ] フロント用リセットCSSを無条件にエディターへ流し込み、管理画面UIを壊していない
+- [x] `add_theme_support( 'editor-styles' )` と `add_editor_style()` が適切に設定されている
+- [x] エディター用CSSが `after_setup_theme` のタイミングで登録されている
+- [x] `asset/css/tokens.css` の必要なカスタムプロパティがエディター内でも利用できる
+- [x] フロント用リセットCSSを無条件にエディターへ流し込み、管理画面UIを壊していない
 - [ ] エディター用CSSが `.editor-styles-wrapper` 等の適切なスコープを考慮している
 - [ ] フロントとエディターで、本文のフォント、文字色、背景色、行間が概ね一致する
 - [ ] 見出し `h1`〜`h6` のサイズ、太さ、余白がエディターでも確認できる
@@ -128,57 +128,57 @@
 
 ### 静的制作からテーマへの切替
 
-- [ ] `pages/` を静的な完成見本、WordPressのPHPを本番実装として区別している
-- [ ] `[data-hb-include]` の全参照箇所についてPHP側の移植先を確認している
-- [ ] WordPressの公開画面に `[data-hb-include]` 属性や空の読込用要素が残っていない
-- [ ] `asset/js/include-components.js` をWordPressの公開画面でenqueueしていない
-- [ ] ヘッダーとフッターをJavaScriptの `fetch()` に依存せずPHPで出力している
-- [ ] その他の共有部品を `get_template_part()` 等でサーバー側出力している
-- [ ] 静的HTMLの `<head><style>` 内のCSSを外部CSSへ移している
-- [ ] PHPテンプレート、`header.php`、テンプレートパーツ内に大量のインラインCSSが残っていない
-- [ ] 静的HTML末尾のインラインJavaScriptを責務別の外部ファイルへ移している
+- [x] `pages/` を静的な完成見本、WordPressのPHPを本番実装として区別している
+- [x] `[data-hb-include]` の全参照箇所についてPHP側の移植先を確認している
+- [x] WordPressの公開画面に `[data-hb-include]` 属性や空の読込用要素が残っていない
+- [x] `asset/js/include-components.js` をWordPressの公開画面でenqueueしていない
+- [x] ヘッダーとフッターをJavaScriptの `fetch()` に依存せずPHPで出力している
+- [x] その他の共有部品を `get_template_part()` 等でサーバー側出力している
+- [x] 静的HTMLの `<head><style>` 内のCSSを外部CSSへ移している
+- [x] PHPテンプレート、`header.php`、テンプレートパーツ内に大量のインラインCSSが残っていない
+- [x] 静的HTML末尾のインラインJavaScriptを責務別の外部ファイルへ移している
 - [ ] 静的制作用の相対リンク、ダミーURL、固定タイトル、開発用属性を整理している
 - [ ] 静的HTMLとWordPress表示を比較し、移植による要素欠落がない
 
 ### ページ
 
-- [ ] `pages/front.html` 相当のフロントページが実装されている
-- [ ] `pages/page-reason.html` 相当の固定ページが実装されている
-- [ ] `pages/page-privacy.html` 相当の固定ページが実装されている
-- [ ] `pages/page-genre-list.html` 相当の固定ページが実装されている
-- [ ] `pages/page-flow.html` 相当の固定ページが実装されている
-- [ ] `pages/page-faq.html` 相当の固定ページが実装されている
-- [ ] `pages/page-contact.html` 相当の固定ページが実装されている
-- [ ] `pages/page-company.html` 相当の固定ページが実装されている
-- [ ] 固定ページのスラッグとテンプレートの対応が管理・記録されている
+- [x] `pages/front.html` 相当のフロントページが実装されている
+- [x] `pages/page-reason.html` 相当の固定ページが実装されている
+- [x] `pages/page-privacy.html` 相当の固定ページが実装されている
+- [x] `pages/page-genre-list.html` 相当の固定ページが実装されている
+- [x] `pages/page-flow.html` 相当の固定ページが実装されている
+- [x] `pages/page-faq.html` 相当の固定ページが実装されている
+- [x] `pages/page-contact.html` 相当の固定ページが実装されている
+- [x] `pages/page-company.html` 相当の固定ページが実装されている
+- [x] 固定ページのスラッグとテンプレートの対応が管理・記録されている
 
 ### 投稿一覧・詳細・分類
 
-- [ ] `pages/archive-purchase-record.html` 相当の一覧が実装されている
-- [ ] `pages/single-purchase-record.html` 相当の詳細が実装されている
-- [ ] `pages/archive-info.html` 相当の一覧が実装されている
-- [ ] `pages/single-info.html` 相当の詳細が実装されている
-- [ ] `pages/archive-column.html` 相当の一覧が実装されている
-- [ ] `pages/single-column.html` 相当の詳細が実装されている
-- [ ] `pages/taxonomy-genre.html` 相当のタクソノミー一覧が実装されている
+- [x] `pages/archive-purchase-record.html` 相当の一覧が実装されている
+- [x] `pages/single-purchase-record.html` 相当の詳細が実装されている
+- [x] `pages/archive-info.html` 相当の一覧が実装されている
+- [x] `pages/single-info.html` 相当の詳細が実装されている
+- [x] `pages/archive-column.html` 相当の一覧が実装されている
+- [x] `pages/single-column.html` 相当の詳細が実装されている
+- [x] `pages/taxonomy-genre.html` 相当のタクソノミー一覧が実装されている
 - [ ] 各投稿タイプとタクソノミーのスラッグが仕様どおりである
 - [ ] 一覧から詳細、詳細から分類・一覧への導線が正しい
 - [ ] 投稿0件、1件、複数件、ページネーション発生時を確認している
 
 ### 共通コンポーネント
 
-- [ ] `components/header.html` 相当が共通化されている
-- [ ] `components/footer.html` 相当が共通化されている
-- [ ] `components/footer-cta.html` 相当が共通化されている
-- [ ] `components/parts-cta.html` 相当が共通化されている
-- [ ] `components/blog-card.html` 相当が共通化されている
-- [ ] `components/purchase-methods.html` 相当が共通化されている
-- [ ] `components/purchase-cases.html` 相当が共通化されている
-- [ ] `components/purchase-price-table.html` 相当が共通化されている
-- [ ] `components/genre-table.html` 相当が共通化されている
-- [ ] `components/flow-tab.html` 相当が共通化されている
-- [ ] `components/customer-reviews.html` 相当が共通化されている
-- [ ] 同じHTMLを複数テンプレートへコピーせず、`get_template_part()` 等で再利用している
+- [x] `components/header.html` 相当が共通化されている
+- [x] `components/footer.html` 相当が共通化されている
+- [x] `components/footer-cta.html` 相当が共通化されている
+- [x] `components/parts-cta.html` 相当が共通化されている
+- [x] `components/blog-card.html` 相当が共通化されている
+- [x] `components/purchase-methods.html` 相当が共通化されている
+- [x] `components/purchase-cases.html` 相当が共通化されている
+- [x] `components/purchase-price-table.html` 相当が共通化されている
+- [x] `components/genre-table.html` 相当が共通化されている
+- [x] `components/flow-tab.html` 相当が共通化されている
+- [x] `components/customer-reviews.html` 相当が共通化されている
+- [x] 同じHTMLを複数テンプレートへコピーせず、`get_template_part()` 等で再利用している
 - [ ] テンプレートパーツへ渡す引数と初期値が明確である
 - [ ] 同じテンプレートパーツを1ページ内で複数回呼び出してもIDや状態が競合しない
 
@@ -202,13 +202,13 @@
 
 ## 7. テンプレート階層・ループ
 
-- [ ] クラシックテーマのPHPテンプレート階層に従っている
-- [ ] `get_header()`、`get_footer()`、`get_sidebar()`、`get_template_part()` を目的に応じて使用している
+- [x] クラシックテーマのPHPテンプレート階層に従っている
+- [x] `get_header()`、`get_footer()`、`get_sidebar()`、`get_template_part()` を目的に応じて使用している
 - [ ] `front-page.php` とホーム／投稿ページ設定の関係が仕様どおりである
 - [ ] `home.php`、`page.php`、`single.php`、`archive.php`、`taxonomy.php` のフォールバックを確認している
 - [ ] カスタム投稿タイプ用・タクソノミー用テンプレート名が正しい
-- [ ] メインクエリを不要に置き換えていない
-- [ ] `query_posts()` を使用していない
+- [x] メインクエリを不要に置き換えていない
+- [x] `query_posts()` を使用していない
 - [ ] 独自クエリは目的、件数、並び順、ページングが仕様どおりである
 - [ ] 独自 `WP_Query` 後に必要な `wp_reset_postdata()` を実行している
 - [ ] `pre_get_posts` を使う場合、管理画面や別クエリへ誤適用していない
@@ -219,21 +219,21 @@
 
 ## 8. URL・リンク・アセット
 
-- [ ] テーマURL、ホームURL、投稿URLを固定文字列で記述していない
-- [ ] テーマ内ファイルは `get_theme_file_uri()` 等で参照している
-- [ ] サイト内リンクは `home_url()`、`get_permalink()` 等を適切に使用している
+- [x] テーマURL、ホームURL、投稿URLを固定文字列で記述していない
+- [x] テーマ内ファイルは `get_theme_file_uri()` 等で参照している
+- [x] サイト内リンクは `home_url()`、`get_permalink()` 等を適切に使用している
 - [ ] 開発環境のドメイン、`localhost`、静的HTMLへのリンクが残っていない
-- [ ] CSSは `wp_enqueue_style()` で読み込まれている
-- [ ] JavaScriptは `wp_enqueue_script()` で読み込まれている
-- [ ] PHPテンプレートの `<head>` にページ固有CSSを直書きしていない
-- [ ] 静的制作用の `include-components.js` を本番テーマで読み込んでいない
+- [x] CSSは `wp_enqueue_style()` で読み込まれている
+- [x] JavaScriptは `wp_enqueue_script()` で読み込まれている
+- [x] PHPテンプレートの `<head>` にページ固有CSSを直書きしていない
+- [x] 静的制作用の `include-components.js` を本番テーマで読み込んでいない
 - [ ] CSSの管理元が `tokens.css`、`reset.css`、`base.css`、`utility.css`、`component.css`、`page.css` の責務に分かれている
 - [ ] ビルド工程がある場合、本番フロント用CSSが1つのバンドルへまとめられている
-- [ ] ビルド工程がない場合、CSSが依存順にenqueueされ、`@import` で連結されていない
+- [x] ビルド工程がない場合、CSSが依存順にenqueueされ、`@import` で連結されていない
 - [ ] ページ別CSSを条件付きで読み込む場合、その必要性と分割基準が記録されている
-- [ ] enqueueのハンドル名がテーマ固有で、依存関係が正しい
-- [ ] キャッシュ更新用のバージョン指定方針がある
-- [ ] ページ固有アセットは必要なページだけで読み込まれる
+- [x] enqueueのハンドル名がテーマ固有で、依存関係が正しい
+- [x] キャッシュ更新用のバージョン指定方針がある
+- [x] ページ固有アセットは必要なページだけで読み込まれる
 - [ ] CSS、JS、画像、フォント、ソースマップに404がない
 - [ ] 画像パスの大文字・小文字が実ファイルと一致し、Linux環境でも動作する
 - [ ] 外部リンク、電話、メール、LINE等のリンク形式が正しい
