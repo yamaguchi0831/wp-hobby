@@ -1954,6 +1954,10 @@
         object-fit: cover;
       }
 
+      .hb-single-purchase-record__p-image--empty {
+        background: var(--hb-color-surface-green-light);
+      }
+
       .hb-single-purchase-record__p-summary {
         display: flex;
         flex-direction: column;
@@ -1962,6 +1966,12 @@
         gap: var(--hb-space-md);
         min-width: 0;
         padding: var(--hb-space-sm) var(--hb-space-sm) var(--hb-space-sm) 0;
+      }
+
+      .hb-single-purchase-record__p-labels {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--hb-space-xs);
       }
 
       .hb-single-purchase-record__p-label {

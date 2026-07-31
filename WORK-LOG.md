@@ -151,3 +151,27 @@
 - 変更：`theme/buybuycoms-hobby/PHASE-1-STATUS.md`、`theme/buybuycoms-hobby/README.md`、`THEME-COMPLETION-CHECKLIST.md`、`WORK-LOG.md`
 - 未完了：CPT・タクソノミー・ACFの登録主体と運用資料、空データ・画像未設定・ページネーション・モバイル・WP_DEBUG・複数ブラウザ・公開前検証
 - 次回：Localで境界値とモバイル表示を確認し、検証結果に対応するチェック項目を更新する
+
+## 2026-07-31：TOP買取実績カードの価格表示を単一金額へ変更
+
+- 状態：完了
+- 実施：価格データを`item-min-price`・`item-max-price`の範囲表示から`item-price`の単一金額へ切り替え、数値を桁区切り付きの「XX円」で中央表示。未入力時は価格要素を非表示
+- 変更：`template-parts/front/purchase-records.php`、`asset/css/component.css`、`WORK-LOG.md`
+- 未完了：Localで`item-price`入力済み・未入力の表示とカード幅ごとの中央揃えを確認
+- 次回：数値入力時の「XX円」、未入力時の価格非表示、PC・モバイルの中央揃えを確認する
+
+## 2026-07-31：買取実績詳細のメイン画像をDB接続
+
+- 状態：完了
+- 実施：詳細ページの固定プレースホルダー画像を`purchase-record`の`item-image`へ接続し、ACFの画像配列・添付ID・URL形式に対応。未入力時は空の画像枠を表示
+- 変更：`single-purchase-record.php`、`asset/css/page-static.css`、`WORK-LOG.md`
+- 未完了：Localで画像の各返り値形式、代替テキスト、未入力時、PC・モバイルの表示を確認
+- 次回：実データの`item-image`を設定し、画像比率と未入力時のレイアウトを確認する
+
+## 2026-07-31：買取実績詳細の主要情報をDB接続
+
+- 状態：完了
+- 実施：詳細ページのタイトルを投稿タイトル、タイトル下を`genre`ターム、金額を`item-price`、スタッフコメントを投稿内容へ接続。元の「MG」ラベル位置には、紐づく`genre`のうち親を持つ小カテゴリをすべて個別表示。複数genreは読点区切り、金額・投稿内容の未入力時は対応する表示を非表示
+- 変更：`single-purchase-record.php`、`asset/css/page-static.css`、`WORK-LOG.md`
+- 未完了：Localで親・子genre、複数の小カテゴリ、金額・本文の入力有無、本文ブロックの表示を確認
+- 次回：実データでタイトル、親・子genre、小カテゴリラベル、金額、本文と各未入力状態を確認する

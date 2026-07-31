@@ -1170,10 +1170,13 @@
 }
 
 .hb__p-cases-price {
+  display: block;
+  width: 100%;
   color: var(--hb-color-tertiary-600);
   font-size: var(--hb-font-size-h4);
   font-weight: 900;
   font-variant-numeric: tabular-nums;
+  text-align: center;
 }
 
 .hb__p-cases-button {

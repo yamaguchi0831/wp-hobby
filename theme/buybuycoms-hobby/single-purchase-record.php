@@ -4,39 +4,127 @@
  *
  * @package BuyBuyComs_Hobby
  */
+
+$purchase_record_id = get_the_ID();
+$item_image         = function_exists( 'get_field' ) ? get_field( 'item-image', $purchase_record_id ) : false;
+$item_price         = function_exists( 'get_field' ) ? get_field( 'item-price', $purchase_record_id ) : false;
+
+if ( false === $item_image || '' === $item_image || null === $item_image ) {
+	$item_image = get_post_meta( $purchase_record_id, 'item-image', true );
+}
+
+if ( false === $item_price || '' === $item_price || null === $item_price ) {
+	$item_price = get_post_meta( $purchase_record_id, 'item-price', true );
+}
+
+$item_image_markup = '';
+$item_image_alt    = get_the_title( $purchase_record_id );
+$price             = '';
+$numeric_price     = str_replace( array( ',', '￥', '¥', '円', ' ' ), '', trim( (string) $item_price ) );
+$genre_terms       = get_the_terms( $purchase_record_id, 'genre' );
+$genre_names       = array();
+$small_genre_names = array();
+$post_content      = get_post_field( 'post_content', $purchase_record_id );
+
+if ( '' !== $numeric_price && ctype_digit( $numeric_price ) ) {
+	$price = number_format_i18n( (int) $numeric_price ) . '円';
+} elseif ( '' !== trim( (string) $item_price ) ) {
+	$price = trim( (string) $item_price );
+}
+
+if ( ! is_wp_error( $genre_terms ) && $genre_terms ) {
+	$genre_names = wp_list_pluck( $genre_terms, 'name' );
+
+	foreach ( $genre_terms as $genre_term ) {
+		if ( 0 !== (int) $genre_term->parent ) {
+			$small_genre_names[] = $genre_term->name;
+		}
+	}
+}
+
+if ( is_array( $item_image ) ) {
+	$item_image_id = ! empty( $item_image['ID'] )
+		? absint( $item_image['ID'] )
+		: ( ! empty( $item_image['id'] ) ? absint( $item_image['id'] ) : 0 );
+
+	if ( $item_image_id ) {
+		$item_image_markup = wp_get_attachment_image(
+			$item_image_id,
+			'large',
+			false,
+			array(
+				'class' => 'hb-single-purchase-record__p-image',
+				'alt'   => ! empty( $item_image['alt'] ) ? $item_image['alt'] : $item_image_alt,
+			)
+		);
+	} elseif ( ! empty( $item_image['url'] ) ) {
+		$item_image_markup = sprintf(
+			'<img class="hb-single-purchase-record__p-image" src="%1$s" alt="%2$s" loading="eager" />',
+			esc_url( $item_image['url'] ),
+			esc_attr( ! empty( $item_image['alt'] ) ? $item_image['alt'] : $item_image_alt )
+		);
+	}
+} elseif ( is_numeric( $item_image ) ) {
+	$item_image_markup = wp_get_attachment_image(
+		absint( $item_image ),
+		'large',
+		false,
+		array(
+			'class' => 'hb-single-purchase-record__p-image',
+			'alt'   => $item_image_alt,
+		)
+	);
+} elseif ( is_string( $item_image ) && '' !== trim( $item_image ) ) {
+	$item_image_markup = sprintf(
+		'<img class="hb-single-purchase-record__p-image" src="%1$s" alt="%2$s" loading="eager" />',
+		esc_url( $item_image ),
+		esc_attr( $item_image_alt )
+	);
+}
+
+get_header();
 ?>
-<?php get_header(); ?>
 
     <main id="main-content">
       <article class="hb-single-purchase-record__p-detail">
         <div class="hb__l-container">
           <div class="hb-single-purchase-record__p-card">
             <figure class="hb-single-purchase-record__p-image-frame">
-              <img
-                class="hb-single-purchase-record__p-image"
-                src="https://placehold.co/760x465/eef3ee/33423a?text=Gunpla+RG+MG+120+kits"
-                alt="ガンプラRG・MG 約120点の買取商品画像"
-                width="760"
-                height="465"
-              />
+              <?php if ( $item_image_markup ) : ?>
+                <?php echo wp_kses_post( $item_image_markup ); ?>
+              <?php else : ?>
+                <span class="hb-single-purchase-record__p-image hb-single-purchase-record__p-image--empty" aria-hidden="true"></span>
+              <?php endif; ?>
             </figure>
 
             <div class="hb-single-purchase-record__p-summary">
-              <span class="hb-single-purchase-record__p-label">MG</span>
+              <?php if ( $small_genre_names ) : ?>
+                <div class="hb-single-purchase-record__p-labels">
+                  <?php foreach ( $small_genre_names as $small_genre_name ) : ?>
+                    <span class="hb-single-purchase-record__p-label">
+                      <?php echo esc_html( $small_genre_name ); ?>
+                    </span>
+                  <?php endforeach; ?>
+                </div>
+              <?php endif; ?>
               <h1 class="hb-single-purchase-record__p-title">
-                ガンプラRG・MG 約120点
+                <?php echo esc_html( get_the_title( $purchase_record_id ) ); ?>
               </h1>
-              <span class="hb-single-purchase-record__p-category"
-                >機動戦士ガンダム</span
-              >
-              <div class="hb-single-purchase-record__p-price-row">
-                <span class="hb-single-purchase-record__p-price-label"
-                  >買取価格</span
-                >
-                <span class="hb-single-purchase-record__p-price"
-                  >¥ 380,000</span
-                >
-              </div>
+              <?php if ( $genre_names ) : ?>
+                <span class="hb-single-purchase-record__p-category">
+                  <?php echo esc_html( implode( '、', $genre_names ) ); ?>
+                </span>
+              <?php endif; ?>
+              <?php if ( '' !== $price ) : ?>
+                <div class="hb-single-purchase-record__p-price-row">
+                  <span class="hb-single-purchase-record__p-price-label"
+                    >買取価格</span
+                  >
+                  <span class="hb-single-purchase-record__p-price">
+                    <?php echo esc_html( $price ); ?>
+                  </span>
+                </div>
+              <?php endif; ?>
               <p class="hb-single-purchase-record__p-location">
                 2026/7/25 神奈川県で宅配買取
               </p>
@@ -48,50 +136,22 @@
             </div>
           </div>
 
-          <section
-            class="hb-single-purchase-record__p-note"
-            aria-labelledby="staff-comment"
-          >
-            <h2
-              class="hb-single-purchase-record__p-note-title"
-              id="staff-comment"
+          <?php if ( '' !== trim( wp_strip_all_tags( $post_content ) ) ) : ?>
+            <section
+              class="hb-single-purchase-record__p-note"
+              aria-labelledby="staff-comment"
             >
-              買取スタッフからの一言
-            </h2>
-            <div class="hb-single-purchase-record__p-note-body">
-              <p class="hb-single-purchase-record__p-note-text">
-                神奈川県横浜市金沢区のお客様よりガンダムのプラモデルの未開封品や素組み完成品、計120点をお買取りさせていただきました。
-              </p>
-              <p class="hb-single-purchase-record__p-note-text">
-                コレクション専用のお部屋の入り口からは、さっそく天井まで立ち上がるガンプラタワーが迎えてくれます。
-              </p>
-              <p class="hb-single-purchase-record__p-note-text">
-                大量のお部屋は動線を除いてプラモデルとフィギュアでいっぱいにされていました。こちらを現場にて持参したダンボールに梱包させていただいた上で搬出作業に移らせていただきます！
-              </p>
-              <p class="hb-single-purchase-record__p-note-text">
-                破損の無いようにダンボールに詰めていきます。お客様がダンボールに詰めた状態で保管されている場合は、そのままお引取りすることも可能です。
-              </p>
-              <p class="hb-single-purchase-record__p-note-text">
-                お客様の御迷惑にならないよう、迅速に搬出させていただきます！マスクや消毒用アルコールなど、すべてご用意した上でお伺いいたしますので安心下さいませ。
-              </p>
-              <p class="hb-single-purchase-record__p-note-text">
-                HG、MGの通常キットから、ネオジオングをはじめPGやディープストライカーなどの大型キットまで、プレミアムバンダイ限定商品を含めて膨大な数のコレクションとなっています！
-              </p>
-              <p class="hb-single-purchase-record__p-note-text">
-                MG
-                百式壊やキュベレイダムドといったビルドファイターズの人気キットの姿も！
-              </p>
-              <p class="hb-single-purchase-record__p-note-text">
-                ビルドファイターズ以降の自由なガンプラによる可能性の広がりにはワクワクしてしまいますね！
-              </p>
-              <p class="hb-single-purchase-record__p-note-text">
-                また、ワンピースを中心にコレクションされているフィギュアも、メガハウスのP.O.Pシリーズを含め質量共に素晴らしい内容となっています！
-              </p>
-              <p class="hb-single-purchase-record__p-note-text">
-                ガンプラやプラモデルの買取はぜひ、売買コムズへ
-              </p>
-            </div>
-          </section>
+              <h2
+                class="hb-single-purchase-record__p-note-title"
+                id="staff-comment"
+              >
+                買取スタッフからの一言
+              </h2>
+              <div class="hb-single-purchase-record__p-note-body">
+                <?php the_content(); ?>
+              </div>
+            </section>
+          <?php endif; ?>
           <?php get_template_part( 'template-parts/content/blog-card' ); ?>
         </div>
       </article>

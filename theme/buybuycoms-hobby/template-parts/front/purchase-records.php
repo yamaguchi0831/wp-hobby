@@ -33,13 +33,13 @@ $format_purchase_record_price = static function ( $price ) {
 	$price = trim( (string) $price );
 
 	if ( '' === $price ) {
-		return 'ASK';
+		return '';
 	}
 
-	$numeric_price = str_replace( ',', '', $price );
+	$numeric_price = str_replace( array( ',', '￥', '¥', '円', ' ' ), '', $price );
 
 	if ( ctype_digit( $numeric_price ) ) {
-		return '¥ ' . number_format_i18n( (int) $numeric_price );
+		return number_format_i18n( (int) $numeric_price ) . '円';
 	}
 
 	return $price;
@@ -54,8 +54,7 @@ $format_purchase_record_price = static function ( $price ) {
 		$item_image              = $get_purchase_record_field( 'item-image', $purchase_record_id );
 		$item_excerpt            = $get_purchase_record_field( 'item-excerpt', $purchase_record_id );
 		$item_purchase_date      = $get_purchase_record_field( 'item-purchase-date', $purchase_record_id );
-		$item_min_price          = $get_purchase_record_field( 'item-min-price', $purchase_record_id );
-		$item_max_price          = $get_purchase_record_field( 'item-max-price', $purchase_record_id );
+		$item_price              = $get_purchase_record_field( 'item-price', $purchase_record_id );
 		$item_image_markup       = '';
 		$item_image_fallback_alt = get_the_title();
 
@@ -99,13 +98,7 @@ $format_purchase_record_price = static function ( $price ) {
 			);
 		}
 
-		$min_price = $format_purchase_record_price( $item_min_price );
-		$max_price = $format_purchase_record_price( $item_max_price );
-		$price     = 'ASK';
-
-		if ( 'ASK' !== $min_price || 'ASK' !== $max_price ) {
-			$price = $min_price . ' ～ ' . $max_price;
-		}
+		$price = $format_purchase_record_price( $item_price );
 		?>
 		<article class="hb__p-cases-card">
 			<?php if ( $item_image_markup ) : ?>
@@ -137,7 +130,9 @@ $format_purchase_record_price = static function ( $price ) {
 					</p>
 				<?php endif; ?>
 				<div class="hb__p-cases-foot">
-					<span class="hb__p-cases-price"><?php echo esc_html( $price ); ?></span>
+					<?php if ( '' !== $price ) : ?>
+						<span class="hb__p-cases-price"><?php echo esc_html( $price ); ?></span>
+					<?php endif; ?>
 					<a
 						class="hb__c-btn hb__c-btn--primary hb__p-cases-button"
 						href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"
