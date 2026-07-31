@@ -54,28 +54,40 @@ $format_purchase_price = static function ( $price ) {
 	return $price;
 };
 
-$purchase_price_genres = get_terms(
-	array(
-		'taxonomy'   => 'genre',
-		'hide_empty' => false,
-	)
-);
+$purchase_price_genres          = array();
+$is_genre_purchase_price_page   = is_tax( 'genre' );
+$purchase_price_initial_visible = 10;
 
-if ( is_wp_error( $purchase_price_genres ) || empty( $purchase_price_genres ) ) {
-	return;
+if ( $is_genre_purchase_price_page ) {
+	$current_purchase_price_genre = get_queried_object();
+
+	if ( $current_purchase_price_genre instanceof WP_Term ) {
+		$purchase_price_genres = array( $current_purchase_price_genre );
+	}
+} else {
+	$purchase_price_genres = get_terms(
+		array(
+			'taxonomy'   => 'genre',
+			'hide_empty' => false,
+		)
+	);
+
+	if ( is_wp_error( $purchase_price_genres ) ) {
+		$purchase_price_genres = array();
+	} else {
+		$purchase_price_genres = array_values(
+			array_filter(
+				$purchase_price_genres,
+				static function ( $genre_term ) use ( $get_purchase_price_term_field, $is_purchase_price_enabled ) {
+					$display_flag = $get_purchase_price_term_field( 'genre-purchase-table-flag', $genre_term );
+
+					return $is_purchase_price_enabled( $display_flag );
+				}
+			)
+		);
+		$purchase_price_genres = buybuycoms_hobby_sort_genre_terms( $purchase_price_genres );
+	}
 }
-
-$purchase_price_genres = array_values(
-	array_filter(
-		$purchase_price_genres,
-		static function ( $genre_term ) use ( $get_purchase_price_term_field, $is_purchase_price_enabled ) {
-			$display_flag = $get_purchase_price_term_field( 'genre-purchase-table-flag', $genre_term );
-
-			return $is_purchase_price_enabled( $display_flag );
-		}
-	)
-);
-$purchase_price_genres = buybuycoms_hobby_sort_genre_terms( $purchase_price_genres );
 
 if ( empty( $purchase_price_genres ) ) {
 	return;
@@ -90,7 +102,7 @@ foreach ( $purchase_price_genres as $purchase_price_genre ) {
 	);
 	$display_limit_text  = trim( (string) $display_limit_value );
 
-	if ( '' !== $display_limit_text && 0 === absint( $display_limit_value ) ) {
+	if ( ! $is_genre_purchase_price_page && '' !== $display_limit_text && 0 === absint( $display_limit_value ) ) {
 		continue;
 	}
 
@@ -98,7 +110,9 @@ foreach ( $purchase_price_genres as $purchase_price_genre ) {
 		array(
 			'post_type'           => 'purchase-price',
 			'post_status'         => 'publish',
-			'posts_per_page'      => '' === $display_limit_text ? 10 : absint( $display_limit_value ),
+			'posts_per_page'      => $is_genre_purchase_price_page
+				? -1
+				: ( '' === $display_limit_text ? 10 : absint( $display_limit_value ) ),
 			'orderby'             => 'date',
 			'order'               => 'DESC',
 			'ignore_sticky_posts' => true,
@@ -135,12 +149,21 @@ if ( empty( $purchase_price_groups ) ) {
 			<?php
 			$purchase_price_genre = $purchase_price_group['genre'];
 			$purchase_price_query = $purchase_price_group['query'];
+			$purchase_price_list_id = 'genre-purchase-price-list-' . $purchase_price_genre->term_id;
 			?>
 			<div class="hb__p-price-group">
 				<div class="hb__p-price-group-head">
 					<?php echo esc_html( $purchase_price_genre->name ); ?>
 				</div>
-				<ul class="hb__p-price-group-list" role="list">
+				<ul
+					class="hb__p-price-group-list"
+					role="list"
+					<?php if ( $is_genre_purchase_price_page ) : ?>
+						id="<?php echo esc_attr( $purchase_price_list_id ); ?>"
+						data-hb-purchase-price-list
+						data-hb-initial-visible="<?php echo esc_attr( (string) $purchase_price_initial_visible ); ?>"
+					<?php endif; ?>
+				>
 					<?php while ( $purchase_price_query->have_posts() ) : ?>
 						<?php
 						$purchase_price_query->the_post();
@@ -178,8 +201,21 @@ if ( empty( $purchase_price_groups ) ) {
 						</li>
 					<?php endwhile; ?>
 				</ul>
-				<?php $purchase_price_genre_link = get_term_link( $purchase_price_genre ); ?>
-				<?php if ( ! is_wp_error( $purchase_price_genre_link ) ) : ?>
+				<?php if ( $is_genre_purchase_price_page ) : ?>
+					<div class="hb__p-price-list-more" hidden>
+						<button
+							class="hb__p-price-list-more-button"
+							type="button"
+							aria-controls="<?php echo esc_attr( $purchase_price_list_id ); ?>"
+							aria-expanded="false"
+							data-hb-purchase-price-more
+						>
+							もっと見る
+						</button>
+					</div>
+				<?php else : ?>
+					<?php $purchase_price_genre_link = get_term_link( $purchase_price_genre ); ?>
+					<?php if ( ! is_wp_error( $purchase_price_genre_link ) ) : ?>
 					<div class="hb__p-price-group-more">
 						<a
 							class="hb__p-price-group-button"
@@ -188,6 +224,7 @@ if ( empty( $purchase_price_groups ) ) {
 							<?php echo esc_html( $purchase_price_genre->name ); ?>をもっと見る
 						</a>
 					</div>
+					<?php endif; ?>
 				<?php endif; ?>
 			</div>
 			<?php wp_reset_postdata(); ?>

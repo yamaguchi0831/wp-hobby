@@ -600,14 +600,21 @@ if ( is_string( $genre_faq_json ) && '' !== trim( $genre_faq_json ) ) {
         <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
       </div>
 
-      <section class="hb__l-section hb-item-genre__p-price" id="price">
-        <div class="hb__l-container">
-          <div class="hb-item-genre__p-section-head">
-            <h2 class="hb-item-genre__p-section-title">買取価格相場</h2>
+      <?php
+      ob_start();
+      get_template_part( 'template-parts/common/purchase-price-table' );
+      $genre_purchase_price_markup = trim( ob_get_clean() );
+      ?>
+      <?php if ( $genre_purchase_price_markup ) : ?>
+        <section class="hb__l-section hb-item-genre__p-price" id="price">
+          <div class="hb__l-container">
+            <div class="hb-item-genre__p-section-head">
+              <h2 class="hb-item-genre__p-section-title">買取価格相場</h2>
+            </div>
+            <?php echo $genre_purchase_price_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
           </div>
-          <?php get_template_part( 'template-parts/common/purchase-price-table' ); ?>
-        </div>
-      </section>
+        </section>
+      <?php endif; ?>
 
       <section class="hb__l-section hb-item-genre__p-maker" id="maker">
         <div class="hb__l-container">

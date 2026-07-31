@@ -255,3 +255,17 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/purchase-price-table.php`、`theme/buybuycoms-hobby/asset/css/component.css`、`theme/buybuycoms-hobby/asset/css/page-static.css`
 - 未完了事項: WordPress実画面でのボタン表示とリンク先の最終確認。
 - 次回の着手点: トップ、flow、reason等で各ジャンルボタンが正しいジャンルページへ遷移することを確認する。
+## 2026-07-31 ジャンルページの買取価格相場を限定表示
+
+- 状態: 完了
+- 実施内容: `genre` ページでは現在のジャンルに紐づく `purchase-price` のみ表示し、`genre-purchase-table-flag` の値は参照しないよう変更。対象データが0件の場合は「買取価格相場」セクション全体を非表示化。
+- 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/purchase-price-table.php`、`theme/buybuycoms-hobby/taxonomy-genre.php`
+- 未完了事項: WordPress実画面でのジャンル別表示と0件時の最終確認。
+- 次回の着手点: フラグ未設定でもデータがあるジャンル、データが0件のジャンルの双方を確認する。
+## 2026-07-31 ジャンル価格表の段階表示
+
+- 状態: 完了
+- 実施内容: `genre` ページではジャンルリンクボタンを非表示化し、価格データを初期10件表示へ変更。11件以上の場合のみ「もっと見る」を表示し、クリックで残りを一括表示する挙動を追加。
+- 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/purchase-price-table.php`、`theme/buybuycoms-hobby/asset/js/pages/taxonomy-genre.js`、`theme/buybuycoms-hobby/asset/css/component.css`
+- 未完了事項: WordPress実画面で10件以下・11件以上の両状態を最終確認。
+- 次回の着手点: 10件以下でボタンが出ないこと、11件以上で展開後にボタンが消えることを確認する。

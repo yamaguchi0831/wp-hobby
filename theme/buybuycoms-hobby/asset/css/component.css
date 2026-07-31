@@ -2009,6 +2009,40 @@
   background: var(--hb-color-surface-green-light);
 }
 
+.hb__p-price-list-more {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--hb-space-xl);
+}
+
+.hb__p-price-list-more-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 176px;
+  min-height: 36px;
+  padding: var(--hb-space-xs) var(--hb-space-lg);
+  border: 1px solid var(--hb-color-primary-500);
+  border-radius: var(--hb-radius-full);
+  background: var(--hb-color-surface-mint);
+  color: var(--hb-color-primary-700);
+  font-size: var(--hb-font-size-body--sm);
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+  cursor: pointer;
+}
+
+.hb__p-price-list-more-button:hover {
+  background: var(--hb-color-surface-mint-soft);
+  color: var(--hb-color-primary-800);
+}
+
+.hb__p-price-group-item[hidden],
+.hb__p-price-list-more[hidden] {
+  display: none;
+}
+
 @media (max-width: 720px) {
   .hb__p-prices-table {
     padding: var(--hb-space-lg);
