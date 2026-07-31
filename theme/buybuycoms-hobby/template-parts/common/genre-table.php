@@ -1,205 +1,93 @@
 <?php
 /**
- * Static first-stage template part: genre-table.
+ * Genre term cards.
  *
  * @package BuyBuyComs_Hobby
  */
+
+$genre_terms = get_terms(
+	array(
+		'taxonomy'   => 'genre',
+		'hide_empty' => false,
+	)
+);
+
+if ( is_wp_error( $genre_terms ) || empty( $genre_terms ) ) {
+	return;
+}
 ?>
 <div class="hb__p-categories">
-  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
-    <img
-      class="hb__p-cat__image"
-      src="<?php echo esc_url( get_theme_file_uri( '/images/01.gumdom.webp' ) ); ?>"
-      alt="機動戦士ガンダム(ガンプラ)"
-      width="300"
-      height="225"
-    />
-    <div class="hb__p-cat__foot">
-      <span>機動戦士ガンダム(ガンプラ)</span>
-      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
-    </div>
-    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
-  </a>
-  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
-    <img
-      class="hb__p-cat__image"
-      src="<?php echo esc_url( get_theme_file_uri( '/images/02.chougoukin.webp' ) ); ?>"
-      alt="超合金/メタルビルド"
-      width="300"
-      height="225"
-    />
-    <div class="hb__p-cat__foot">
-      <span>超合金/メタルビルド</span>
-      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
-    </div>
-    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
-  </a>
-  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
-    <img
-      class="hb__p-cat__image"
-      src="<?php echo esc_url( get_theme_file_uri( '/images/03.lego.webp' ) ); ?>"
-      alt="LEGO"
-      width="300"
-      height="225"
-    />
-    <div class="hb__p-cat__foot">
-      <span>LEGO</span>
-      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
-    </div>
-    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
-  </a>
-  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
-    <img
-      class="hb__p-cat__image"
-      src="<?php echo esc_url( get_theme_file_uri( '/images/04.puramoderu.webp' ) ); ?>"
-      alt="プラモデル"
-      width="300"
-      height="225"
-    />
-    <div class="hb__p-cat__foot">
-      <span>プラモデル</span>
-      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
-    </div>
-    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
-  </a>
-  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
-    <img
-      class="hb__p-cat__image"
-      src="<?php echo esc_url( get_theme_file_uri( '/images/05.tetudou.webp' ) ); ?>"
-      alt="鉄道模型"
-      width="300"
-      height="225"
-    />
-    <div class="hb__p-cat__foot">
-      <span>鉄道模型</span>
-      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
-    </div>
-    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
-  </a>
-  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
-    <img
-      class="hb__p-cat__image"
-      src="<?php echo esc_url( get_theme_file_uri( '/images/06.sohubi.webp' ) ); ?>"
-      alt="ソフビ"
-      width="300"
-      height="225"
-    />
-    <div class="hb__p-cat__foot">
-      <span>ソフビ</span>
-      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
-    </div>
-    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
-  </a>
-  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
-    <img
-      class="hb__p-cat__image"
-      src="<?php echo esc_url( get_theme_file_uri( '/images/07.retoro.webp' ) ); ?>"
-      alt="レトロ玩具/昭和玩具"
-      width="300"
-      height="225"
-    />
-    <div class="hb__p-cat__foot">
-      <span>レトロ玩具/昭和玩具</span>
-      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
-    </div>
-    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
-  </a>
-  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
-    <img
-      class="hb__p-cat__image"
-      src="<?php echo esc_url( get_theme_file_uri( '/images/08.tokusatsu.webp' ) ); ?>"
-      alt="特撮グッズ"
-      width="300"
-      height="225"
-    />
-    <div class="hb__p-cat__foot">
-      <span>特撮グッズ</span>
-      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
-    </div>
-    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
-  </a>
-  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
-    <img
-      class="hb__p-cat__image"
-      src="<?php echo esc_url( get_theme_file_uri( '/images/09.retoro-game.webp' ) ); ?>"
-      alt="レトロゲーム"
-      width="300"
-      height="225"
-    />
-    <div class="hb__p-cat__foot">
-      <span>レトロゲーム</span>
-      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
-    </div>
-    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
-  </a>
-  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
-    <img
-      class="hb__p-cat__image"
-      src="<?php echo esc_url( get_theme_file_uri( '/images/10.mini-car.webp' ) ); ?>"
-      alt="ミニカー"
-      width="300"
-      height="225"
-    />
-    <div class="hb__p-cat__foot">
-      <span>ミニカー</span>
-      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
-    </div>
-    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
-  </a>
-  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
-    <img
-      class="hb__p-cat__image"
-      src="<?php echo esc_url( get_theme_file_uri( '/images/11.figure.webp' ) ); ?>"
-      alt="フィギュア"
-      width="300"
-      height="225"
-    />
-    <div class="hb__p-cat__foot">
-      <span>フィギュア</span>
-      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
-    </div>
-    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
-  </a>
-  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
-    <img
-      class="hb__p-cat__image"
-      src="<?php echo esc_url( get_theme_file_uri( '/images/12.musenki.webp' ) ); ?>"
-      alt="無線機"
-      width="300"
-      height="225"
-    />
-    <div class="hb__p-cat__foot">
-      <span>無線機</span>
-      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
-    </div>
-    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
-  </a>
-  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
-    <img
-      class="hb__p-cat__image"
-      src="<?php echo esc_url( get_theme_file_uri( '/images/13.deago.webp' ) ); ?>"
-      alt="デアゴスティーニ"
-      width="300"
-      height="225"
-    />
-    <div class="hb__p-cat__foot">
-      <span>デアゴスティーニ</span>
-      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
-    </div>
-    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
-  </a>
-  <a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>" class="hb__p-cat">
-    <img
-      class="hb__p-cat__image"
-      src="<?php echo esc_url( get_theme_file_uri( '/images/14.asheeto.webp' ) ); ?>"
-      alt="アシェット"
-      width="300"
-      height="225"
-    />
-    <div class="hb__p-cat__foot">
-      <span>アシェット</span>
-      <span class="hb__p-cat__chev" aria-hidden="true">›</span>
-    </div>
-    <span class="hb__p-cat__sub">ここにテキストが入ります</span>
-  </a>
+	<?php foreach ( $genre_terms as $genre_term ) : ?>
+		<?php
+		$genre_link = get_term_link( $genre_term );
+
+		if ( is_wp_error( $genre_link ) ) {
+			continue;
+		}
+
+		$genre_context = 'genre_' . $genre_term->term_id;
+		$genre_thumb   = function_exists( 'get_field' )
+			? get_field( 'genre-thumb', $genre_context )
+			: get_term_meta( $genre_term->term_id, 'genre-thumb', true );
+		$genre_excerpt = function_exists( 'get_field' )
+			? get_field( 'genre-excerpt', $genre_context )
+			: get_term_meta( $genre_term->term_id, 'genre-excerpt', true );
+		$genre_image   = '';
+		$genre_alt     = $genre_term->name;
+
+		if ( is_array( $genre_thumb ) ) {
+			$genre_image_id = ! empty( $genre_thumb['ID'] )
+				? absint( $genre_thumb['ID'] )
+				: ( ! empty( $genre_thumb['id'] ) ? absint( $genre_thumb['id'] ) : 0 );
+
+			if ( $genre_image_id ) {
+				$genre_image = wp_get_attachment_image(
+					$genre_image_id,
+					'medium',
+					false,
+					array(
+						'class' => 'hb__p-cat__image',
+						'alt'   => ! empty( $genre_thumb['alt'] ) ? $genre_thumb['alt'] : $genre_alt,
+					)
+				);
+			} elseif ( ! empty( $genre_thumb['url'] ) ) {
+				$genre_image = sprintf(
+					'<img class="hb__p-cat__image" src="%1$s" alt="%2$s" loading="lazy" />',
+					esc_url( $genre_thumb['url'] ),
+					esc_attr( ! empty( $genre_thumb['alt'] ) ? $genre_thumb['alt'] : $genre_alt )
+				);
+			}
+		} elseif ( is_numeric( $genre_thumb ) ) {
+			$genre_image = wp_get_attachment_image(
+				absint( $genre_thumb ),
+				'medium',
+				false,
+				array(
+					'class' => 'hb__p-cat__image',
+					'alt'   => $genre_alt,
+				)
+			);
+		} elseif ( is_string( $genre_thumb ) && '' !== trim( $genre_thumb ) ) {
+			$genre_image = sprintf(
+				'<img class="hb__p-cat__image" src="%1$s" alt="%2$s" loading="lazy" />',
+				esc_url( $genre_thumb ),
+				esc_attr( $genre_alt )
+			);
+		}
+		?>
+		<a href="<?php echo esc_url( $genre_link ); ?>" class="hb__p-cat">
+			<?php if ( $genre_image ) : ?>
+				<?php echo wp_kses_post( $genre_image ); ?>
+			<?php else : ?>
+				<span class="hb__p-cat__image hb__p-cat__image--empty" aria-hidden="true"></span>
+			<?php endif; ?>
+			<div class="hb__p-cat__foot">
+				<span><?php echo esc_html( $genre_term->name ); ?></span>
+				<span class="hb__p-cat__chev" aria-hidden="true">›</span>
+			</div>
+			<?php if ( '' !== trim( (string) $genre_excerpt ) ) : ?>
+				<span class="hb__p-cat__sub"><?php echo esc_html( $genre_excerpt ); ?></span>
+			<?php endif; ?>
+		</a>
+	<?php endforeach; ?>
 </div>

@@ -1121,6 +1121,14 @@
   object-fit: cover;
 }
 
+.hb__p-cases-image-link {
+  display: block;
+}
+
+.hb__p-cases-image--empty {
+  background: var(--hb-color-surface-green);
+}
+
 .hb__p-cases-body {
   display: flex;
   flex: 1;
@@ -1255,6 +1263,10 @@
   background: var(--hb-color-white);
   object-fit: contain;
   box-sizing: border-box;
+}
+
+.hb__p-cat__image--empty {
+  background: var(--hb-color-surface-green);
 }
 
 .hb__p-cat__foot {
