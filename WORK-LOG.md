@@ -220,3 +220,38 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/inc/template-functions.php`、`theme/buybuycoms-hobby/template-parts/common/genre-table.php`、`theme/buybuycoms-hobby/page-genre-list.php`
 - 未完了事項: WordPress実データでの表示順の最終確認。
 - 次回の着手点: トップページ、ジャンル一覧、その他の買取品目セクションで同じ順番になることを確認する。
+## 2026-07-31 買取価格の目安をDB接続
+
+- 状態: 完了
+- 実施内容: `purchase-price` の公開データを `genre` ごとに表示。`genre-purchase-table-flag` が有効なジャンルだけを `genre-order` 順で出力し、`genre-purchase-table-number-of-display` をジャンルごとの上限に適用（未入力時は10件）。商品名は投稿タイトル、買取強化中バッジ、`product-min-price`、`product-max-price`を各フィールドへ接続し、両価格未入力時は `ASK` と表示。
+- 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/purchase-price-table.php`
+- 未完了事項: WordPress実データでの表示内容と各ジャンルの件数上限の最終確認。
+- 次回の着手点: フラグ有無、表示件数、片側価格未入力、両価格未入力の各状態を実画面確認する。
+## 2026-07-31 選ばれる理由ページの買取実績をDB接続
+
+- 状態: 完了
+- 実施内容: `/reason/` の買取実績を旧固定パーツから、トップページと同じ `purchase-record` DB接続済み共通パーツへ変更。
+- 主な変更ファイル: `theme/buybuycoms-hobby/page-reason.php`
+- 未完了事項: WordPress実画面での最終表示確認。
+- 次回の着手点: `/reason/` で最新の買取実績が最大8件表示されることを確認する。
+## 2026-07-31 買取の流れページの買取実績をDB接続
+
+- 状態: 完了
+- 実施内容: `/flow/` の買取実績を旧固定パーツから、トップページと同じ `purchase-record` DB接続済み共通パーツへ変更。
+- 主な変更ファイル: `theme/buybuycoms-hobby/page-flow.php`
+- 未完了事項: WordPress実画面での最終表示確認。
+- 次回の着手点: `/flow/` で最新の買取実績が最大8件表示されることを確認する。
+## 2026-07-31 買取の流れページの価格目安をDB接続
+
+- 状態: 完了
+- 実施内容: `/flow/` の固定表示だった買取価格の目安を、トップページと同じ `purchase-price` DB接続済み共通パーツへ変更。
+- 主な変更ファイル: `theme/buybuycoms-hobby/page-flow.php`
+- 未完了事項: WordPress実画面での最終表示確認。
+- 次回の着手点: `/flow/` でジャンル順、表示件数、価格、バッジがトップページと一致することを確認する。
+## 2026-07-31 買取価格表のジャンル導線を共通化
+
+- 状態: 完了
+- 実施内容: 買取価格表の各ジャンル末尾へ「ジャンル名をもっと見る」ボタンを追加し、該当ジャンルページへ接続。flow専用だったボタンCSSを共通パーツ用クラスへ移行。
+- 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/purchase-price-table.php`、`theme/buybuycoms-hobby/asset/css/component.css`、`theme/buybuycoms-hobby/asset/css/page-static.css`
+- 未完了事項: WordPress実画面でのボタン表示とリンク先の最終確認。
+- 次回の着手点: トップ、flow、reason等で各ジャンルボタンが正しいジャンルページへ遷移することを確認する。

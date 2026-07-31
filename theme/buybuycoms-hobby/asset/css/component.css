@@ -1978,6 +1978,37 @@
   white-space: nowrap;
 }
 
+.hb__p-price-group-more {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--hb-space-md);
+}
+
+.hb__p-price-group-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--hb-space-xs) var(--hb-space-md);
+  border: 1px solid var(--hb-color-primary-500);
+  border-radius: var(--hb-radius-full);
+  background: var(--hb-color-white);
+  color: var(--hb-color-primary-600);
+  font-size: var(--hb-font-size-body--sm);
+  font-weight: 700;
+  line-height: 1.4;
+  text-decoration: none;
+}
+
+.hb__p-price-group-button::after {
+  content: "→";
+  margin-left: var(--hb-space-2xs);
+}
+
+.hb__p-price-group-button:hover {
+  background: var(--hb-color-surface-green-light);
+}
+
 @media (max-width: 720px) {
   .hb__p-prices-table {
     padding: var(--hb-space-lg);

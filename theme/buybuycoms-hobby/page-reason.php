@@ -201,7 +201,7 @@ Template Name: Reasons
               最近の買取実績
             </h2>
           </header>
-          <?php get_template_part( 'template-parts/common/purchase-cases' ); ?>
+          <?php get_template_part( 'template-parts/common/purchase-records' ); ?>
         </div>
       </section>
 
