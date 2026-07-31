@@ -1,19 +1,55 @@
 <?php
 /**
- * Purchase record cards for the front page.
+ * Context-aware purchase record cards.
+ *
+ * Shows the latest purchase records by default. On a genre archive or a
+ * singular post assigned to genre terms, records are limited to that context.
  *
  * @package BuyBuyComs_Hobby
  */
 
-$purchase_records = new WP_Query(
-	array(
-		'post_type'           => 'purchase-record',
-		'post_status'         => 'publish',
-		'posts_per_page'      => 8,
-		'ignore_sticky_posts' => true,
-		'no_found_rows'       => true,
-	)
+$posts_per_page = isset( $args['posts_per_page'] ) ? max( 1, absint( $args['posts_per_page'] ) ) : 8;
+$initial_visible = isset( $args['initial_visible'] ) ? absint( $args['initial_visible'] ) : 0;
+$grid_id         = isset( $args['grid_id'] ) ? sanitize_html_class( $args['grid_id'] ) : '';
+
+$purchase_record_query_args = array(
+	'post_type'           => 'purchase-record',
+	'post_status'         => 'publish',
+	'posts_per_page'      => $posts_per_page,
+	'orderby'             => 'date',
+	'order'               => 'DESC',
+	'ignore_sticky_posts' => true,
+	'no_found_rows'       => true,
 );
+$purchase_record_genre_ids  = array();
+
+if ( is_tax( 'genre' ) ) {
+	$queried_genre = get_queried_object();
+
+	if ( $queried_genre instanceof WP_Term ) {
+		$purchase_record_genre_ids = array( (int) $queried_genre->term_id );
+	}
+} elseif ( is_singular() ) {
+	$context_genres = get_the_terms( get_queried_object_id(), 'genre' );
+
+	if ( ! is_wp_error( $context_genres ) && $context_genres ) {
+		$purchase_record_genre_ids = array_map( 'intval', wp_list_pluck( $context_genres, 'term_id' ) );
+	}
+}
+
+if ( $purchase_record_genre_ids ) {
+	$purchase_record_query_args['tax_query'] = array(
+		array(
+			'taxonomy'         => 'genre',
+			'field'            => 'term_id',
+			'terms'            => $purchase_record_genre_ids,
+			'operator'         => 'IN',
+			'include_children' => is_tax( 'genre' ),
+		),
+	);
+}
+
+$purchase_records = new WP_Query( $purchase_record_query_args );
 
 if ( ! $purchase_records->have_posts() ) {
 	return;
@@ -45,7 +81,14 @@ $format_purchase_record_price = static function ( $price ) {
 	return $price;
 };
 ?>
-<div class="hb__p-cases-grid">
+<div
+	class="hb__p-cases-grid"
+	<?php if ( $grid_id ) : ?>id="<?php echo esc_attr( $grid_id ); ?>"<?php endif; ?>
+	<?php if ( 0 < $initial_visible ) : ?>
+		data-hb-purchase-records
+		data-hb-initial-visible="<?php echo esc_attr( (string) $initial_visible ); ?>"
+	<?php endif; ?>
+>
 	<?php while ( $purchase_records->have_posts() ) : ?>
 		<?php
 		$purchase_records->the_post();

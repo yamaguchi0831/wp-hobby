@@ -175,3 +175,48 @@
 - 変更：`single-purchase-record.php`、`asset/css/page-static.css`、`WORK-LOG.md`
 - 未完了：Localで親・子genre、複数の小カテゴリ、金額・本文の入力有無、本文ブロックの表示を確認
 - 次回：実データでタイトル、親・子genre、小カテゴリラベル、金額、本文と各未入力状態を確認する
+
+## 2026-07-31：お客様の声の共通パーツをDB接続
+
+- 状態：完了
+- 実施：共通テンプレートパーツで`review`の最新3件を取得。タイトル、`review-age`、`review-job`、`review-star`、投稿内容、アイキャッチを接続。アイキャッチ未設定時は、参考イメージを基に新規生成した汎用人物アイコンを表示。トップ等は全口コミ、`genre`アーカイブは表示中のジャンル、genreが紐づく詳細ページは同じジャンルに絞り込み。ジャンルページへ該当口コミがある場合だけ共通パーツを表示するセクションを追加
+- 変更：`template-parts/common/customer-reviews.php`、`front-page.php`、`taxonomy-genre.php`、`asset/css/component.css`、`images/icon/review-default-avatar.png`、`WORK-LOG.md`
+- 未完了：Localでアイキャッチあり・なし、全件表示、親・子genreアーカイブ、買取事例詳細、該当0件、各フィールド未入力、星数境界値、PC・モバイル表示を確認
+- 次回：ジャンルが異なる口コミと買取事例を用意し、アイキャッチのフォールバック、各ページの最新3件と絞り込み条件を確認する
+
+## 2026-07-31：買取実績カードをジャンル対応の共通パーツ化
+
+- 状態：完了
+- 実施：トップ用のDB接続済み買取実績カードを共通パーツへ昇格。通常ページは全実績、`genre`アーカイブは表示中のジャンル、genreが紐づく詳細ページは同じジャンルに絞り、最新8件を表示
+- 変更：`template-parts/common/purchase-records.php`、`front-page.php`、`taxonomy-genre.php`、`single-purchase-record.php`、`WORK-LOG.md`
+- 未完了：Localでトップ、親・子genre、複数genreの事例詳細、該当0件、8件超の表示を確認
+- 次回：複数ジャンルの買取実績を用意し、各ページの絞り込みと最新順を確認する
+
+## 2026-07-31：ジャンル一覧ページの買取実績を20件表示
+
+- 状態：完了
+- 実施：ジャンル一覧ページでは全ジャンルの最新買取実績を最大20件取得し、初期8件・「もっと見る」で残りを展開。実績が8件以下の場合はボタンを非表示。公開済み買取実績が存在するgenreだけを抽出し、各ジャンルページへのタグリンクを表示
+- 変更：`page-genre-list.php`、`template-parts/common/purchase-records.php`、`asset/js/pages/page-genre-list.js`、`inc/enqueue.php`、`asset/css/page-static.css`、`WORK-LOG.md`
+- 未完了：Localで実績0件・8件・9件・20件以上、genreなし投稿、親・子genre、タグリンク、JavaScript無効時を確認
+- 次回：20件以上のテストデータで初期8件、残り12件、最新順、存在するgenreだけのタグ表示を確認する
+## 2026-07-31 買取実績ジャンルタグの取得修正
+
+- 状態: 完了
+- 実施内容: ジャンル一覧ページの買取実績タグについて、公開中の全 `purchase-record` に紐づく `genre` を一括取得し、タームIDで重複を除外してすべて表示する方式へ変更。サンプルデータの設定ミスと判明したため、投稿ごとの個別取得処理は取り消した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/page-genre-list.php`
+- 未完了事項: WordPress実データを使用した表示件数の最終確認。
+- 次回の着手点: 公開中の買取実績に複数ジャンルを割り当てた状態で、各ジャンルタグとリンクを実画面確認する。
+## 2026-07-31 買取実績ジャンルタグの表示順対応
+
+- 状態: 完了
+- 実施内容: ジャンル一覧ページの買取実績タグを、`genre` タームの `genre-order` の数値が小さい順に表示するよう変更。未入力は入力済みタームの後ろ、同値は名前順とした。
+- 主な変更ファイル: `theme/buybuycoms-hobby/page-genre-list.php`
+- 未完了事項: WordPress実データでの表示順の最終確認。
+- 次回の着手点: 各ジャンルへ異なる `genre-order` を設定し、画面上の並び順を確認する。
+## 2026-07-31 買取品目カードの表示順対応
+
+- 状態: 完了
+- 実施内容: 共通の買取品目カードを `genre-order` の数値が小さい順に表示。ジャンルタグとカードで同じ並び順関数を使用する構成へ整理。
+- 主な変更ファイル: `theme/buybuycoms-hobby/inc/template-functions.php`、`theme/buybuycoms-hobby/template-parts/common/genre-table.php`、`theme/buybuycoms-hobby/page-genre-list.php`
+- 未完了事項: WordPress実データでの表示順の最終確認。
+- 次回の着手点: トップページ、ジャンル一覧、その他の買取品目セクションで同じ順番になることを確認する。

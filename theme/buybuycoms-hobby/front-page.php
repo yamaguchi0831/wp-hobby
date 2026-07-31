@@ -193,7 +193,7 @@
                         </p>
                     </header>
 
-                    <?php get_template_part( 'template-parts/front/purchase-records' ); ?>
+                    <?php get_template_part( 'template-parts/common/purchase-records' ); ?>
                 </div>
             </section>
             <!-- ============================== 05. RECOMMENDED FOR ============================== -->

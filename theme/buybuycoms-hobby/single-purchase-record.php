@@ -253,7 +253,7 @@ get_header();
               >
             </li>
           </ul>
-          <?php get_template_part( 'template-parts/common/purchase-cases' ); ?>
+          <?php get_template_part( 'template-parts/common/purchase-records' ); ?>
           <div class="hb-single-purchase-record__p-case-more">
             <a class="hb-single-purchase-record__p-case-more-link" href="<?php echo esc_url( home_url( '/purchase-record/' ) ); ?>"
               >もっと見る</a

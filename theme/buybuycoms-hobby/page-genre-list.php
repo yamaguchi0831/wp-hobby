@@ -90,119 +90,84 @@ Template Name: Genre List
                             フィギュア・プラモデル・カードなど、実際にお売りいただいたホビーの一例です。
                         </p>
                     </header>
-                    <ul class="hb-page-genre-list__p-case-filter" role="list">
-                        <li>
-                            <a
-                                class="hb-page-genre-list__p-case-filter-link hb__is-active"
-                                href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>"
-                                aria-current="page"
-                                >TOP</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="hb-page-genre-list__p-case-filter-link"
-                                href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>"
-                                >機動戦士ガンダム</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="hb-page-genre-list__p-case-filter-link"
-                                href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>"
-                                >超合金/メタルビルド</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="hb-page-genre-list__p-case-filter-link"
-                                href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>"
-                                >LEGO</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="hb-page-genre-list__p-case-filter-link"
-                                href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>"
-                                >プラモデル</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="hb-page-genre-list__p-case-filter-link"
-                                href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>"
-                                >鉄道模型</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="hb-page-genre-list__p-case-filter-link"
-                                href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>"
-                                >ソフビ</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="hb-page-genre-list__p-case-filter-link"
-                                href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>"
-                                >特撮グッズ</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="hb-page-genre-list__p-case-filter-link"
-                                href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>"
-                                >レトロゲーム</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="hb-page-genre-list__p-case-filter-link"
-                                href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>"
-                                >レトロ玩具/昭和玩具</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="hb-page-genre-list__p-case-filter-link"
-                                href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>"
-                                >ミニカー</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="hb-page-genre-list__p-case-filter-link"
-                                href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>"
-                                >フィギュア</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="hb-page-genre-list__p-case-filter-link"
-                                href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>"
-                                >無線機</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="hb-page-genre-list__p-case-filter-link"
-                                href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>"
-                                >ディズニー</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="hb-page-genre-list__p-case-filter-link"
-                                href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>"
-                                >アメトイ</a
-                            >
-                        </li>
-                    </ul>
-                    <?php get_template_part( 'template-parts/common/purchase-cases' ); ?>
+                    <?php
+                    $genre_list_purchase_record_ids = get_posts(
+                        array(
+                            'post_type'              => 'purchase-record',
+                            'post_status'            => 'publish',
+                            'posts_per_page'         => -1,
+                            'fields'                 => 'ids',
+                            'orderby'                => 'date',
+                            'order'                  => 'DESC',
+                            'no_found_rows'          => true,
+                            'update_post_meta_cache' => false,
+                            'update_post_term_cache' => false,
+                        )
+                    );
+                    $genre_list_case_terms = $genre_list_purchase_record_ids
+                        ? wp_get_object_terms(
+                            $genre_list_purchase_record_ids,
+                            'genre',
+                            array(
+                                'orderby' => 'name',
+                                'order'   => 'ASC',
+                            )
+                        )
+                        : array();
+
+                    if ( is_wp_error( $genre_list_case_terms ) ) {
+                        $genre_list_case_terms = array();
+                    } else {
+                        $genre_list_case_terms_by_id = array();
+
+                        foreach ( $genre_list_case_terms as $genre_list_case_term ) {
+                            $genre_list_case_terms_by_id[ $genre_list_case_term->term_id ] = $genre_list_case_term;
+                        }
+
+                        $genre_list_case_terms = array_values( $genre_list_case_terms_by_id );
+                        $genre_list_case_terms = buybuycoms_hobby_sort_genre_terms( $genre_list_case_terms );
+                    }
+                    ?>
+                    <?php if ( $genre_list_case_terms ) : ?>
+                        <ul class="hb-page-genre-list__p-case-filter" role="list">
+                            <?php foreach ( $genre_list_case_terms as $genre_list_case_term ) : ?>
+                                <?php $genre_list_case_term_link = get_term_link( $genre_list_case_term ); ?>
+                                <?php if ( ! is_wp_error( $genre_list_case_term_link ) ) : ?>
+                                    <li>
+                                        <a
+                                            class="hb-page-genre-list__p-case-filter-link"
+                                            href="<?php echo esc_url( $genre_list_case_term_link ); ?>"
+                                        >
+                                            <?php echo esc_html( $genre_list_case_term->name ); ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+
+                    <?php
+                    get_template_part(
+                        'template-parts/common/purchase-records',
+                        null,
+                        array(
+                            'posts_per_page' => 20,
+                            'initial_visible' => 8,
+                            'grid_id'         => 'genre-list-purchase-records',
+                        )
+                    );
+                    ?>
                     <div class="hb-page-genre-list__p-case-more">
-                        <a class="hb-page-genre-list__p-case-more-link" href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>"
-                            >もっと見る</a
+                        <button
+                            class="hb-page-genre-list__p-case-more-link"
+                            type="button"
+                            aria-controls="genre-list-purchase-records"
+                            aria-expanded="false"
+                            data-hb-purchase-record-more
+                            hidden
                         >
+                            もっと見る
+                        </button>
                     </div>
                 </div>
             </section>

@@ -457,6 +457,7 @@
                 min-width: 176px;
                 min-height: 36px;
                 padding: var(--hb-space-2xs) var(--hb-space-xl);
+                border: 0;
                 border-radius: var(--hb-radius-full);
                 background: var(--hb-color-surface-pill);
                 color: var(--hb-color-primary-600);
@@ -465,11 +466,17 @@
                 line-height: 1.4;
                 text-align: center;
                 text-decoration: none;
+                cursor: pointer;
             }
 
             .hb-page-genre-list__p-case-more-link:hover {
                 background: var(--hb-color-surface-mint-soft);
                 color: var(--hb-color-primary-800);
+            }
+
+            .hb__p-cases-card[hidden],
+            .hb-page-genre-list__p-case-more-link[hidden] {
+                display: none;
             }
 
             .hb-page-genre-list__p-cta {

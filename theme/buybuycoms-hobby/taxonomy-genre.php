@@ -187,7 +187,7 @@ if ( is_string( $genre_faq_json ) && '' !== trim( $genre_faq_json ) ) {
           <div class="hb-item-genre__p-section-head">
             <h2 class="hb-item-genre__p-section-title">買取価格実績</h2>
           </div>
-          <?php get_template_part( 'template-parts/common/purchase-cases' ); ?>
+          <?php get_template_part( 'template-parts/common/purchase-records' ); ?>
         </div>
       </section>
 
@@ -641,6 +641,22 @@ if ( is_string( $genre_faq_json ) && '' !== trim( $genre_faq_json ) ) {
           </dl>
         </div>
       </section>
+
+      <?php
+      ob_start();
+      get_template_part( 'template-parts/common/customer-reviews' );
+      $genre_reviews_markup = trim( ob_get_clean() );
+      ?>
+      <?php if ( '' !== $genre_reviews_markup ) : ?>
+        <section class="hb__l-section hb-item-genre__p-reviews" id="reviews">
+          <div class="hb__l-container">
+            <div class="hb-item-genre__p-section-head">
+              <h2 class="hb-item-genre__p-section-title">お客様の声</h2>
+            </div>
+            <?php echo wp_kses_post( $genre_reviews_markup ); ?>
+          </div>
+        </section>
+      <?php endif; ?>
 
       <section class="hb__l-section hb-item-genre__p-faq" id="faq">
         <div class="hb__l-container">

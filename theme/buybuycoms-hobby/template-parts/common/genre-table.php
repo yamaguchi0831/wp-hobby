@@ -15,6 +15,8 @@ $genre_terms = get_terms(
 if ( is_wp_error( $genre_terms ) || empty( $genre_terms ) ) {
 	return;
 }
+
+$genre_terms = buybuycoms_hobby_sort_genre_terms( $genre_terms );
 ?>
 <div class="hb__p-categories">
 	<?php foreach ( $genre_terms as $genre_term ) : ?>

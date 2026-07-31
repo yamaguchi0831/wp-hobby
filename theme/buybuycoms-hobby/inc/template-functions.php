@@ -48,6 +48,43 @@ function buybuycoms_hobby_column_archive_posts_per_page( $query ) {
 add_action( 'pre_get_posts', 'buybuycoms_hobby_column_archive_posts_per_page' );
 
 /**
+ * Sort genre terms by the genre-order term meta.
+ *
+ * Terms without an order are placed after ordered terms. Terms with the same
+ * order are sorted by name.
+ *
+ * @param WP_Term[] $genre_terms Genre terms.
+ * @return WP_Term[]
+ */
+function buybuycoms_hobby_sort_genre_terms( $genre_terms ) {
+	usort(
+		$genre_terms,
+		static function ( $first_term, $second_term ) {
+			$first_order      = get_term_meta( $first_term->term_id, 'genre-order', true );
+			$second_order     = get_term_meta( $second_term->term_id, 'genre-order', true );
+			$first_has_order  = '' !== trim( (string) $first_order );
+			$second_has_order = '' !== trim( (string) $second_order );
+
+			if ( $first_has_order && $second_has_order ) {
+				$order_comparison = (float) $first_order <=> (float) $second_order;
+
+				if ( 0 !== $order_comparison ) {
+					return $order_comparison;
+				}
+			} elseif ( $first_has_order ) {
+				return -1;
+			} elseif ( $second_has_order ) {
+				return 1;
+			}
+
+			return strnatcasecmp( $first_term->name, $second_term->name );
+		}
+	);
+
+	return $genre_terms;
+}
+
+/**
  * Output a branded logo with a static fallback.
  *
  * @return void

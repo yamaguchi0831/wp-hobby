@@ -833,6 +833,14 @@
   line-height: 1.85;
 }
 
+.hb__p-review__text > :first-child {
+  margin-top: 0;
+}
+
+.hb__p-review__text > :last-child {
+  margin-bottom: 0;
+}
+
 @media (max-width: 980px) {
   .hb__p-reviews {
     grid-template-columns: repeat(2, 1fr);
