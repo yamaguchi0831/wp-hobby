@@ -5,7 +5,39 @@
  * @package BuyBuyComs_Hobby
  */
 ?>
-<?php get_header(); ?>
+<?php
+get_header();
+
+while ( have_posts() ) :
+  the_post();
+
+  $column_genres       = get_the_terms( get_the_ID(), 'genre' );
+  $column_genres       = ( ! is_wp_error( $column_genres ) && $column_genres ) ? $column_genres : array();
+  $column_genre_names  = wp_list_pluck( $column_genres, 'name' );
+  $column_primary_genre = $column_genres ? $column_genres[0] : null;
+  $column_related_query = null;
+
+  if ( $column_genres ) {
+    $column_related_query = new WP_Query(
+      array(
+        'post_type'           => 'column',
+        'post_status'         => 'publish',
+        'posts_per_page'      => 3,
+        'post__not_in'        => array( get_the_ID() ),
+        'ignore_sticky_posts' => true,
+        'no_found_rows'       => true,
+        'orderby'             => 'rand',
+        'tax_query'           => array(
+          array(
+            'taxonomy' => 'genre',
+            'field'    => 'term_id',
+            'terms'    => wp_list_pluck( $column_genres, 'term_id' ),
+          ),
+        ),
+      )
+    );
+  }
+?>
 
     <main id="main-content" class="hb-single-column__p-page">
       <div class="hb-single-column__p-breadcrumb-wrap">
@@ -27,7 +59,7 @@
               class="hb-single-column__p-breadcrumb-current"
               aria-current="page"
             >
-              ガンプラを高く売るための保管と整理のコツ
+              <?php the_title(); ?>
             </li>
           </ol>
         </nav>
@@ -38,110 +70,117 @@
           <article class="hb-single-column__p-article">
             <div class="hb-single-column__p-article-inner">
               <div class="hb-single-column__p-article-meta">
+                <?php if ( $column_genre_names ) : ?>
                 <span class="hb-single-column__p-category-label">
-                  ガンプラ買取コラム
+                  <?php echo esc_html( implode( ' / ', $column_genre_names ) ); ?>
                 </span>
-                <p class="hb-single-column__p-updated">更新日:2026.06.18</p>
+                <?php endif; ?>
+                <p class="hb-single-column__p-updated">
+                  更新日:<time datetime="<?php echo esc_attr( get_the_modified_date( 'c' ) ); ?>"><?php echo esc_html( get_the_modified_date( 'Y.m.d' ) ); ?></time>
+                </p>
               </div>
 
+              <?php if ( has_post_thumbnail() ) : ?>
               <figure class="hb-single-column__p-hero">
-                <img
-                  class="hb-single-column__p-hero-image"
-                  src="https://placehold.co/920x520/eef3ee/33423a?text=Hobby+Column"
-                  alt="ホビーコラムのメイン画像"
-                  width="920"
-                  height="520"
-                />
+                <?php
+                the_post_thumbnail(
+                  'full',
+                  array(
+                    'class' => 'hb-single-column__p-hero-image',
+                  )
+                );
+                ?>
               </figure>
+              <?php endif; ?>
 
               <h1 class="hb-single-column__p-title">
-                ガンプラを高く売るための保管と整理のコツ
+                <?php the_title(); ?>
               </h1>
 
               <div class="hb-single-column__p-content">
-                <p>
-                  大切に集めてきたガンプラやホビーコレクションは、保管状態や付属品の有無によって査定時の印象が大きく変わります。箱や説明書、ランナー、限定パーツなどが残っている場合は、できるだけまとめて確認できる状態にしておくのがおすすめです。
-                </p>
-                <p>
-                  とくに未開封品や限定品は、外箱の状態も評価対象になります。日焼けや湿気、箱つぶれを避けて保管されているものは、コレクター需要が高いジャンルほど評価につながりやすくなります。
-                </p>
-
-                <h2>査定前に確認したいポイント</h2>
-                <ul class="hb-single-column__p-content-list">
-                  <li>箱・説明書・デカール・付属パーツをまとめておく</li>
-                  <li>シリーズやグレードごとに仕分けしておく</li>
-                  <li>未開封品は開封せず、そのままの状態で相談する</li>
-                  <li>大量にある場合は全体量がわかる写真を用意する</li>
-                </ul>
-
-                <h2>大量コレクションはまとめて相談がおすすめ</h2>
-                <p>
-                  積みプラやフィギュア、超合金などが複数ジャンルに分かれている場合でも、まとめて査定することで市場価値を整理しやすくなります。引退やコレクション整理、生前整理などで量が多い場合も、まずは全体の内容がわかる写真からご相談ください。
-                </p>
-                <?php get_template_part( 'template-parts/content/blog-card' ); ?>
+                <?php the_content(); ?>
+                <?php
+                wp_link_pages(
+                  array(
+                    'before' => '<nav class="hb-single-column__p-page-links" aria-label="' . esc_attr__( '記事内ページ送り', 'buybuycoms-hobby' ) . '">',
+                    'after'  => '</nav>',
+                  )
+                );
+                ?>
+                <?php
+                if ( $column_primary_genre ) {
+                  get_template_part(
+                    'template-parts/content/blog-card',
+                    null,
+                    array(
+                      'genre_term' => $column_primary_genre,
+                    )
+                  );
+                }
+                ?>
               </div>
 
-              <section
-                class="hb-single-column__p-related"
-                aria-labelledby="related-column-title"
-              >
-                <h2
-                  class="hb-single-column__p-related-title"
-                  id="related-column-title"
+              <?php if ( $column_related_query && $column_related_query->have_posts() ) : ?>
+                <section
+                  class="hb-single-column__p-related"
+                  aria-labelledby="related-column-title"
                 >
-                  関連記事
-                </h2>
-                <ul class="hb-single-column__p-related-list" role="list">
-                  <li>
-                    <a class="hb-single-column__p-related-link" href="<?php echo esc_url( home_url( '/column/' ) ); ?>">
-                      <span class="hb-single-column__p-related-thumb">
-                        <img
-                          src="https://placehold.co/320x240/eef3ee/33423a?text=Related"
-                          alt=""
-                          width="320"
-                          height="240"
-                        />
-                      </span>
-                      <span class="hb-single-column__p-related-card-title">
-                        積みプラをまとめて売る前に整理しておきたいこと
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="hb-single-column__p-related-link" href="<?php echo esc_url( home_url( '/column/' ) ); ?>">
-                      <span class="hb-single-column__p-related-thumb">
-                        <img
-                          src="https://placehold.co/320x240/eef3ee/33423a?text=Related"
-                          alt=""
-                          width="320"
-                          height="240"
-                        />
-                      </span>
-                      <span class="hb-single-column__p-related-card-title">
-                        未開封ガンプラの査定で見られやすいポイント
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="hb-single-column__p-related-link" href="<?php echo esc_url( home_url( '/column/' ) ); ?>">
-                      <span class="hb-single-column__p-related-thumb">
-                        <img
-                          src="https://placehold.co/320x240/eef3ee/33423a?text=Related"
-                          alt=""
-                          width="320"
-                          height="240"
-                        />
-                      </span>
-                      <span class="hb-single-column__p-related-card-title">
-                        大量買取をスムーズに進める写真の撮り方
-                      </span>
-                    </a>
-                  </li>
-                </ul>
-              </section>
+                  <h2
+                    class="hb-single-column__p-related-title"
+                    id="related-column-title"
+                  >
+                    関連記事
+                  </h2>
+                  <ul class="hb-single-column__p-related-list" role="list">
+                    <?php while ( $column_related_query->have_posts() ) : ?>
+                      <?php $column_related_query->the_post(); ?>
+                      <li>
+                        <a class="hb-single-column__p-related-link" href="<?php the_permalink(); ?>">
+                          <span class="hb-single-column__p-related-thumb">
+                            <?php if ( has_post_thumbnail() ) : ?>
+                              <?php
+                              the_post_thumbnail(
+                                'medium',
+                                array(
+                                  'loading' => 'lazy',
+                                )
+                              );
+                              ?>
+                            <?php else : ?>
+                              <img
+                                class="hb-single-column__p-no-image"
+                                src="<?php echo esc_url( get_theme_file_uri( '/images/no-image-column.png' ) ); ?>"
+                                alt=""
+                                width="800"
+                                height="600"
+                                loading="lazy"
+                              />
+                            <?php endif; ?>
+                          </span>
+                          <span class="hb-single-column__p-related-card-title">
+                            <?php the_title(); ?>
+                          </span>
+                        </a>
+                      </li>
+                    <?php endwhile; ?>
+                    <?php wp_reset_postdata(); ?>
+                  </ul>
+                </section>
+              <?php endif; ?>
             </div>
           </article>
 
+          <?php
+          get_template_part(
+            'template-parts/column/sidebar',
+            null,
+            array(
+              'class_prefix' => 'hb-single-column',
+            )
+          );
+          ?>
+
+          <?php if ( false ) : ?>
           <aside class="hb-single-column__p-sidebar" aria-label="サイドバー">
             <section class="hb-single-column__p-widget">
               <div class="hb-single-column__p-widget-inner">
@@ -357,9 +396,11 @@
               </div>
             </section>
           </aside>
+          <?php endif; ?>
         </div>
       </section>
     </main>
 
+    <?php endwhile; ?>
     <?php get_template_part( 'template-parts/common/footer-cta' ); ?>
     <?php get_footer(); ?>

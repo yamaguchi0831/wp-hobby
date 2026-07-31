@@ -11,24 +11,41 @@
  * @return void
  */
 function buybuycoms_hobby_primary_menu_fallback() {
+	$column_archive_url = get_post_type_archive_link( 'column' );
 	$links = array(
-		'/flow/'       => __( '買取方法', 'buybuycoms-hobby' ),
-		'/reason/'     => __( '選ばれる理由', 'buybuycoms-hobby' ),
-		'/genre-list/' => __( 'カテゴリー一覧', 'buybuycoms-hobby' ),
-		'/faq/'        => __( 'よくある質問', 'buybuycoms-hobby' ),
-		'/company/'    => __( '会社概要', 'buybuycoms-hobby' ),
+		home_url( '/flow/' )       => __( '買取方法', 'buybuycoms-hobby' ),
+		home_url( '/reason/' )     => __( '選ばれる理由', 'buybuycoms-hobby' ),
+		home_url( '/genre-list/' ) => __( 'カテゴリー一覧', 'buybuycoms-hobby' ),
+		$column_archive_url ?: home_url( '/column/' ) => __( 'コラム', 'buybuycoms-hobby' ),
+		home_url( '/faq/' )        => __( 'よくある質問', 'buybuycoms-hobby' ),
+		home_url( '/company/' )    => __( '会社概要', 'buybuycoms-hobby' ),
 	);
 
 	echo '<ul class="hb__p-header__nav-list">';
-	foreach ( $links as $path => $label ) {
+	foreach ( $links as $url => $label ) {
 		printf(
 			'<li><a href="%1$s">%2$s</a></li>',
-			esc_url( home_url( $path ) ),
+			esc_url( $url ),
 			esc_html( $label )
 		);
 	}
 	echo '</ul>';
 }
+
+/**
+ * Set the number of column posts shown on each archive page.
+ *
+ * @param WP_Query $query Current query.
+ * @return void
+ */
+function buybuycoms_hobby_column_archive_posts_per_page( $query ) {
+	if ( is_admin() || ! $query->is_main_query() || ! $query->is_post_type_archive( 'column' ) ) {
+		return;
+	}
+
+	$query->set( 'posts_per_page', 10 );
+}
+add_action( 'pre_get_posts', 'buybuycoms_hobby_column_archive_posts_per_page' );
 
 /**
  * Output a branded logo with a static fallback.

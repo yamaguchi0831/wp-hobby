@@ -5,7 +5,9 @@
  * @package BuyBuyComs_Hobby
  */
 ?>
-<?php get_header(); ?>
+<?php
+get_header();
+?>
 
         <main id="main-content" class="hb-archive-column__p-page">
             <section class="hb__p-subpage-title" aria-label="コラム一覧">
@@ -57,6 +59,66 @@
                             class="hb-archive-column__p-column-list"
                             role="list"
                         >
+                            <?php if ( have_posts() ) : ?>
+                                <?php while ( have_posts() ) : ?>
+                                    <?php
+                                    the_post();
+                                    $column_genres = get_the_terms( get_the_ID(), 'genre' );
+                                    $column_label  = ( ! is_wp_error( $column_genres ) && ! empty( $column_genres ) )
+                                        ? $column_genres[0]->name
+                                        : '';
+                                    $column_excerpt = get_post_field( 'post_excerpt', get_the_ID() );
+                                    ?>
+                                    <li class="hb-archive-column__p-column-card">
+                                        <a
+                                            class="hb-archive-column__p-column-link"
+                                            href="<?php the_permalink(); ?>"
+                                        >
+                                            <span class="hb-archive-column__p-column-thumb">
+                                                <?php if ( has_post_thumbnail() ) : ?>
+                                                    <?php the_post_thumbnail( 'medium_large' ); ?>
+                                                <?php else : ?>
+                                                    <img
+                                                        class="hb-archive-column__p-no-image"
+                                                        src="<?php echo esc_url( get_theme_file_uri( '/images/no-image-column.png' ) ); ?>"
+                                                        alt=""
+                                                        width="800"
+                                                        height="600"
+                                                        loading="lazy"
+                                                    />
+                                                <?php endif; ?>
+                                            </span>
+                                            <span class="hb-archive-column__p-column-body">
+                                                <?php if ( $column_label ) : ?>
+                                                    <span class="hb-archive-column__p-column-label">
+                                                        <?php echo esc_html( $column_label ); ?>
+                                                    </span>
+                                                <?php endif; ?>
+                                                <span class="hb-archive-column__p-column-title">
+                                                    <?php the_title(); ?>
+                                                </span>
+                                                <?php if ( $column_excerpt ) : ?>
+                                                    <span class="hb-archive-column__p-column-excerpt">
+                                                        <?php echo esc_html( wp_trim_words( wp_strip_all_tags( $column_excerpt ), 80, '…' ) ); ?>
+                                                    </span>
+                                                <?php endif; ?>
+                                                <time
+                                                    class="hb-archive-column__p-column-date"
+                                                    datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"
+                                                >
+                                                    <?php echo esc_html( get_the_date( 'Y年n月j日' ) ); ?>
+                                                </time>
+                                            </span>
+                                        </a>
+                                    </li>
+                                <?php endwhile; ?>
+                            <?php else : ?>
+                                <li class="hb-archive-column__p-empty">
+                                    <?php esc_html_e( '現在、コラム記事はありません。', 'buybuycoms-hobby' ); ?>
+                                </li>
+                            <?php endif; ?>
+
+                            <?php if ( false ) : ?>
                             <li class="hb-archive-column__p-column-card">
                                 <a
                                     class="hb-archive-column__p-column-link"
@@ -262,9 +324,42 @@
                                     </span>
                                 </a>
                             </li>
+                            <?php endif; ?>
                         </ul>
+
+                        <?php
+                        $column_pagination = paginate_links(
+                            array(
+                                'current'   => max( 1, get_query_var( 'paged' ) ),
+                                'total'     => $GLOBALS['wp_query']->max_num_pages,
+                                'type'      => 'array',
+                                'prev_text' => '<span aria-hidden="true">‹</span><span class="screen-reader-text">' . esc_html__( '前のページ', 'buybuycoms-hobby' ) . '</span>',
+                                'next_text' => '<span aria-hidden="true">›</span><span class="screen-reader-text">' . esc_html__( '次のページ', 'buybuycoms-hobby' ) . '</span>',
+                            )
+                        );
+                        ?>
+                        <?php if ( $column_pagination ) : ?>
+                            <nav aria-label="コラムページ送り">
+                                <ol class="hb-archive-column__p-pagination">
+                                    <?php foreach ( $column_pagination as $column_pagination_link ) : ?>
+                                        <li><?php echo wp_kses_post( $column_pagination_link ); ?></li>
+                                    <?php endforeach; ?>
+                                </ol>
+                            </nav>
+                        <?php endif; ?>
                     </div>
 
+                    <?php
+                    get_template_part(
+                        'template-parts/column/sidebar',
+                        null,
+                        array(
+                            'class_prefix' => 'hb-archive-column',
+                        )
+                    );
+                    ?>
+
+                    <?php if ( false ) : ?>
                     <aside
                         class="hb-archive-column__p-sidebar"
                         aria-label="サイドバー"
@@ -278,6 +373,55 @@
                                     class="hb-archive-column__p-post-list"
                                     role="list"
                                 >
+                                    <?php
+                                    $latest_columns = new WP_Query(
+                                        array(
+                                            'post_type'           => 'column',
+                                            'post_status'         => 'publish',
+                                            'posts_per_page'      => 3,
+                                            'ignore_sticky_posts' => true,
+                                            'no_found_rows'       => true,
+                                        )
+                                    );
+                                    ?>
+                                    <?php while ( $latest_columns->have_posts() ) : ?>
+                                        <?php $latest_columns->the_post(); ?>
+                                        <li>
+                                            <a
+                                                class="hb-archive-column__p-post-link"
+                                                href="<?php the_permalink(); ?>"
+                                            >
+                                                <span class="hb-archive-column__p-post-thumb">
+                                                    <?php if ( has_post_thumbnail() ) : ?>
+                                                        <?php the_post_thumbnail( 'thumbnail' ); ?>
+                                                    <?php else : ?>
+                                                        <img
+                                                            class="hb-archive-column__p-no-image"
+                                                            src="<?php echo esc_url( get_theme_file_uri( '/images/no-image-column.png' ) ); ?>"
+                                                            alt=""
+                                                            width="800"
+                                                            height="600"
+                                                            loading="lazy"
+                                                        />
+                                                    <?php endif; ?>
+                                                </span>
+                                                <span class="hb-archive-column__p-post-body">
+                                                    <span class="hb-archive-column__p-post-title">
+                                                        <?php the_title(); ?>
+                                                    </span>
+                                                    <time
+                                                        class="hb-archive-column__p-post-date"
+                                                        datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"
+                                                    >
+                                                        <?php echo esc_html( get_the_date( 'Y年n月j日' ) ); ?>
+                                                    </time>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    <?php endwhile; ?>
+                                    <?php wp_reset_postdata(); ?>
+
+                                    <?php if ( false ) : ?>
                                     <li>
                                         <a
                                             class="hb-archive-column__p-post-link"
@@ -368,10 +512,12 @@
                                             </span>
                                         </a>
                                     </li>
+                                    <?php endif; ?>
                                 </ul>
                             </div>
                         </section>
 
+                        <?php if ( $column_popular_query->have_posts() ) : ?>
                         <section class="hb-archive-column__p-widget">
                             <div class="hb-archive-column__p-widget-inner">
                                 <h2 class="hb-archive-column__p-widget-title">
@@ -381,88 +527,48 @@
                                     class="hb-archive-column__p-post-list"
                                     role="list"
                                 >
-                                    <li>
-                                        <a
-                                            class="hb-archive-column__p-post-link"
-                                            href="<?php echo esc_url( home_url( '/column/' ) ); ?>"
-                                        >
-                                            <span
-                                                class="hb-archive-column__p-post-thumb"
+                                    <?php while ( $column_popular_query->have_posts() ) : ?>
+                                        <?php $column_popular_query->the_post(); ?>
+                                        <li>
+                                            <a
+                                                class="hb-archive-column__p-post-link"
+                                                href="<?php the_permalink(); ?>"
                                             >
-                                                <img
-                                                    src="https://placehold.co/176x132/eef3ee/33423a?text=Popular"
-                                                    alt=""
-                                                    width="176"
-                                                    height="132"
-                                                />
-                                            </span>
-                                            <span
-                                                class="hb-archive-column__p-post-body"
-                                            >
-                                                <span
-                                                    class="hb-archive-column__p-post-title"
-                                                >
-                                                    ガンプラ買取で高くなりやすいシリーズ
+                                                <span class="hb-archive-column__p-post-thumb">
+                                                    <?php if ( has_post_thumbnail() ) : ?>
+                                                        <?php
+                                                        the_post_thumbnail(
+                                                            'medium',
+                                                            array(
+                                                                'loading' => 'lazy',
+                                                            )
+                                                        );
+                                                        ?>
+                                                    <?php else : ?>
+                                                        <img
+                                                            src="<?php echo esc_url( get_theme_file_uri( '/images/no-image-column.png' ) ); ?>"
+                                                            alt=""
+                                                            width="800"
+                                                            height="600"
+                                                            loading="lazy"
+                                                        />
+                                                    <?php endif; ?>
                                                 </span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            class="hb-archive-column__p-post-link"
-                                            href="<?php echo esc_url( home_url( '/column/' ) ); ?>"
-                                        >
-                                            <span
-                                                class="hb-archive-column__p-post-thumb"
-                                            >
-                                                <img
-                                                    src="https://placehold.co/176x132/eef3ee/33423a?text=Popular"
-                                                    alt=""
-                                                    width="176"
-                                                    height="132"
-                                                />
-                                            </span>
-                                            <span
-                                                class="hb-archive-column__p-post-body"
-                                            >
-                                                <span
-                                                    class="hb-archive-column__p-post-title"
-                                                >
-                                                    超合金・メタルビルドを売るタイミング
+                                                <span class="hb-archive-column__p-post-body">
+                                                    <span class="hb-archive-column__p-post-title">
+                                                        <?php the_title(); ?>
+                                                    </span>
                                                 </span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            class="hb-archive-column__p-post-link"
-                                            href="<?php echo esc_url( home_url( '/column/' ) ); ?>"
-                                        >
-                                            <span
-                                                class="hb-archive-column__p-post-thumb"
-                                            >
-                                                <img
-                                                    src="https://placehold.co/176x132/eef3ee/33423a?text=Popular"
-                                                    alt=""
-                                                    width="176"
-                                                    height="132"
-                                                />
-                                            </span>
-                                            <span
-                                                class="hb-archive-column__p-post-body"
-                                            >
-                                                <span
-                                                    class="hb-archive-column__p-post-title"
-                                                >
-                                                    大量買取をスムーズに進める梱包のコツ
-                                                </span>
-                                            </span>
-                                        </a>
-                                    </li>
+                                            </a>
+                                        </li>
+                                    <?php endwhile; ?>
+                                    <?php wp_reset_postdata(); ?>
                                 </ul>
                             </div>
                         </section>
+                        <?php endif; ?>
 
+                        <?php if ( $column_genre_terms ) : ?>
                         <section class="hb-archive-column__p-widget">
                             <div class="hb-archive-column__p-widget-inner">
                                 <h2 class="hb-archive-column__p-widget-title">
@@ -472,6 +578,18 @@
                                     class="hb-archive-column__p-link-list"
                                     role="list"
                                 >
+                                    <?php foreach ( $column_genre_terms as $column_genre_term ) : ?>
+                                        <?php $column_genre_link = get_term_link( $column_genre_term ); ?>
+                                        <?php if ( ! is_wp_error( $column_genre_link ) ) : ?>
+                                            <li>
+                                                <a href="<?php echo esc_url( $column_genre_link ); ?>">
+                                                    <?php echo esc_html( $column_genre_term->name ); ?>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+
+                                    <?php if ( false ) : ?>
                                     <li>
                                         <a href="<?php echo esc_url( home_url( '/column/' ) ); ?>"
                                             >機動戦士ガンダム(ガンプラ) 買取</a
@@ -496,10 +614,13 @@
                                         <a href="<?php echo esc_url( home_url( '/column/' ) ); ?>">デアゴスティーニ 買取</a>
                                     </li>
                                     <li><a href="<?php echo esc_url( home_url( '/column/' ) ); ?>">アシェット 買取</a></li>
+                                    <?php endif; ?>
                                 </ul>
                             </div>
                         </section>
+                        <?php endif; ?>
 
+                        <?php if ( $column_tag_terms ) : ?>
                         <section class="hb-archive-column__p-widget">
                             <div class="hb-archive-column__p-widget-inner">
                                 <h2 class="hb-archive-column__p-widget-title">
@@ -509,6 +630,21 @@
                                     class="hb-archive-column__p-tag-list"
                                     role="list"
                                 >
+                                    <?php foreach ( $column_tag_terms as $column_tag_term ) : ?>
+                                        <?php $column_tag_link = get_term_link( $column_tag_term ); ?>
+                                        <?php if ( ! is_wp_error( $column_tag_link ) ) : ?>
+                                            <li>
+                                                <a
+                                                    class="hb-archive-column__p-tag-link"
+                                                    href="<?php echo esc_url( $column_tag_link ); ?>"
+                                                >
+                                                    <?php echo esc_html( $column_tag_term->name ); ?>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+
+                                    <?php if ( false ) : ?>
                                     <li>
                                         <a
                                             class="hb-archive-column__p-tag-link"
@@ -600,10 +736,13 @@
                                             >宅配買取</a
                                         >
                                     </li>
+                                    <?php endif; ?>
                                 </ul>
                             </div>
                         </section>
+                        <?php endif; ?>
                     </aside>
+                    <?php endif; ?>
                 </div>
             </section>
         </main>
