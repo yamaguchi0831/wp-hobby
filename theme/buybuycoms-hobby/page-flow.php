@@ -138,21 +138,28 @@ Template Name: Purchase Flow
       </section>
 
       <!-- ============================== お客様の声 ============================== -->
-      <section class="hb__l-section" id="reviews">
-        <div class="hb__l-container">
-          <header class="hb__c-section-head hb__c-section-head--center">
-            <span class="hb__c-section-head__kicker">Reviews</span>
-            <h2 class="hb__c-section-head__title">
-              お客様の <span class="hb__c-hl">声</span>
-            </h2>
-            <p class="hb__c-section-head__lead">
-              実際にご利用いただいたお客様からのレビューです。
-            </p>
-          </header>
+      <?php
+      ob_start();
+      get_template_part( 'template-parts/common/customer-reviews' );
+      $flow_reviews_markup = trim( ob_get_clean() );
+      ?>
+      <?php if ( '' !== $flow_reviews_markup ) : ?>
+        <section class="hb__l-section" id="reviews">
+          <div class="hb__l-container">
+            <header class="hb__c-section-head hb__c-section-head--center">
+              <span class="hb__c-section-head__kicker">Reviews</span>
+              <h2 class="hb__c-section-head__title">
+                お客様の <span class="hb__c-hl">声</span>
+              </h2>
+              <p class="hb__c-section-head__lead">
+                実際にご利用いただいたお客様からのレビューです。
+              </p>
+            </header>
 
-          <?php get_template_part( 'template-parts/common/customer-reviews' ); ?>
-        </div>
-      </section>
+            <?php echo wp_kses_post( $flow_reviews_markup ); ?>
+          </div>
+        </section>
+      <?php endif; ?>
 
       <!-- ============================== よくある質問 ============================== -->
       <section class="hb__l-section hb__l-section--soft" id="faq">

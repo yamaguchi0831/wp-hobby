@@ -3,6 +3,14 @@
 日をまたぐ作業をスムーズに再開するため、各作業の終了時に要点だけを記録します。
 細かな変更履歴はGitに任せ、このログには判断内容、進捗、未完了事項、次の着手点を残します。
 
+## 2026-07-31 お客様の声セクションの空状態対応
+
+- 状態: 完了
+- 実施内容: お客様の声の共通パーツを先にレンダリングし、該当する `review` 投稿が0件の場合は見出しや余白を含むセクション全体を出力しないよう変更。トップ、買取方法、ジャンル一覧、買取実績一覧、買取実績詳細へ適用し、対応済みのジャンルページと挙動を統一。
+- 主な変更ファイル: `theme/buybuycoms-hobby/front-page.php`、`theme/buybuycoms-hobby/page-flow.php`、`theme/buybuycoms-hobby/page-genre-list.php`、`theme/buybuycoms-hobby/archive-purchase-record.php`、`theme/buybuycoms-hobby/single-purchase-record.php`
+- 未完了事項: WordPress実画面でレビュー0件・1件以上、ジャンル一致・不一致の各状態を確認。
+- 次回の着手点: 全レビュー非公開時と、詳細ページのジャンルに一致するレビューがない状態で、`#reviews` セクションがHTMLへ出力されないことを確認する。
+
 ## 記録形式
 
 ```md
@@ -269,3 +277,10 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/purchase-price-table.php`、`theme/buybuycoms-hobby/asset/js/pages/taxonomy-genre.js`、`theme/buybuycoms-hobby/asset/css/component.css`
 - 未完了事項: WordPress実画面で10件以下・11件以上の両状態を最終確認。
 - 次回の着手点: 10件以下でボタンが出ないこと、11件以上で展開後にボタンが消えることを確認する。
+## 2026-07-31 買取実績セクションの共通パーツ化
+
+- 状態: 完了
+- 実施内容: `/genre-list/` の見出し、実績が存在するジャンルへの導線、最新20件、初期8件と「もっと見る」を含む買取実績セクションを共通テンプレートパーツへ切り出し、買取事例詳細ページでも使用。詳細ページでは投稿に紐づく `genre` と同じジャンルの実績を表示。段階表示のJavaScriptとセクションCSSを共有アセットへ移行。
+- 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/purchase-records-section.php`、`theme/buybuycoms-hobby/page-genre-list.php`、`theme/buybuycoms-hobby/single-purchase-record.php`、`theme/buybuycoms-hobby/asset/css/component.css`、`theme/buybuycoms-hobby/asset/js/component.js`、`theme/buybuycoms-hobby/inc/enqueue.php`
+- 未完了事項: WordPress実画面で `/genre-list/` と買取事例詳細の表示、同一ジャンルへの絞り込み、8件以下・9件以上の段階表示を確認。
+- 次回の着手点: 複数ジャンルの買取実績を用意し、両ページのジャンルリンク、カード件数、「もっと見る」の表示と展開をPC・モバイルで確認する。

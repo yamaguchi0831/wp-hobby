@@ -72,105 +72,15 @@ Template Name: Genre List
                 <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
             </div>
 
-            <section class="hb__l-section" id="cases">
-                <div class="hb__l-container">
-                    <header
-                        class="hb-page-genre-list__c-section-head hb-page-genre-list__c-section-head--center"
-                    >
-                        <span class="hb-page-genre-list__c-section-head__kicker"
-                            >Cases</span
-                        >
-                        <h2 class="hb-page-genre-list__c-section-head__title">
-                            最近の
-                            <span class="hb-page-genre-list__c-hl"
-                                >買取実績</span
-                            >
-                        </h2>
-                        <p class="hb-page-genre-list__c-section-head__lead">
-                            フィギュア・プラモデル・カードなど、実際にお売りいただいたホビーの一例です。
-                        </p>
-                    </header>
-                    <?php
-                    $genre_list_purchase_record_ids = get_posts(
-                        array(
-                            'post_type'              => 'purchase-record',
-                            'post_status'            => 'publish',
-                            'posts_per_page'         => -1,
-                            'fields'                 => 'ids',
-                            'orderby'                => 'date',
-                            'order'                  => 'DESC',
-                            'no_found_rows'          => true,
-                            'update_post_meta_cache' => false,
-                            'update_post_term_cache' => false,
-                        )
-                    );
-                    $genre_list_case_terms = $genre_list_purchase_record_ids
-                        ? wp_get_object_terms(
-                            $genre_list_purchase_record_ids,
-                            'genre',
-                            array(
-                                'orderby' => 'name',
-                                'order'   => 'ASC',
-                            )
-                        )
-                        : array();
-
-                    if ( is_wp_error( $genre_list_case_terms ) ) {
-                        $genre_list_case_terms = array();
-                    } else {
-                        $genre_list_case_terms_by_id = array();
-
-                        foreach ( $genre_list_case_terms as $genre_list_case_term ) {
-                            $genre_list_case_terms_by_id[ $genre_list_case_term->term_id ] = $genre_list_case_term;
-                        }
-
-                        $genre_list_case_terms = array_values( $genre_list_case_terms_by_id );
-                        $genre_list_case_terms = buybuycoms_hobby_sort_genre_terms( $genre_list_case_terms );
-                    }
-                    ?>
-                    <?php if ( $genre_list_case_terms ) : ?>
-                        <ul class="hb-page-genre-list__p-case-filter" role="list">
-                            <?php foreach ( $genre_list_case_terms as $genre_list_case_term ) : ?>
-                                <?php $genre_list_case_term_link = get_term_link( $genre_list_case_term ); ?>
-                                <?php if ( ! is_wp_error( $genre_list_case_term_link ) ) : ?>
-                                    <li>
-                                        <a
-                                            class="hb-page-genre-list__p-case-filter-link"
-                                            href="<?php echo esc_url( $genre_list_case_term_link ); ?>"
-                                        >
-                                            <?php echo esc_html( $genre_list_case_term->name ); ?>
-                                        </a>
-                                    </li>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php endif; ?>
-
-                    <?php
-                    get_template_part(
-                        'template-parts/common/purchase-records',
-                        null,
-                        array(
-                            'posts_per_page' => 20,
-                            'initial_visible' => 8,
-                            'grid_id'         => 'genre-list-purchase-records',
-                        )
-                    );
-                    ?>
-                    <div class="hb-page-genre-list__p-case-more">
-                        <button
-                            class="hb-page-genre-list__p-case-more-link"
-                            type="button"
-                            aria-controls="genre-list-purchase-records"
-                            aria-expanded="false"
-                            data-hb-purchase-record-more
-                            hidden
-                        >
-                            もっと見る
-                        </button>
-                    </div>
-                </div>
-            </section>
+            <?php
+            get_template_part(
+                'template-parts/common/purchase-records-section',
+                null,
+                array(
+                    'grid_id' => 'genre-list-purchase-records',
+                )
+            );
+            ?>
 
             <section class="hb__l-section" id="methods">
                 <div class="hb__l-container">
@@ -198,25 +108,32 @@ Template Name: Genre List
                 <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
             </div>
 
-            <section class="hb__l-section hb__l-section--soft" id="reviews">
-                <div class="hb__l-container">
-                    <header
-                        class="hb-page-genre-list__c-section-head hb-page-genre-list__c-section-head--center"
-                    >
-                        <span class="hb-page-genre-list__c-section-head__kicker"
-                            >Reviews</span
+            <?php
+            ob_start();
+            get_template_part( 'template-parts/common/customer-reviews' );
+            $genre_list_reviews_markup = trim( ob_get_clean() );
+            ?>
+            <?php if ( '' !== $genre_list_reviews_markup ) : ?>
+                <section class="hb__l-section hb__l-section--soft" id="reviews">
+                    <div class="hb__l-container">
+                        <header
+                            class="hb-page-genre-list__c-section-head hb-page-genre-list__c-section-head--center"
                         >
-                        <h2 class="hb-page-genre-list__c-section-head__title">
-                            お客様の
-                            <span class="hb-page-genre-list__c-hl">声</span>
-                        </h2>
-                        <p class="hb-page-genre-list__c-section-head__lead">
-                            実際にご利用いただいたお客様からのレビューです。
-                        </p>
-                    </header>
-                    <?php get_template_part( 'template-parts/common/customer-reviews' ); ?>
-                </div>
-            </section>
+                            <span class="hb-page-genre-list__c-section-head__kicker"
+                                >Reviews</span
+                            >
+                            <h2 class="hb-page-genre-list__c-section-head__title">
+                                お客様の
+                                <span class="hb-page-genre-list__c-hl">声</span>
+                            </h2>
+                            <p class="hb-page-genre-list__c-section-head__lead">
+                                実際にご利用いただいたお客様からのレビューです。
+                            </p>
+                        </header>
+                        <?php echo wp_kses_post( $genre_list_reviews_markup ); ?>
+                    </div>
+                </section>
+            <?php endif; ?>
 
             <section class="hb__l-section" id="faq">
                 <div class="hb__l-container">

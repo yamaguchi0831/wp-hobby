@@ -459,29 +459,36 @@
             </section>
 
             <!-- ============================== 10. REVIEWS ============================== -->
-            <section
-                class="hb__l-section"
-                id="reviews"
-                data-screen-label="10 お客様の声"
-            >
-                <div class="hb__l-container">
-                    <header
-                        class="hb-front__c-section-head hb-front__c-section-head--center"
-                    >
-                        <span class="hb-front__c-section-head__kicker"
-                            >Reviews</span
+            <?php
+            ob_start();
+            get_template_part( 'template-parts/common/customer-reviews' );
+            $front_reviews_markup = trim( ob_get_clean() );
+            ?>
+            <?php if ( '' !== $front_reviews_markup ) : ?>
+                <section
+                    class="hb__l-section"
+                    id="reviews"
+                    data-screen-label="10 お客様の声"
+                >
+                    <div class="hb__l-container">
+                        <header
+                            class="hb-front__c-section-head hb-front__c-section-head--center"
                         >
-                        <h2 class="hb-front__c-section-head__title">
-                            お客様の <span class="hb-front__c-hl">声</span>
-                        </h2>
-                        <p class="hb-front__c-section-head__lead">
-                            実際にご利用いただいたお客様からのレビューです。
-                        </p>
-                    </header>
+                            <span class="hb-front__c-section-head__kicker"
+                                >Reviews</span
+                            >
+                            <h2 class="hb-front__c-section-head__title">
+                                お客様の <span class="hb-front__c-hl">声</span>
+                            </h2>
+                            <p class="hb-front__c-section-head__lead">
+                                実際にご利用いただいたお客様からのレビューです。
+                            </p>
+                        </header>
 
-                    <?php get_template_part( 'template-parts/common/customer-reviews' ); ?>
-                </div>
-            </section>
+                        <?php echo wp_kses_post( $front_reviews_markup ); ?>
+                    </div>
+                </section>
+            <?php endif; ?>
 
             <!-- ============================== 11. FAQ ============================== -->
             <section

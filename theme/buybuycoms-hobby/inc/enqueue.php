@@ -82,7 +82,6 @@ function buybuycoms_hobby_get_page_script() {
 		'contact'    => array( 'page-contact.php', '/asset/js/pages/page-contact.js' ),
 		'faq'        => array( 'page-faq.php', '/asset/js/pages/page-faq.js' ),
 		'flow'       => array( 'page-flow.php', '/asset/js/pages/page-flow.js' ),
-		'genre-list' => array( 'page-genre-list.php', '/asset/js/pages/page-genre-list.js' ),
 	);
 
 	foreach ( $page_map as $slug => $page_data ) {

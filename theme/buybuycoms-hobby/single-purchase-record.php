@@ -160,107 +160,15 @@ get_header();
         <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
       </div>
 
-      <section class="hb__l-section" id="cases">
-        <div class="hb__l-container">
-          <header
-            class="hb-single-purchase-record__c-section-head hb-single-purchase-record__c-section-head--center"
-          >
-            <span class="hb-single-purchase-record__c-section-head__kicker"
-              >Cases</span
-            >
-            <h2 class="hb-single-purchase-record__c-section-head__title">
-              最近の
-              <span class="hb-single-purchase-record__c-hl">買取実績</span>
-            </h2>
-            <p class="hb-single-purchase-record__c-section-head__lead">
-              どんなコレクションが、どんな金額になったのか。実例をご紹介します。
-            </p>
-          </header>
-          <ul class="hb-single-purchase-record__p-case-filter" role="list">
-            <li>
-              <a class="hb-single-purchase-record__p-case-filter-link" href="<?php echo esc_url( home_url( '/purchase-record/' ) ); ?>"
-                >TOP</a
-              >
-            </li>
-            <li>
-              <a class="hb-single-purchase-record__p-case-filter-link" href="<?php echo esc_url( home_url( '/purchase-record/' ) ); ?>"
-                >機動戦士ガンダム</a
-              >
-            </li>
-            <li>
-              <a class="hb-single-purchase-record__p-case-filter-link" href="<?php echo esc_url( home_url( '/purchase-record/' ) ); ?>"
-                >超合金/メタルビルド</a
-              >
-            </li>
-            <li>
-              <a class="hb-single-purchase-record__p-case-filter-link" href="<?php echo esc_url( home_url( '/purchase-record/' ) ); ?>"
-                >LEGO</a
-              >
-            </li>
-            <li>
-              <a class="hb-single-purchase-record__p-case-filter-link" href="<?php echo esc_url( home_url( '/purchase-record/' ) ); ?>"
-                >プラモデル</a
-              >
-            </li>
-            <li>
-              <a class="hb-single-purchase-record__p-case-filter-link" href="<?php echo esc_url( home_url( '/purchase-record/' ) ); ?>"
-                >鉄道模型</a
-              >
-            </li>
-            <li>
-              <a class="hb-single-purchase-record__p-case-filter-link" href="<?php echo esc_url( home_url( '/purchase-record/' ) ); ?>"
-                >ソフビ</a
-              >
-            </li>
-            <li>
-              <a class="hb-single-purchase-record__p-case-filter-link" href="<?php echo esc_url( home_url( '/purchase-record/' ) ); ?>"
-                >特撮グッズ</a
-              >
-            </li>
-            <li>
-              <a class="hb-single-purchase-record__p-case-filter-link" href="<?php echo esc_url( home_url( '/purchase-record/' ) ); ?>"
-                >レトロゲーム</a
-              >
-            </li>
-            <li>
-              <a class="hb-single-purchase-record__p-case-filter-link" href="<?php echo esc_url( home_url( '/purchase-record/' ) ); ?>"
-                >レトロ玩具/昭和玩具</a
-              >
-            </li>
-            <li>
-              <a class="hb-single-purchase-record__p-case-filter-link" href="<?php echo esc_url( home_url( '/purchase-record/' ) ); ?>"
-                >ミニカー</a
-              >
-            </li>
-            <li>
-              <a class="hb-single-purchase-record__p-case-filter-link" href="<?php echo esc_url( home_url( '/purchase-record/' ) ); ?>"
-                >フィギュア</a
-              >
-            </li>
-            <li>
-              <a class="hb-single-purchase-record__p-case-filter-link" href="<?php echo esc_url( home_url( '/purchase-record/' ) ); ?>"
-                >無線機</a
-              >
-            </li>
-            <li>
-              <a class="hb-single-purchase-record__p-case-filter-link" href="<?php echo esc_url( home_url( '/purchase-record/' ) ); ?>"
-                >ディズニー</a
-              >
-            </li>
-            <li>
-              <a class="hb-single-purchase-record__p-case-filter-link" href="<?php echo esc_url( home_url( '/purchase-record/' ) ); ?>"
-                >アメトイ</a
-              >
-            </li>
-          </ul>
-          <?php get_template_part( 'template-parts/common/purchase-records' ); ?>
-          <div class="hb-single-purchase-record__p-case-more">
-            <a class="hb-single-purchase-record__p-case-more-link" href="<?php echo esc_url( home_url( '/purchase-record/' ) ); ?>"
-              >もっと見る</a
-            >
-          </div>
-        </div>
-      </section>
+      <?php
+      get_template_part(
+        'template-parts/common/purchase-records-section',
+        null,
+        array(
+          'grid_id' => 'single-purchase-records',
+        )
+      );
+      ?>
 
       <div class="hb__l-container hb-single-purchase-record__p-cta-block">
         <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
@@ -310,25 +218,32 @@ get_header();
         <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
       </div>
 
-      <section class="hb__l-section hb__l-section--soft" id="reviews">
-        <div class="hb__l-container">
-          <header
-            class="hb-single-purchase-record__c-section-head hb-single-purchase-record__c-section-head--center"
-          >
-            <span class="hb-single-purchase-record__c-section-head__kicker"
-              >Reviews</span
+      <?php
+      ob_start();
+      get_template_part( 'template-parts/common/customer-reviews' );
+      $purchase_record_reviews_markup = trim( ob_get_clean() );
+      ?>
+      <?php if ( '' !== $purchase_record_reviews_markup ) : ?>
+        <section class="hb__l-section hb__l-section--soft" id="reviews">
+          <div class="hb__l-container">
+            <header
+              class="hb-single-purchase-record__c-section-head hb-single-purchase-record__c-section-head--center"
             >
-            <h2 class="hb-single-purchase-record__c-section-head__title">
-              お客様の
-              <span class="hb-single-purchase-record__c-hl">声</span>
-            </h2>
-            <p class="hb-single-purchase-record__c-section-head__lead">
-              実際にご利用いただいたお客様からのレビューです。
-            </p>
-          </header>
-          <?php get_template_part( 'template-parts/common/customer-reviews' ); ?>
-        </div>
-      </section>
+              <span class="hb-single-purchase-record__c-section-head__kicker"
+                >Reviews</span
+              >
+              <h2 class="hb-single-purchase-record__c-section-head__title">
+                お客様の
+                <span class="hb-single-purchase-record__c-hl">声</span>
+              </h2>
+              <p class="hb-single-purchase-record__c-section-head__lead">
+                実際にご利用いただいたお客様からのレビューです。
+              </p>
+            </header>
+            <?php echo wp_kses_post( $purchase_record_reviews_markup ); ?>
+          </div>
+        </section>
+      <?php endif; ?>
 
       <section class="hb__l-section" id="faq">
         <div class="hb__l-container">

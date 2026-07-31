@@ -198,25 +198,32 @@
         <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
       </div>
 
-      <section class="hb__l-section hb__l-section--soft" id="reviews">
-        <div class="hb__l-container">
-          <header
-            class="hb-archive-purchase-record__c-section-head hb-archive-purchase-record__c-section-head--center"
-          >
-            <span class="hb-archive-purchase-record__c-section-head__kicker"
-              >Reviews</span
+      <?php
+      ob_start();
+      get_template_part( 'template-parts/common/customer-reviews' );
+      $purchase_record_archive_reviews_markup = trim( ob_get_clean() );
+      ?>
+      <?php if ( '' !== $purchase_record_archive_reviews_markup ) : ?>
+        <section class="hb__l-section hb__l-section--soft" id="reviews">
+          <div class="hb__l-container">
+            <header
+              class="hb-archive-purchase-record__c-section-head hb-archive-purchase-record__c-section-head--center"
             >
-            <h2 class="hb-archive-purchase-record__c-section-head__title">
-              お客様の
-              <span class="hb-archive-purchase-record__c-hl">声</span>
-            </h2>
-            <p class="hb-archive-purchase-record__c-section-head__lead">
-              実際にご利用いただいたお客様からのレビューです。
-            </p>
-          </header>
-          <?php get_template_part( 'template-parts/common/customer-reviews' ); ?>
-        </div>
-      </section>
+              <span class="hb-archive-purchase-record__c-section-head__kicker"
+                >Reviews</span
+              >
+              <h2 class="hb-archive-purchase-record__c-section-head__title">
+                お客様の
+                <span class="hb-archive-purchase-record__c-hl">声</span>
+              </h2>
+              <p class="hb-archive-purchase-record__c-section-head__lead">
+                実際にご利用いただいたお客様からのレビューです。
+              </p>
+            </header>
+            <?php echo wp_kses_post( $purchase_record_archive_reviews_markup ); ?>
+          </div>
+        </section>
+      <?php endif; ?>
 
       <section class="hb__l-section" id="faq">
         <div class="hb__l-container">
