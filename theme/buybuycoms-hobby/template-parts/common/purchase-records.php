@@ -11,6 +11,9 @@
 $posts_per_page = isset( $args['posts_per_page'] ) ? max( 1, absint( $args['posts_per_page'] ) ) : 8;
 $initial_visible = isset( $args['initial_visible'] ) ? absint( $args['initial_visible'] ) : 0;
 $grid_id         = isset( $args['grid_id'] ) ? sanitize_html_class( $args['grid_id'] ) : '';
+$post_ids        = isset( $args['post_ids'] ) && is_array( $args['post_ids'] ) ? array_values( array_filter( array_map( 'absint', $args['post_ids'] ) ) ) : array();
+$all_post_ids    = isset( $args['all_post_ids'] ) && is_array( $args['all_post_ids'] ) ? array_values( array_filter( array_map( 'absint', $args['all_post_ids'] ) ) ) : array();
+$filter_term_ids_by_post_id = isset( $args['filter_term_ids_by_post_id'] ) && is_array( $args['filter_term_ids_by_post_id'] ) ? $args['filter_term_ids_by_post_id'] : array();
 
 $purchase_record_query_args = array(
 	'post_type'           => 'purchase-record',
@@ -23,7 +26,10 @@ $purchase_record_query_args = array(
 );
 $purchase_record_genre_ids  = array();
 
-if ( is_tax( 'genre' ) ) {
+if ( $post_ids ) {
+	$purchase_record_query_args['post__in']       = $post_ids;
+	$purchase_record_query_args['posts_per_page'] = count( $post_ids );
+} elseif ( is_tax( 'genre' ) ) {
 	$queried_genre = get_queried_object();
 
 	if ( $queried_genre instanceof WP_Term ) {
@@ -142,8 +148,18 @@ $format_purchase_record_price = static function ( $price ) {
 		}
 
 		$price = $format_purchase_record_price( $item_price );
+		$filter_term_ids = isset( $filter_term_ids_by_post_id[ $purchase_record_id ] ) && is_array( $filter_term_ids_by_post_id[ $purchase_record_id ] )
+			? array_values( array_filter( array_map( 'absint', $filter_term_ids_by_post_id[ $purchase_record_id ] ) ) )
+			: array();
 		?>
-		<article class="hb__p-cases-card">
+		<article
+			class="hb__p-cases-card"
+			<?php if ( $all_post_ids || $filter_term_ids ) : ?>
+				data-hb-purchase-record-card
+				data-hb-purchase-record-all="<?php echo in_array( $purchase_record_id, $all_post_ids, true ) ? 'true' : 'false'; ?>"
+				data-hb-purchase-record-terms="<?php echo esc_attr( implode( ' ', $filter_term_ids ) ); ?>"
+			<?php endif; ?>
+		>
 			<?php if ( $item_image_markup ) : ?>
 				<a
 					class="hb__p-cases-image-link"

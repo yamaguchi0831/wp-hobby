@@ -86,21 +86,71 @@ document.querySelectorAll("[data-hb-purchase-records]").forEach((grid) => {
   const moreButton = document.querySelector(
     `[data-hb-purchase-record-more][aria-controls="${grid.id}"]`,
   );
+  const filterButtons = Array.from(
+    document.querySelectorAll(
+      `[data-hb-purchase-record-filter][aria-controls="${grid.id}"]`,
+    ),
+  );
 
-  if (!moreButton || initialVisible < 1 || cards.length <= initialVisible) {
+  const updateCards = (filterId = "") => {
+    const filteredCards = cards.filter((card) => {
+      if (!card.hasAttribute("data-hb-purchase-record-card")) {
+        return true;
+      }
+
+      if (!filterId) {
+        return card.dataset.hbPurchaseRecordAll === "true";
+      }
+
+      return (card.dataset.hbPurchaseRecordTerms || "")
+        .split(" ")
+        .includes(filterId);
+    });
+
+    cards.forEach((card) => {
+      card.hidden = !filteredCards.includes(card);
+    });
+
+    if (!moreButton || initialVisible < 1 || filteredCards.length <= initialVisible) {
+      if (moreButton) {
+        moreButton.hidden = true;
+        moreButton.setAttribute("aria-expanded", "false");
+      }
+      return;
+    }
+
+    filteredCards.slice(initialVisible).forEach((card) => {
+      card.hidden = true;
+    });
+    moreButton.hidden = false;
+    moreButton.setAttribute("aria-expanded", "false");
+
+    moreButton.onclick = () => {
+      filteredCards.forEach((card) => {
+        card.hidden = false;
+      });
+      moreButton.setAttribute("aria-expanded", "true");
+      moreButton.hidden = true;
+    };
+  };
+
+  if (!moreButton || initialVisible < 1) {
     return;
   }
 
-  cards.slice(initialVisible).forEach((card) => {
-    card.hidden = true;
-  });
-  moreButton.hidden = false;
+  updateCards();
 
-  moreButton.addEventListener("click", () => {
-    cards.forEach((card) => {
-      card.hidden = false;
+  filterButtons.forEach((filterButton) => {
+    filterButton.addEventListener("click", () => {
+      const filterId = filterButton.dataset.hbPurchaseRecordFilter || "";
+
+      filterButtons.forEach((button) => {
+        const isActive = button === filterButton;
+        button.classList.toggle("hb__is-active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+
+      updateCards(filterId);
     });
-    moreButton.setAttribute("aria-expanded", "true");
-    moreButton.hidden = true;
   });
 });

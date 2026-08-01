@@ -77,7 +77,8 @@ Template Name: Genre List
                 'template-parts/common/purchase-records-section',
                 null,
                 array(
-                    'grid_id' => 'genre-list-purchase-records',
+                    'grid_id'            => 'genre-list-purchase-records',
+                    'enable_genre_filter' => true,
                 )
             );
             ?>

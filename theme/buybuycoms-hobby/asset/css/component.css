@@ -2213,9 +2213,12 @@
   width: 100%;
   min-height: 34px;
   padding: var(--hb-space-lg);
+  border: 1px solid transparent;
   border-radius: var(--hb-radius-full);
   background: var(--hb-color-surface-green);
   color: var(--hb-color-primary-700);
+  cursor: pointer;
+  font-family: inherit;
   font-size: var(--hb-font-size-body--sm);
   font-weight: 700;
   line-height: 1.5;
@@ -2229,6 +2232,16 @@
 .hb__p-purchase-records-section__filter-link:hover {
   background: var(--hb-color-surface-mint-soft);
   color: var(--hb-color-primary-800);
+}
+
+.hb__p-purchase-records-section__filter-link.hb__is-active {
+  background: var(--hb-color-primary-600);
+  color: var(--hb-color-white);
+}
+
+.hb__p-purchase-records-section__filter-link:focus-visible {
+  outline: 3px solid var(--hb-color-primary-300);
+  outline-offset: 2px;
 }
 
 .hb__p-purchase-records-section__more {

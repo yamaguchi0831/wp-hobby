@@ -284,3 +284,19 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/purchase-records-section.php`、`theme/buybuycoms-hobby/page-genre-list.php`、`theme/buybuycoms-hobby/single-purchase-record.php`、`theme/buybuycoms-hobby/asset/css/component.css`、`theme/buybuycoms-hobby/asset/js/component.js`、`theme/buybuycoms-hobby/inc/enqueue.php`
 - 未完了事項: WordPress実画面で `/genre-list/` と買取事例詳細の表示、同一ジャンルへの絞り込み、8件以下・9件以上の段階表示を確認。
 - 次回の着手点: 複数ジャンルの買取実績を用意し、両ページのジャンルリンク、カード件数、「もっと見る」の表示と展開をPC・モバイルで確認する。
+
+## 2026-08-01：買取品目一覧の買取実績をジャンルでフィルター化
+
+- 状態：完了
+- 実施：`/genre-list/` のジャンル導線を遷移リンクからフィルターボタンへ変更。全件（最新20件）または各ジャンル（ジャンルごとに最新20件）を切り替え、各状態で初期8件・「もっと見る」による残り表示となるよう実装。
+- 変更：`theme/buybuycoms-hobby/page-genre-list.php`、`theme/buybuycoms-hobby/template-parts/common/purchase-records-section.php`、`theme/buybuycoms-hobby/template-parts/common/purchase-records.php`、`theme/buybuycoms-hobby/asset/js/component.js`、`WORK-LOG.md`
+- 未完了：Localで全件・各ジャンルの20件上限、8件／9件／20件、複数ジャンルが付いた投稿、0件、キーボード操作、PC・モバイルの表示を確認。
+- 次回の着手点：複数ジャンルを設定した`purchase-record`で、選択ボタンの状態、対象カード、もっと見るの再表示を実画面で確認する。
+
+## 2026-08-01：買取実績フィルターの全件表記を変更
+
+- 状態：完了
+- 実施：`/genre-list/` の買取実績フィルターで、全件表示ボタンの文言を「すべて」から「ALL」へ変更。
+- 変更：`theme/buybuycoms-hobby/template-parts/common/purchase-records-section.php`、`WORK-LOG.md`
+- 未完了：Localで表記とフィルター動作を確認。
+- 次回の着手点：全件・ジャンル選択時のカード表示と「もっと見る」を実画面で確認する。
