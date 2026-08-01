@@ -49,8 +49,12 @@ Template Name: Purchase Flow
         <div class="hb__l-container--sm hb-flow__p-lead__inner">
           <figure class="hb-flow__p-lead__image">
             <img
-              src="https://placehold.co/800x600/eef3ee/5f6f66?text=Flow+Image"
-              alt="箱に入ったホビー品のイメージ"
+              src="<?php echo esc_url( get_theme_file_uri( '/images/flow-hobby-collection.webp' ) ); ?>"
+              alt="ロボットや鉄道模型、カードなどを箱にまとめたホビー用品とスタッフ"
+              width="800"
+              height="600"
+              loading="eager"
+              decoding="async"
             />
           </figure>
           <div class="hb-flow__p-lead__body">

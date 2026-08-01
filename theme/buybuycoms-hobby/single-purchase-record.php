@@ -24,6 +24,7 @@ $numeric_price     = str_replace( array( ',', '￥', '¥', '円', ' ' ), '', tri
 $genre_terms       = get_the_terms( $purchase_record_id, 'genre' );
 $genre_names       = array();
 $small_genre_names = array();
+$default_genre_id  = 0;
 $post_content      = get_post_field( 'post_content', $purchase_record_id );
 
 if ( '' !== $numeric_price && ctype_digit( $numeric_price ) ) {
@@ -33,6 +34,8 @@ if ( '' !== $numeric_price && ctype_digit( $numeric_price ) ) {
 }
 
 if ( ! is_wp_error( $genre_terms ) && $genre_terms ) {
+	$genre_terms      = buybuycoms_hobby_sort_genre_terms( $genre_terms );
+	$default_genre_id = absint( $genre_terms[0]->term_id );
 	$genre_names = wp_list_pluck( $genre_terms, 'name' );
 
 	foreach ( $genre_terms as $genre_term ) {
@@ -165,7 +168,9 @@ get_header();
         'template-parts/common/purchase-records-section',
         null,
         array(
-          'grid_id' => 'single-purchase-records',
+          'grid_id'            => 'single-purchase-records',
+          'enable_genre_filter' => true,
+          'default_genre_id'    => $default_genre_id,
         )
       );
       ?>

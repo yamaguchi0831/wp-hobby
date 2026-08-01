@@ -83,6 +83,7 @@ document.querySelectorAll("[data-hb-purchase-records]").forEach((grid) => {
     grid.dataset.hbInitialVisible || "0",
     10,
   );
+  const defaultFilterId = grid.dataset.hbDefaultFilter || "";
   const moreButton = document.querySelector(
     `[data-hb-purchase-record-more][aria-controls="${grid.id}"]`,
   );
@@ -138,7 +139,7 @@ document.querySelectorAll("[data-hb-purchase-records]").forEach((grid) => {
     return;
   }
 
-  updateCards();
+  updateCards(defaultFilterId);
 
   filterButtons.forEach((filterButton) => {
     filterButton.addEventListener("click", () => {

@@ -300,3 +300,19 @@
 - 変更：`theme/buybuycoms-hobby/template-parts/common/purchase-records-section.php`、`WORK-LOG.md`
 - 未完了：Localで表記とフィルター動作を確認。
 - 次回の着手点：全件・ジャンル選択時のカード表示と「もっと見る」を実画面で確認する。
+
+## 2026-08-01：買取実績詳細の関連実績をジャンルフィルターへ統一
+
+- 状態：完了
+- 実施：買取実績詳細ページでも`/genre-list/`と同じフィルター付き共通パーツを利用するよう統一。詳細投稿に設定されたgenreを並び順の先頭から初期選択し、同ジャンルの買取実績を初期表示するよう変更。
+- 変更：`theme/buybuycoms-hobby/single-purchase-record.php`、`theme/buybuycoms-hobby/template-parts/common/purchase-records-section.php`、`theme/buybuycoms-hobby/template-parts/common/purchase-records.php`、`theme/buybuycoms-hobby/asset/js/component.js`、`WORK-LOG.md`
+- 未完了：Localでジャンルあり・なし、複数ジャンル、各ジャンルの20件上限、初期8件ともっと見るを確認。
+- 次回の着手点：詳細投稿のgenreと初期選択されたフィルターボタン、表示カードが一致することを実画面で確認する。
+
+## 2026-08-01：買取方法ページのリード画像を差し替え
+
+- 状態：完了
+- 実施：`/flow/`のプレースホルダーを、提供されたホビー用品のドット絵へ差し替え。4:3表示枠向けに構図を保持した`800×600`のWebP（約87KB）へ最適化し、テーマ内アセットとして参照。
+- 変更：`theme/buybuycoms-hobby/images/flow-hobby-collection.webp`、`theme/buybuycoms-hobby/page-flow.php`、`WORK-LOG.md`
+- 未完了：LocalでPC・モバイル表示、画像の読み込み、レイアウトシフトがないことを確認。
+- 次回の着手点：`/flow/`のリード画像が4:3枠内で切れずに表示されることを実画面で確認する。

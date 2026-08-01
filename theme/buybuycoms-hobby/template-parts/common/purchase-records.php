@@ -14,6 +14,7 @@ $grid_id         = isset( $args['grid_id'] ) ? sanitize_html_class( $args['grid_
 $post_ids        = isset( $args['post_ids'] ) && is_array( $args['post_ids'] ) ? array_values( array_filter( array_map( 'absint', $args['post_ids'] ) ) ) : array();
 $all_post_ids    = isset( $args['all_post_ids'] ) && is_array( $args['all_post_ids'] ) ? array_values( array_filter( array_map( 'absint', $args['all_post_ids'] ) ) ) : array();
 $filter_term_ids_by_post_id = isset( $args['filter_term_ids_by_post_id'] ) && is_array( $args['filter_term_ids_by_post_id'] ) ? $args['filter_term_ids_by_post_id'] : array();
+$default_filter_id = isset( $args['default_filter_id'] ) ? absint( $args['default_filter_id'] ) : 0;
 
 $purchase_record_query_args = array(
 	'post_type'           => 'purchase-record',
@@ -93,6 +94,9 @@ $format_purchase_record_price = static function ( $price ) {
 	<?php if ( 0 < $initial_visible ) : ?>
 		data-hb-purchase-records
 		data-hb-initial-visible="<?php echo esc_attr( (string) $initial_visible ); ?>"
+		<?php if ( $default_filter_id ) : ?>
+			data-hb-default-filter="<?php echo esc_attr( (string) $default_filter_id ); ?>"
+		<?php endif; ?>
 	<?php endif; ?>
 >
 	<?php while ( $purchase_records->have_posts() ) : ?>

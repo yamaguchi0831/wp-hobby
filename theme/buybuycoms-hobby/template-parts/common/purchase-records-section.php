@@ -15,6 +15,7 @@ $purchase_records_lead       = isset( $args['lead'] )
 	? sanitize_text_field( $args['lead'] )
 	: 'フィギュア・プラモデル・カードなど、実際にお売りいただいたホビーの一例です。';
 $enable_genre_filter         = ! empty( $args['enable_genre_filter'] );
+$default_genre_id            = isset( $args['default_genre_id'] ) ? absint( $args['default_genre_id'] ) : 0;
 
 $purchase_record_ids = get_posts(
 	array(
@@ -51,6 +52,10 @@ if ( is_wp_error( $purchase_record_terms ) ) {
 
 	$purchase_record_terms = array_values( $purchase_record_terms_by_id );
 	$purchase_record_terms = buybuycoms_hobby_sort_genre_terms( $purchase_record_terms );
+}
+
+if ( $default_genre_id && ! in_array( $default_genre_id, wp_list_pluck( $purchase_record_terms, 'term_id' ), true ) ) {
+	$default_genre_id = 0;
 }
 
 $purchase_record_filter_ids_by_term = array();
@@ -129,10 +134,10 @@ if ( $enable_genre_filter && $purchase_record_ids && $purchase_record_terms ) {
 				<?php if ( $enable_genre_filter ) : ?>
 					<li>
 						<button
-							class="hb__p-purchase-records-section__filter-link hb__is-active"
+							class="hb__p-purchase-records-section__filter-link<?php echo $default_genre_id ? '' : ' hb__is-active'; ?>"
 							type="button"
 							aria-controls="<?php echo esc_attr( $purchase_records_grid_id ); ?>"
-							aria-pressed="true"
+							aria-pressed="<?php echo $default_genre_id ? 'false' : 'true'; ?>"
 							data-hb-purchase-record-filter
 						>
 							ALL
@@ -143,10 +148,10 @@ if ( $enable_genre_filter && $purchase_record_ids && $purchase_record_terms ) {
 					<li>
 						<?php if ( $enable_genre_filter ) : ?>
 							<button
-								class="hb__p-purchase-records-section__filter-link"
+								class="hb__p-purchase-records-section__filter-link<?php echo (int) $purchase_record_term->term_id === $default_genre_id ? ' hb__is-active' : ''; ?>"
 								type="button"
 								aria-controls="<?php echo esc_attr( $purchase_records_grid_id ); ?>"
-								aria-pressed="false"
+								aria-pressed="<?php echo (int) $purchase_record_term->term_id === $default_genre_id ? 'true' : 'false'; ?>"
 								data-hb-purchase-record-filter="<?php echo esc_attr( (string) $purchase_record_term->term_id ); ?>"
 							>
 								<?php echo esc_html( $purchase_record_term->name ); ?>
@@ -175,6 +180,7 @@ if ( $enable_genre_filter && $purchase_record_ids && $purchase_record_terms ) {
 				'post_ids'                        => $purchase_record_display_ids,
 				'all_post_ids'                    => $purchase_record_all_ids,
 				'filter_term_ids_by_post_id'      => $purchase_record_filter_terms_by_id,
+				'default_filter_id'               => $default_genre_id,
 			)
 		);
 		?>
