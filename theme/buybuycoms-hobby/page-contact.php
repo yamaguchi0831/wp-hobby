@@ -47,10 +47,23 @@ Template Name: Contact
           <form
             class="hb__p-form"
             id="hb-purchase-form"
-            action="#"
+            action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"
             method="post"
             novalidate
           >
+            <input type="hidden" name="action" value="buybuycoms_hobby_contact" />
+            <?php wp_nonce_field( 'buybuycoms_hobby_contact', 'buybuycoms_hobby_contact_nonce' ); ?>
+            <div class="hb__p-form__honeypot" aria-hidden="true">
+              <label for="hb-contact-website">Webサイト</label>
+              <input id="hb-contact-website" type="text" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+            <?php if ( 'error' === filter_input( INPUT_GET, 'contact_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) : ?>
+              <p class="hb__p-form__alert" role="alert">送信できませんでした。入力内容を確認して、時間をおいてもう一度お試しください。</p>
+            <?php elseif ( 'rate_limited' === filter_input( INPUT_GET, 'contact_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) : ?>
+              <p class="hb__p-form__alert" role="alert">短時間に複数回送信されたため、一時的に送信を制限しています。10分ほど時間をおいて再度お試しください。</p>
+            <?php elseif ( 'sent' === filter_input( INPUT_GET, 'contact_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) ) : ?>
+              <p class="hb__p-form__alert" role="status">お問い合わせを受け付けました。自動返信メールをご確認ください。</p>
+            <?php endif; ?>
             <section class="hb__p-form__block" data-block="method">
               <div class="hb__p-form__head">
                 <h2 class="hb__p-form__title">買取方法を選択してください</h2>

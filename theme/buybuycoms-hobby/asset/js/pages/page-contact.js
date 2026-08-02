@@ -430,14 +430,7 @@
             return;
           }
 
-          event.preventDefault();
-          openModal({
-            title: "お申し込み内容を受け付けました",
-            body: "<p>送信先の設定後、このフォームからお申し込み内容を送信できます。現在は設置前の確認用として送信を止めています。</p>",
-            actions: [
-              modalButton("閉じる", "hb__p-form-modal__close", closeModal),
-            ],
-          });
+          // Client-side validation has passed. Submit to the server for validation and delivery.
         });
 
         const params = new URLSearchParams(window.location.search);

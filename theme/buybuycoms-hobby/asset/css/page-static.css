@@ -4532,3 +4532,13 @@
           padding: 0 var(--hb-space-md) var(--hb-space-md);
         }
       }
+/* Keep the spam-trap field out of the visual and accessibility flow. */
+.hb__p-form__honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

@@ -316,3 +316,58 @@
 - 変更：`theme/buybuycoms-hobby/images/flow-hobby-collection.webp`、`theme/buybuycoms-hobby/page-flow.php`、`WORK-LOG.md`
 - 未完了：LocalでPC・モバイル表示、画像の読み込み、レイアウトシフトがないことを確認。
 - 次回の着手点：`/flow/`のリード画像が4:3枠内で切れずに表示されることを実画面で確認する。
+## 2026-08-02 お問い合わせフォームの送信・管理機能を実装
+
+- 状態: 実装完了（WordPress実機でのメール配送確認は未実施）
+- 実施内容: `/contact/` の確認用JavaScript停止処理を実送信へ切り替え、nonce、ハニーポット、入力値の許可リスト・サーバー側検証、送信回数制限、固定送信先、Reply-To、303リダイレクトを追加。外観を維持したまま、テーマ設定画面で送信先・差し込み可能な自動返信文面・送信後の固定ページを管理できるようにした。
+- 主な変更ファイル: `theme/buybuycoms-hobby/inc/contact-form.php`、`theme/buybuycoms-hobby/functions.php`、`theme/buybuycoms-hobby/page-contact.php`、`theme/buybuycoms-hobby/asset/js/pages/page-contact.js`、`theme/buybuycoms-hobby/asset/css/page-static.css`
+- 未完了事項: SMTP等のメール配送設定と、WordPress実機での送信・自動返信・リダイレクトの確認。
+- 次回の着手点: 本番と同等のメール送信環境で、管理画面の設定値ごとに送信試験を行う。
+
+## 2026-08-02 静的確認ページの旧送信ポップアップを同期
+
+- 状態: 完了
+- 実施内容: 静的確認用 `pages/page-contact.html` にだけ残っていた、送信を停止する旧ポップアップ処理を削除。WordPressテーマ側のフォーム送信フローと矛盾しない状態にした。
+- 主な変更ファイル: `pages/page-contact.html`、`WORK-LOG.md`
+- 未完了事項: 静的HTMLはWordPressのnonce・送信エンドポイントを持たないため、メール送信の実機確認はテーマをWordPress環境で有効化して行う。
+- 次回の着手点: `/contact/` をWordPress環境から開き、SMTP設定を含めた送信試験を行う。
+
+## 2026-08-02 お問い合わせフォームのWordPress互換性を修正
+
+- 状態: 完了
+- 実施内容: Local環境で未定義だった `wp_strlen()` を、PHP標準／mbstringを使うテーマ内ヘルパーへ置換した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/inc/contact-form.php`、`WORK-LOG.md`
+- 未完了事項: Local環境でのメール送信・自動返信・リダイレクトの実機確認。
+- 次回の着手点: キャッシュを更新して再送信し、配送設定を確認する。
+
+## 2026-08-02 お問い合わせメールを送信先別に編集可能化
+
+- 状態: 完了
+- 実施内容: 管理者宛・入力者宛それぞれに、独立した件名と本文の設定を追加。送信時には管理者宛に1通、入力者宛に1通を送信するよう明示した。旧自動返信文面の設定値は入力者宛本文へ自動的に引き継ぐ。
+- 主な変更ファイル: `theme/buybuycoms-hobby/inc/contact-form.php`、`WORK-LOG.md`
+- 未完了事項: Local環境のメール受信箱で両メールの配送確認。
+- 次回の着手点: 「外観 → お問い合わせフォーム」で件名・本文を保存後、テスト送信する。
+
+## 2026-08-02 お問い合わせメールの宅配買取値を日本語化
+
+- 状態: 完了
+- 実施内容: 管理者宛メールに出力する内部値を、`over` は「点数OK」、`self` は「自分で用意する」、`kit` は「買取キット希望」へ変換した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/inc/contact-form.php`、`WORK-LOG.md`
+- 未完了事項: Local環境でのメール表示確認。
+- 次回の着手点: 宅配買取の各分岐でテスト送信する。
+
+## 2026-08-02 お問い合わせフォームのテスト送信制限を調整
+
+- 状態: 完了
+- 実施内容: Localでの連続テスト時に送信不能となったため、送信回数制限を10分間3回から10回へ調整。制限中は専用メッセージを表示する。
+- 主な変更ファイル: `theme/buybuycoms-hobby/inc/contact-form.php`、`theme/buybuycoms-hobby/page-contact.php`、`WORK-LOG.md`
+- 未完了事項: Local環境での再送信確認。
+- 次回の着手点: 管理者宛・入力者宛の両メールが届くか確認する。
+
+## 2026-08-02 お問い合わせメールの物量ラベルを変更
+
+- 状態: 完了
+- 実施内容: 宅配買取メールの「宅配買取の箱数」を「物量チェック」へ変更した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/inc/contact-form.php`、`WORK-LOG.md`
+- 未完了事項: Local環境でのメール表示確認。
+- 次回の着手点: 宅配買取のテスト送信で表示を確認する。
