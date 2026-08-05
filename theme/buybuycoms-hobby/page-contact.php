@@ -7,6 +7,9 @@
 /*
 Template Name: Contact
 */
+
+$requested_purchase_type = filter_input( INPUT_GET, 'type', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+$requested_purchase_type = in_array( $requested_purchase_type, array( 'takuhai', 'shuccho', 'mochikomi' ), true ) ? $requested_purchase_type : '';
 ?>
 <!-- ============================== HEADER ============================== -->
     <?php get_header(); ?>
@@ -18,28 +21,7 @@ Template Name: Contact
         </div>
       </section>
       <div class="hb__l-container">
-        <nav
-          class="hb__p-subpage-title__breadcrumb-area"
-          aria-label="パンくずリスト"
-        >
-          <ol class="hb__l-container hb__p-subpage-title__breadcrumb">
-            <li class="hb__p-subpage-title__breadcrumb-item">
-              <a class="hb__p-subpage-title__breadcrumb-link" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">TOP</a>
-            </li>
-            <li
-              class="hb__p-subpage-title__breadcrumb-separator"
-              aria-hidden="true"
-            >
-              &gt;
-            </li>
-            <li
-              class="hb__p-subpage-title__breadcrumb-current"
-              aria-current="page"
-            >
-              買取お申し込みフォーム
-            </li>
-          </ol>
-        </nav>
+      <?php buybuycoms_hobby_breadcrumb(); ?>
       </div>
 
       <section class="hb__l-section hb__p-form-shell" id="purchase-form">
@@ -79,6 +61,7 @@ Template Name: Contact
                     name="purchase_type"
                     value="takuhai"
                     required
+                    <?php checked( 'takuhai', $requested_purchase_type ); ?>
                   />
                   <span class="hb__p-form__choice-body">
                     <span class="hb__p-form__choice-title">宅配買取</span>
@@ -94,6 +77,7 @@ Template Name: Contact
                     name="purchase_type"
                     value="shuccho"
                     required
+                    <?php checked( 'shuccho', $requested_purchase_type ); ?>
                   />
                   <span class="hb__p-form__choice-body">
                     <span class="hb__p-form__choice-title">出張買取</span>
@@ -109,6 +93,7 @@ Template Name: Contact
                     name="purchase_type"
                     value="mochikomi"
                     required
+                    <?php checked( 'mochikomi', $requested_purchase_type ); ?>
                   />
                   <span class="hb__p-form__choice-body">
                     <span class="hb__p-form__choice-title">店頭買取</span>

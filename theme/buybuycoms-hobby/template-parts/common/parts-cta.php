@@ -29,7 +29,7 @@
           <span class="hb__p-parts-cta__arrow" aria-hidden="true"></span>
         </span>
       </a>
-      <a class="hb__p-parts-cta__ch hb__p-parts-cta__ch--line" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">
+      <a class="hb__p-parts-cta__ch hb__p-parts-cta__ch--line" href="<?php echo esc_url( 'https://line.me/R/ti/p/@081xadbs' ); ?>">
         <span class="hb__p-parts-cta__icon">
           <img src="<?php echo esc_url( get_theme_file_uri( '/images/icon/cta-ican02.svg' ) ); ?>" alt="" />
         </span>

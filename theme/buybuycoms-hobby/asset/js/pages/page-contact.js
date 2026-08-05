@@ -440,8 +440,10 @@
           const radio = form.querySelector(
             `[name="purchase_type"][value="${requestedType}"]`,
           );
-          radio.checked = true;
-          handleMethod(requestedType);
+          if (radio) {
+            radio.checked = true;
+            handleMethod(requestedType);
+          }
         } else {
           [
             "takuhai-qty",

@@ -41,28 +41,7 @@ while ( have_posts() ) :
 
     <main id="main-content" class="hb-single-column__p-page">
       <div class="hb-single-column__p-breadcrumb-wrap">
-        <nav class="hb__l-container" aria-label="パンくずリスト">
-          <ol class="hb-single-column__p-breadcrumb">
-            <li>
-              <a
-                class="hb-single-column__p-breadcrumb-link"
-                href="<?php echo esc_url( home_url( '/' ) ); ?>"
-                >TOP</a
-              >
-            </li>
-            <li aria-hidden="true">&gt;</li>
-            <li>
-              <a class="hb-single-column__p-breadcrumb-link" href="<?php echo esc_url( home_url( '/column/' ) ); ?>">コラム</a>
-            </li>
-            <li aria-hidden="true">&gt;</li>
-            <li
-              class="hb-single-column__p-breadcrumb-current"
-              aria-current="page"
-            >
-              <?php the_title(); ?>
-            </li>
-          </ol>
-        </nav>
+        <?php buybuycoms_hobby_breadcrumb( 'hb__l-container', 'hb-single-column__p-breadcrumb', '', 'hb-single-column__p-breadcrumb-link', 'hb-single-column__p-breadcrumb-current', '' ); ?>
       </div>
 
       <section class="hb__l-section" aria-label="コラム詳細">

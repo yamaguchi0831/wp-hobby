@@ -154,32 +154,7 @@ if ( is_string( $genre_faq_json ) && '' !== trim( $genre_faq_json ) ) {
       </section>
 
       <div class="hb__l-container">
-        <nav
-          class="hb__p-subpage-title__breadcrumb-area"
-          aria-label="パンくずリスト"
-        >
-          <ol class="hb__l-container hb__p-subpage-title__breadcrumb">
-            <li class="hb__p-subpage-title__breadcrumb-item">
-              <a
-                class="hb__p-subpage-title__breadcrumb-link"
-                href="<?php echo esc_url( home_url( '/' ) ); ?>"
-                >TOP</a
-              >
-            </li>
-            <li
-              class="hb__p-subpage-title__breadcrumb-separator"
-              aria-hidden="true"
-            >
-              &gt;
-            </li>
-            <li
-              class="hb__p-subpage-title__breadcrumb-current"
-              aria-current="page"
-            >
-              ジャンル別買取
-            </li>
-          </ol>
-        </nav>
+      <?php buybuycoms_hobby_breadcrumb(); ?>
       </div>
 
       <section class="hb__l-section hb-item-genre__p-results" id="results">

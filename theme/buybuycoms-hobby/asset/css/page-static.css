@@ -4542,3 +4542,130 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+/* Source: page-thanks.php */
+.hb-thanks__section {
+  background: var(--hb-color-white);
+}
+
+.hb-thanks__container {
+  max-width: 760px;
+}
+
+.hb-thanks__hero {
+  display: grid;
+  justify-items: center;
+  gap: var(--hb-space-xl);
+  margin-bottom: var(--hb-space-3xl);
+  text-align: center;
+}
+
+.hb-thanks__character {
+  display: block;
+  width: 120px;
+  height: auto;
+}
+
+.hb-thanks__title {
+  margin: 0;
+  color: var(--hb-color-text-deep);
+  font-size: clamp(var(--hb-font-size-h2), 4vw, var(--hb-font-size-h1));
+  font-weight: 900;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.hb-thanks__mobile-break {
+  display: none;
+}
+
+.hb-thanks__content {
+  display: grid;
+  gap: var(--hb-space-xl);
+  color: var(--hb-color-text-deep);
+  font-size: var(--hb-font-size-body);
+  line-height: 1.9;
+}
+
+.hb-thanks__content p,
+.hb-thanks__notice p {
+  margin: 0;
+}
+
+.hb-thanks__notice {
+  padding: var(--hb-space-lg);
+  background: var(--hb-color-surface-green-light);
+}
+
+.hb-thanks__notice ul {
+  margin: var(--hb-space-xs) 0 0;
+  padding-left: 1.4em;
+}
+
+.hb-thanks__contact-details {
+  display: grid;
+  gap: var(--hb-space-xs);
+  margin: 0;
+  padding: var(--hb-space-lg);
+  border: 1px solid var(--hb-color-border-muted);
+  border-radius: var(--hb-radius-md);
+  background: var(--hb-color-white);
+  box-shadow: var(--hb-shadow-sm);
+}
+
+.hb-thanks__contact-details div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hb-space-xs);
+}
+
+.hb-thanks__contact-details dt::after {
+  content: '：';
+}
+
+.hb-thanks__contact-details dd {
+  margin: 0;
+}
+
+.hb-thanks__contact-details a,
+.hb-thanks__telephone a {
+  color: var(--hb-color-primary-600);
+  font-weight: 700;
+}
+
+.hb-thanks__telephone {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hb-space-xs);
+}
+
+.hb-thanks__action {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--hb-space-3xl);
+}
+
+@media (max-width: 767px) {
+  .hb-thanks__mobile-break {
+    display: inline;
+  }
+
+  .hb-thanks__hero {
+    gap: var(--hb-space-lg);
+    margin-bottom: var(--hb-space-2xl);
+  }
+
+  .hb-thanks__content {
+    gap: var(--hb-space-lg);
+    font-size: var(--hb-font-size-body--sm);
+  }
+
+  .hb-thanks__notice,
+  .hb-thanks__contact-details {
+    padding: var(--hb-space-md);
+  }
+
+  .hb-thanks__action {
+    margin-top: var(--hb-space-2xl);
+  }
+}

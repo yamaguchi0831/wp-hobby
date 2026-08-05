@@ -66,7 +66,7 @@
         <li>10点以上から受付</li>
       </ul>
       <div class="hb__p-method-action">
-        <a class="hb__c-btn hb__c-btn--ghost" href="<?php echo esc_url( home_url( '/flow/#takuhai-flow' ) ); ?>"
+        <a class="hb__c-btn hb__c-btn--ghost" href="<?php echo esc_url( add_query_arg( 'type', 'takuhai', home_url( '/contact/' ) ) ); ?>"
           >宅配買取はこちら</a
         >
       </div>
@@ -94,7 +94,7 @@
         <li>ご希望日時に対応</li>
       </ul>
       <div class="hb__p-method-action">
-        <a class="hb__c-btn hb__c-btn--ghost" href="<?php echo esc_url( home_url( '/flow/#shuccho-flow' ) ); ?>"
+        <a class="hb__c-btn hb__c-btn--ghost" href="<?php echo esc_url( add_query_arg( 'type', 'shuccho', home_url( '/contact/' ) ) ); ?>"
           >出張買取はこちら</a
         >
       </div>
@@ -122,7 +122,7 @@
         <li>事前予約で待ち時間短縮</li>
       </ul>
       <div class="hb__p-method-action">
-        <a class="hb__c-btn hb__c-btn--ghost" href="<?php echo esc_url( home_url( '/flow/#store-flow' ) ); ?>"
+        <a class="hb__c-btn hb__c-btn--ghost" href="<?php echo esc_url( add_query_arg( 'type', 'mochikomi', home_url( '/contact/' ) ) ); ?>"
           >持ち込み買取はこちら</a
         >
       </div>

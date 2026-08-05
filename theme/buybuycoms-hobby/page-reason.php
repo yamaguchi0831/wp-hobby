@@ -18,28 +18,7 @@ Template Name: Reasons
         </div>
       </section>
       <div class="hb__l-container">
-        <nav
-          class="hb__p-subpage-title__breadcrumb-area"
-          aria-label="パンくずリスト"
-        >
-          <ol class="hb__l-container hb__p-subpage-title__breadcrumb">
-            <li class="hb__p-subpage-title__breadcrumb-item">
-              <a class="hb__p-subpage-title__breadcrumb-link" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">TOP</a>
-            </li>
-            <li
-              class="hb__p-subpage-title__breadcrumb-separator"
-              aria-hidden="true"
-            >
-              &gt;
-            </li>
-            <li
-              class="hb__p-subpage-title__breadcrumb-current"
-              aria-current="page"
-            >
-              買取方法
-            </li>
-          </ol>
-        </nav>
+      <?php buybuycoms_hobby_breadcrumb(); ?>
       </div>
       <!-- ============================== SECTION 01 ============================== -->
       <section
@@ -75,7 +54,7 @@ Template Name: Reasons
                 <p class="hb-reason__text">
                   宅配買取に必要な買取キットは何箱でも無料！必要なサイズと箱数をお申し付けください。
                 </p>
-                <a class="hb-reason__link" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">宅配買取はこちら</a>
+                <a class="hb-reason__link" href="<?php echo esc_url( add_query_arg( 'type', 'takuhai', home_url( '/contact/' ) ) ); ?>">宅配買取はこちら</a>
               </div>
             </article>
 
@@ -102,7 +81,7 @@ Template Name: Reasons
                 <p class="hb-reason__text">
                   どれだけ量が多くても査定は無料！出張費や振り込み手数料なども当店負担。気軽にご利用いただけます。
                 </p>
-                <a class="hb-reason__link" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">よくあるご質問について</a>
+                <a class="hb-reason__link" href="<?php echo esc_url( home_url( '/faq/' ) ); ?>">よくあるご質問について</a>
               </div>
             </article>
 
@@ -115,7 +94,7 @@ Template Name: Reasons
                 <p class="hb-reason__text">
                   金額が分からないまま預けるのが不安な場合は、便利な事前査定をご利用ください。LINEで画像を送るだけで査定可能です。
                 </p>
-                <a class="hb-reason__link" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">LINE査定はこちら</a>
+                <a class="hb-reason__link" href="<?php echo esc_url( 'https://line.me/R/ti/p/@081xadbs' ); ?>">LINE査定はこちら</a>
               </div>
             </article>
 

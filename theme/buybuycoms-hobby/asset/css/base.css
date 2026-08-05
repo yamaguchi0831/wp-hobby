@@ -184,6 +184,10 @@ strong {
     list-style: none;
 }
 
+.hb__p-subpage-title__breadcrumb.hb__l-container {
+    background: var(--hb-color-white);
+}
+
 .hb__p-subpage-title__breadcrumb-link {
     color: var(--hb-color-primary-700);
     text-decoration: underline;

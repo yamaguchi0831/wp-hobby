@@ -85,15 +85,106 @@ function buybuycoms_hobby_sort_genre_terms( $genre_terms ) {
 }
 
 /**
- * Output a branded logo with a static fallback.
+ * Output breadcrumbs for the current WordPress request.
+ *
+ * @param string $nav_class Navigation class name.
+ * @param string $list_class List class name.
+ * @return void
+ */
+function buybuycoms_hobby_breadcrumb( $nav_class = 'hb__p-subpage-title__breadcrumb-area', $list_class = 'hb__l-container hb__p-subpage-title__breadcrumb', $item_class = 'hb__p-subpage-title__breadcrumb-item', $link_class = 'hb__p-subpage-title__breadcrumb-link', $current_class = 'hb__p-subpage-title__breadcrumb-current', $separator_class = 'hb__p-subpage-title__breadcrumb-separator' ) {
+	$items = array(
+		array(
+			'label' => __( 'TOP', 'buybuycoms-hobby' ),
+			'url'   => home_url( '/' ),
+		),
+	);
+
+	if ( is_home() ) {
+		$posts_page_id = (int) get_option( 'page_for_posts' );
+		$items[]       = array(
+			'label' => $posts_page_id ? get_the_title( $posts_page_id ) : __( 'お知らせ', 'buybuycoms-hobby' ),
+		);
+	} elseif ( is_post_type_archive() ) {
+		$post_type = get_queried_object();
+		$items[]   = array(
+			'label' => $post_type instanceof WP_Post_Type ? $post_type->labels->name : get_the_archive_title(),
+		);
+	} elseif ( is_tax() || is_category() || is_tag() ) {
+		$term = get_queried_object();
+		if ( $term instanceof WP_Term ) {
+			$ancestor_ids = array_reverse( get_ancestors( $term->term_id, $term->taxonomy, 'taxonomy' ) );
+			foreach ( $ancestor_ids as $ancestor_id ) {
+				$ancestor = get_term( $ancestor_id, $term->taxonomy );
+				if ( $ancestor instanceof WP_Term ) {
+					$items[] = array(
+						'label' => $ancestor->name,
+						'url'   => get_term_link( $ancestor ),
+					);
+				}
+			}
+			$items[] = array( 'label' => $term->name );
+		}
+	} elseif ( is_singular() ) {
+		$post = get_queried_object();
+		if ( $post instanceof WP_Post ) {
+			if ( 'page' === $post->post_type ) {
+				$ancestor_ids = array_reverse( get_post_ancestors( $post ) );
+				foreach ( $ancestor_ids as $ancestor_id ) {
+					$items[] = array(
+						'label' => get_the_title( $ancestor_id ),
+						'url'   => get_permalink( $ancestor_id ),
+					);
+				}
+			} elseif ( 'post' === $post->post_type ) {
+				$posts_page_id = (int) get_option( 'page_for_posts' );
+				$items[]       = array(
+					'label' => $posts_page_id ? get_the_title( $posts_page_id ) : __( 'お知らせ', 'buybuycoms-hobby' ),
+					'url'   => $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '/' ),
+				);
+			} else {
+				$post_type = get_post_type_object( $post->post_type );
+				$archive   = get_post_type_archive_link( $post->post_type );
+				if ( $post_type instanceof WP_Post_Type && $archive ) {
+					$items[] = array(
+						'label' => $post_type->labels->name,
+						'url'   => $archive,
+					);
+				}
+			}
+			$items[] = array( 'label' => get_the_title( $post ) );
+		}
+	} elseif ( is_search() ) {
+		$items[] = array( 'label' => sprintf( __( '「%s」の検索結果', 'buybuycoms-hobby' ), get_search_query() ) );
+	} elseif ( is_404() ) {
+		$items[] = array( 'label' => __( 'ページが見つかりません', 'buybuycoms-hobby' ) );
+	}
+	$last_index = count( $items ) - 1;
+	?>
+	<nav class="<?php echo esc_attr( $nav_class ); ?>" aria-label="<?php esc_attr_e( 'パンくずリスト', 'buybuycoms-hobby' ); ?>">
+		<ol class="<?php echo esc_attr( $list_class ); ?>">
+			<?php foreach ( $items as $index => $item ) : ?>
+				<?php if ( 0 !== $index ) : ?>
+					<li class="<?php echo esc_attr( $separator_class ); ?>" aria-hidden="true">&gt;</li>
+				<?php endif; ?>
+				<li class="<?php echo esc_attr( $index === $last_index ? $current_class : $item_class ); ?>"<?php echo $index === $last_index ? ' aria-current="page"' : ''; ?>>
+					<?php if ( ! empty( $item['url'] ) && $index !== $last_index ) : ?>
+						<a class="<?php echo esc_attr( $link_class ); ?>" href="<?php echo esc_url( $item['url'] ); ?>"><?php echo esc_html( $item['label'] ); ?></a>
+					<?php else : ?>
+						<?php echo esc_html( $item['label'] ); ?>
+					<?php endif; ?>
+				</li>
+			<?php endforeach; ?>
+		</ol>
+	</nav>
+	<?php
+}
+
+/**
+ * Output the static branded logo.
  *
  * @return void
  */
 function buybuycoms_hobby_brand() {
-	if ( has_custom_logo() ) {
-		the_custom_logo();
-		return;
-	}
 	?>
 	<a class="hb__c-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 		<span class="hb__c-brand__mark" aria-hidden="true">
@@ -104,8 +195,8 @@ function buybuycoms_hobby_brand() {
 			/>
 		</span>
 		<span class="hb__c-brand__text">
-			<span class="hb__c-brand__name"><?php bloginfo( 'name' ); ?></span>
-			<span class="hb__c-brand__sub"><?php bloginfo( 'description' ); ?></span>
+			<span class="hb__c-brand__name">売買コムズ</span>
+			<span class="hb__c-brand__sub">hobbyベース</span>
 		</span>
 	</a>
 	<?php

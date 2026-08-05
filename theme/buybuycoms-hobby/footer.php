@@ -76,7 +76,7 @@
 
 	<div class="hb__p-footer__legal">
 		<div class="hb__l-container hb__p-footer__legal-inner">
-			<span>古物商許可番号：東京都公安委員会 第◯◯◯◯◯◯◯号</span>
+			<span>兵庫県公安委員会 第631331400008号</span>
 			<span class="hb__p-footer__dot" aria-hidden="true"></span>
 			<span>© <?php echo esc_html( wp_date( 'Y' ) ); ?> BaiBaiComs Inc. All rights reserved.</span>
 		</div>

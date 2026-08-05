@@ -100,7 +100,7 @@
               <div class="hb__p-flow-action">
                 <a
                   class="hb__c-btn hb__c-btn--primary hb__c-btn--lg hb__p-flow-button"
-                  href="<?php echo esc_url( home_url( '/contact/?type=takuhai' ) ); ?>"
+                  href="<?php echo esc_url( add_query_arg( 'type', 'takuhai', home_url( '/contact/' ) ) ); ?>"
                 >
                   宅配買取を依頼する
                 </a>
@@ -162,7 +162,7 @@
               <div class="hb__p-flow-action">
                 <a
                   class="hb__c-btn hb__c-btn--primary hb__c-btn--lg hb__p-flow-button"
-                  href="<?php echo esc_url( home_url( '/contact/?type=shuccho' ) ); ?>"
+                  href="<?php echo esc_url( add_query_arg( 'type', 'shuccho', home_url( '/contact/' ) ) ); ?>"
                 >
                   出張買取を依頼する
                 </a>
@@ -224,7 +224,7 @@
               <div class="hb__p-flow-action">
                 <a
                   class="hb__c-btn hb__c-btn--primary hb__c-btn--lg hb__p-flow-button"
-                  href="<?php echo esc_url( home_url( '/contact/?type=mochikomi' ) ); ?>"
+                  href="<?php echo esc_url( add_query_arg( 'type', 'mochikomi', home_url( '/contact/' ) ) ); ?>"
                 >
                   店頭買取を依頼する
                 </a>

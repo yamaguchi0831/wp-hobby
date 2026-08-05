@@ -93,7 +93,7 @@ function buybuycoms_hobby_sanitize_contact_settings( $settings ) {
 function buybuycoms_hobby_add_contact_settings_page() {
 	add_menu_page(
 		__( 'お問い合わせフォーム', 'buybuycoms-hobby' ),
-		__( 'お問い合わせフォーム', 'buybuycoms-hobby' ),
+		__( '問合せフォーム', 'buybuycoms-hobby' ),
 		'manage_options',
 		'buybuycoms-hobby-contact',
 		'buybuycoms_hobby_render_contact_settings_page',
@@ -211,6 +211,17 @@ function buybuycoms_hobby_contact_page_url() {
 	$page = get_page_by_path( 'contact' );
 
 	return $page ? get_permalink( $page ) : home_url( '/contact/' );
+}
+
+/**
+ * Get the thank-you page URL when the corresponding page exists.
+ *
+ * @return string
+ */
+function buybuycoms_hobby_thanks_page_url() {
+	$page = get_page_by_path( 'thanks' );
+
+	return $page ? get_permalink( $page ) : '';
 }
 
 /**
@@ -427,7 +438,7 @@ function buybuycoms_hobby_handle_contact_form() {
 		array( 'Content-Type: text/plain; charset=UTF-8' )
 	);
 
-	$redirect = (int) $settings['redirect_page_id'] ? get_permalink( (int) $settings['redirect_page_id'] ) : buybuycoms_hobby_contact_page_url();
+	$redirect = (int) $settings['redirect_page_id'] ? get_permalink( (int) $settings['redirect_page_id'] ) : buybuycoms_hobby_thanks_page_url();
 	wp_safe_redirect( add_query_arg( 'contact_status', 'sent', $redirect ? $redirect : buybuycoms_hobby_contact_page_url() ), 303 );
 	exit;
 }
