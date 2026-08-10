@@ -55,3 +55,13 @@ function buybuycoms_hobby_setup() {
 	);
 }
 add_action( 'after_setup_theme', 'buybuycoms_hobby_setup' );
+
+/**
+ * Hide the comments menu from the WordPress admin navigation.
+ *
+ * @return void
+ */
+function buybuycoms_hobby_hide_comments_menu() {
+	remove_menu_page( 'edit-comments.php' );
+}
+add_action( 'admin_menu', 'buybuycoms_hobby_hide_comments_menu', 999 );

@@ -34,6 +34,10 @@ $genre_terms = buybuycoms_hobby_sort_genre_terms( $genre_terms );
 		$genre_excerpt = function_exists( 'get_field' )
 			? get_field( 'genre-excerpt', $genre_context )
 			: get_term_meta( $genre_term->term_id, 'genre-excerpt', true );
+		$genre_badge1_flag = function_exists( 'get_field' )
+			? get_field( 'genre-badge1-flag', $genre_context )
+			: get_term_meta( $genre_term->term_id, 'genre-badge1-flag', true );
+		$genre_has_badge1 = (bool) $genre_badge1_flag;
 		$genre_image   = '';
 		$genre_alt     = $genre_term->name;
 
@@ -78,6 +82,9 @@ $genre_terms = buybuycoms_hobby_sort_genre_terms( $genre_terms );
 		}
 		?>
 		<a href="<?php echo esc_url( $genre_link ); ?>" class="hb__p-cat">
+			<?php if ( $genre_has_badge1 ) : ?>
+				<span class="hb__p-cat__badge">強化中</span>
+			<?php endif; ?>
 			<?php if ( $genre_image ) : ?>
 				<?php echo wp_kses_post( $genre_image ); ?>
 			<?php else : ?>

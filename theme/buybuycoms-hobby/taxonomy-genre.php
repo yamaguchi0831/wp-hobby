@@ -297,6 +297,7 @@ if ( is_string( $genre_faq_json ) && '' !== trim( $genre_faq_json ) ) {
         </div>
       </section>
 
+      <?php if ( false ) : // 買取強化中のアイテムは非表示。 ?>
       <section class="hb__l-section hb-item-genre__p-featured" id="featured">
         <div class="hb__l-container">
           <div class="hb-item-genre__p-section-head">
@@ -459,6 +460,7 @@ if ( is_string( $genre_faq_json ) && '' !== trim( $genre_faq_json ) ) {
           </div>
         </div>
       </section>
+      <?php endif; ?>
 
       <div class="hb__l-container">
         <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
@@ -591,6 +593,7 @@ if ( is_string( $genre_faq_json ) && '' !== trim( $genre_faq_json ) ) {
         </section>
       <?php endif; ?>
 
+      <?php if ( false ) : // 対応メーカー、シリーズ一覧は非表示。 ?>
       <section class="hb__l-section hb-item-genre__p-maker" id="maker">
         <div class="hb__l-container">
           <div class="hb-item-genre__p-section-head">
@@ -623,6 +626,7 @@ if ( is_string( $genre_faq_json ) && '' !== trim( $genre_faq_json ) ) {
           </dl>
         </div>
       </section>
+      <?php endif; ?>
 
       <?php
       ob_start();

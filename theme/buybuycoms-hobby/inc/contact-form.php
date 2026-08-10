@@ -13,6 +13,7 @@
 function buybuycoms_hobby_contact_default_settings() {
 	return array(
 		'recipient'        => get_option( 'admin_email' ),
+		'auto_reply_from_name' => '売買コムズ hobbyベース',
 		'admin_subject'    => '[site_name] お問い合わせ',
 		'admin_body'       => "お問い合わせを受け付けました。\n\nお名前：[customer-name]\nメールアドレス：[mailaddress]\n住所：[address]\n電話番号：[telephone]\n買取方法：[inq-type]\n買取点数・物量：[purchase-quantity]\nダンボールの準備：[box-preparation]\n希望ダンボール：Sサイズ：[box-s] / Mサイズ：[box-m] / Lサイズ：[box-l] / LLサイズ：[box-ll]\n第1希望日：[preferred-date-1]\n第1希望時間：[preferred-time-1]\n第2希望日：[preferred-date-2]\n第2希望時間：[preferred-time-2]\n第3希望日：[preferred-date-3]\n第3希望時間：[preferred-time-3]\n\nお問い合わせ内容：\n[body]",
 		'auto_reply_subject' => '[site_name] お問い合わせありがとうございます',
@@ -69,14 +70,19 @@ function buybuycoms_hobby_sanitize_contact_settings( $settings ) {
 	$defaults = buybuycoms_hobby_contact_default_settings();
 	$settings = is_array( $settings ) ? $settings : array();
 	$recipient = isset( $settings['recipient'] ) ? sanitize_email( wp_unslash( $settings['recipient'] ) ) : '';
+	$auto_reply_from_name = isset( $settings['auto_reply_from_name'] ) ? sanitize_text_field( wp_unslash( $settings['auto_reply_from_name'] ) ) : '';
 
 	if ( ! is_email( $recipient ) ) {
 		add_settings_error( 'buybuycoms_hobby_contact_settings', 'invalid-recipient', __( '送信先メールアドレスを正しく入力してください。', 'buybuycoms-hobby' ) );
 		$recipient = $defaults['recipient'];
 	}
+	if ( '' === $auto_reply_from_name ) {
+		$auto_reply_from_name = $defaults['auto_reply_from_name'];
+	}
 
 	return array(
 		'recipient'          => $recipient,
+		'auto_reply_from_name' => $auto_reply_from_name,
 		'admin_subject'      => isset( $settings['admin_subject'] ) ? sanitize_text_field( wp_unslash( $settings['admin_subject'] ) ) : $defaults['admin_subject'],
 		'admin_body'         => isset( $settings['admin_body'] ) ? sanitize_textarea_field( wp_unslash( $settings['admin_body'] ) ) : $defaults['admin_body'],
 		'auto_reply_subject' => isset( $settings['auto_reply_subject'] ) ? sanitize_text_field( wp_unslash( $settings['auto_reply_subject'] ) ) : $defaults['auto_reply_subject'],
@@ -171,6 +177,13 @@ function buybuycoms_hobby_render_contact_settings_page() {
 					<td>
 						<?php buybuycoms_hobby_contact_render_mail_tags(); ?>
 						<textarea class="large-text" id="hb-contact-admin-body" name="buybuycoms_hobby_contact_settings[admin_body]" rows="14" required><?php echo esc_textarea( $settings['admin_body'] ); ?></textarea>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="hb-contact-auto-reply-from-name"><?php esc_html_e( '入力者宛メールの送信者名', 'buybuycoms-hobby' ); ?></label></th>
+					<td>
+						<input class="regular-text" id="hb-contact-auto-reply-from-name" name="buybuycoms_hobby_contact_settings[auto_reply_from_name]" type="text" value="<?php echo esc_attr( $settings['auto_reply_from_name'] ); ?>" required />
+						<p class="description"><?php esc_html_e( '入力者宛メールに表示する差出人名です。差出人メールアドレスはWordPressまたはSMTPの設定を使用します。', 'buybuycoms-hobby' ); ?></p>
 					</td>
 				</tr>
 				<tr>
@@ -270,6 +283,17 @@ function buybuycoms_hobby_contact_post_value( $values, $key ) {
  */
 function buybuycoms_hobby_contact_string_length( $value ) {
 	return function_exists( 'mb_strlen' ) ? mb_strlen( $value, 'UTF-8' ) : strlen( $value );
+}
+
+/**
+ * Set the sender name for the contact-form auto-reply only.
+ *
+ * @return string
+ */
+function buybuycoms_hobby_contact_auto_reply_from_name() {
+	$settings = buybuycoms_hobby_contact_settings();
+
+	return $settings['auto_reply_from_name'];
 }
 
 /**
@@ -431,12 +455,14 @@ function buybuycoms_hobby_handle_contact_form() {
 	}
 
 	set_transient( $rate_key, (int) get_transient( $rate_key ) + 1, 10 * MINUTE_IN_SECONDS );
+	add_filter( 'wp_mail_from_name', 'buybuycoms_hobby_contact_auto_reply_from_name' );
 	wp_mail(
 		$values['email'],
 		buybuycoms_hobby_contact_replace_placeholders( $settings['auto_reply_subject'], $values ),
 		buybuycoms_hobby_contact_replace_placeholders( $settings['auto_reply_body'], $values ),
 		array( 'Content-Type: text/plain; charset=UTF-8' )
 	);
+	remove_filter( 'wp_mail_from_name', 'buybuycoms_hobby_contact_auto_reply_from_name' );
 
 	$redirect = (int) $settings['redirect_page_id'] ? get_permalink( (int) $settings['redirect_page_id'] ) : buybuycoms_hobby_thanks_page_url();
 	wp_safe_redirect( add_query_arg( 'contact_status', 'sent', $redirect ? $redirect : buybuycoms_hobby_contact_page_url() ), 303 );
