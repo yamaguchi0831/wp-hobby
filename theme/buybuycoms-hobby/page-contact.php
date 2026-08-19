@@ -464,16 +464,63 @@ $requested_purchase_type = in_array( $requested_purchase_type, array( 'takuhai',
                   ></span>
                 </div>
                 <div>
-                  <label class="hb__p-form__label" for="customer-address">
-                    ご住所
+                  <label class="hb__p-form__label" for="customer-postal-code">
+                    郵便番号
                     <span class="hb__p-form__required">必須</span>
                   </label>
                   <input
-                    id="customer-address"
+                    id="customer-postal-code"
                     type="text"
-                    name="customer_address"
-                    autocomplete="street-address"
+                    name="customer_postal_code"
+                    autocomplete="postal-code"
+                    inputmode="numeric"
+                    maxlength="7"
+                    placeholder="例：1000001"
+                    aria-describedby="customer-postal-code-status customer-postal-code-error"
                     required
+                  />
+                  <p class="hb__p-form__postal-status" id="customer-postal-code-status" aria-live="polite" hidden></p>
+                  <span
+                    class="hb__p-form__field-error"
+                    id="customer-postal-code-error"
+                    data-field-error="customer_postal_code"
+                    hidden
+                  ></span>
+                </div>
+                <div>
+                  <label class="hb__p-form__label" for="customer-address-locality">
+                    都道府県・市区町村
+                    <span class="hb__p-form__required">必須</span>
+                  </label>
+                  <input
+                    id="customer-address-locality"
+                    type="text"
+                    name="customer_address_locality"
+                    autocomplete="address-level1"
+                    placeholder="郵便番号から自動入力されます"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="hb__p-form__label" for="customer-address-street">
+                    番地
+                    <span class="hb__p-form__required">必須</span>
+                  </label>
+                  <input
+                    id="customer-address-street"
+                    type="text"
+                    name="customer_address_street"
+                    autocomplete="address-line1"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="hb__p-form__label" for="customer-address-building">建物名・部屋番号</label>
+                  <input
+                    id="customer-address-building"
+                    type="text"
+                    name="customer_address_building"
+                    autocomplete="address-line2"
                   />
                 </div>
                 <div>

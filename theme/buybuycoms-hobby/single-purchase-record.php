@@ -8,6 +8,8 @@
 $purchase_record_id = get_the_ID();
 $item_image         = function_exists( 'get_field' ) ? get_field( 'item-image', $purchase_record_id ) : false;
 $item_price         = function_exists( 'get_field' ) ? get_field( 'item-price', $purchase_record_id ) : false;
+$item_purchase_date = function_exists( 'get_field' ) ? get_field( 'item-purchase-date', $purchase_record_id ) : false;
+$item_purchase_area = function_exists( 'get_field' ) ? get_field( 'item-purchase-area', $purchase_record_id ) : false;
 
 if ( false === $item_image || '' === $item_image || null === $item_image ) {
 	$item_image = get_post_meta( $purchase_record_id, 'item-image', true );
@@ -15,6 +17,14 @@ if ( false === $item_image || '' === $item_image || null === $item_image ) {
 
 if ( false === $item_price || '' === $item_price || null === $item_price ) {
 	$item_price = get_post_meta( $purchase_record_id, 'item-price', true );
+}
+
+if ( false === $item_purchase_date || '' === $item_purchase_date || null === $item_purchase_date ) {
+	$item_purchase_date = get_post_meta( $purchase_record_id, 'item-purchase-date', true );
+}
+
+if ( false === $item_purchase_area || '' === $item_purchase_area || null === $item_purchase_area ) {
+	$item_purchase_area = get_post_meta( $purchase_record_id, 'item-purchase-area', true );
 }
 
 $item_image_markup = '';
@@ -26,6 +36,8 @@ $genre_names       = array();
 $small_genre_names = array();
 $default_genre_id  = 0;
 $post_content      = get_post_field( 'post_content', $purchase_record_id );
+$purchase_date     = is_scalar( $item_purchase_date ) ? trim( (string) $item_purchase_date ) : '';
+$purchase_area     = is_scalar( $item_purchase_area ) ? trim( (string) $item_purchase_area ) : '';
 
 if ( '' !== $numeric_price && ctype_digit( $numeric_price ) ) {
 	$price = number_format_i18n( (int) $numeric_price ) . '円';
@@ -128,9 +140,11 @@ get_header();
                   </span>
                 </div>
               <?php endif; ?>
-              <p class="hb-single-purchase-record__p-location">
-                2026/7/25 神奈川県で宅配買取
-              </p>
+              <?php if ( '' !== $purchase_date && '' !== $purchase_area ) : ?>
+                <p class="hb-single-purchase-record__p-location">
+                  <?php echo esc_html( $purchase_date . ' ' . $purchase_area . 'で宅配買取' ); ?>
+                </p>
+              <?php endif; ?>
               <a
                 class="hb-single-purchase-record__p-cta"
                 href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"

@@ -17,6 +17,11 @@
         const messageField = form.elements.message;
         const emailField = form.elements.customer_email;
         const telField = form.elements.customer_tel;
+        const postalCodeField = form.elements.customer_postal_code;
+        const localityField = form.elements.customer_address_locality;
+        const postalStatus = document.querySelector(
+          "#customer-postal-code-status",
+        );
         const fieldErrors = Object.fromEntries(
           [...form.querySelectorAll("[data-field-error]")].map((error) => [
             error.dataset.fieldError,
@@ -44,7 +49,9 @@
           customer: [
             "customer_name",
             "customer_email",
-            "customer_address",
+            "customer_postal_code",
+            "customer_address_locality",
+            "customer_address_street",
             "customer_tel",
             "agreement",
           ],
@@ -124,6 +131,9 @@
             String.fromCharCode(char.charCodeAt(0) - 0xfee0),
           );
 
+        const normalizePostalCode = (value) =>
+          toHalfWidthNumber(value).replace(/[^0-9]/g, "");
+
         const setFieldError = (field, message) => {
           const error = fieldErrors[field.name];
           field.setCustomValidity(message);
@@ -170,10 +180,78 @@
           return isValid;
         };
 
+        const setPostalStatus = (message, isError = false) => {
+          if (!postalStatus) return;
+          postalStatus.textContent = message;
+          postalStatus.hidden = !message;
+          postalStatus.classList.toggle(
+            "hb__p-form__postal-status--error",
+            isError,
+          );
+        };
+
+        const validatePostalCode = () => {
+          const normalized = normalizePostalCode(postalCodeField.value);
+          postalCodeField.value = normalized;
+          if (!normalized) {
+            setFieldError(postalCodeField, "");
+            return true;
+          }
+          const message = "郵便番号は7桁の数字で入力してください。";
+          const isValid = /^\d{7}$/.test(normalized);
+          setFieldError(postalCodeField, isValid ? "" : message);
+          return isValid;
+        };
+
+        let postalLookupTimer;
+        let postalLookupRequest = 0;
+
+        const lookupPostalCode = async () => {
+          if (!validatePostalCode() || 7 !== postalCodeField.value.length) return;
+
+          const requestId = ++postalLookupRequest;
+          setPostalStatus("住所を検索しています。");
+
+          try {
+            const response = await fetch(
+              `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${encodeURIComponent(postalCodeField.value)}`,
+            );
+            if (!response.ok) throw new Error("Postal code lookup failed.");
+
+            const data = await response.json();
+            if (requestId !== postalLookupRequest) return;
+
+            const result = Array.isArray(data.results) ? data.results[0] : null;
+            if (!result) {
+              setPostalStatus(
+                "住所を取得できませんでした。都道府県・市区町村を直接入力してください。",
+                true,
+              );
+              return;
+            }
+
+            localityField.value = [
+              result.address1,
+              result.address2,
+              result.address3,
+            ]
+              .filter(Boolean)
+              .join("");
+            setPostalStatus("都道府県・市区町村を自動入力しました。");
+          } catch (error) {
+            if (requestId !== postalLookupRequest) return;
+            setPostalStatus(
+              "住所を取得できませんでした。都道府県・市区町村を直接入力してください。",
+              true,
+            );
+          }
+        };
+
         const validateContactFields = () => {
           const isEmailValid = validateEmail();
           const isTelValid = validateTel();
-          return isEmailValid && isTelValid;
+          const isPostalCodeValid = validatePostalCode();
+          return isEmailValid && isTelValid && isPostalCodeValid;
         };
 
         const setMessagePlaceholder = (type) => {
@@ -376,6 +454,22 @@
 
         emailField.addEventListener("blur", validateEmail);
         telField.addEventListener("blur", validateTel);
+        postalCodeField.addEventListener("input", () => {
+          postalCodeField.value = normalizePostalCode(postalCodeField.value);
+          clearTimeout(postalLookupTimer);
+          if (7 !== postalCodeField.value.length) {
+            setPostalStatus("");
+            validatePostalCode();
+            return;
+          }
+          postalLookupTimer = setTimeout(lookupPostalCode, 300);
+        });
+        postalCodeField.addEventListener("blur", () => {
+          clearTimeout(postalLookupTimer);
+          if (validatePostalCode() && 7 === postalCodeField.value.length) {
+            lookupPostalCode();
+          }
+        });
 
         modal.addEventListener("click", (event) => {
           const selectTypeLink = event.target.closest("[data-select-type]");

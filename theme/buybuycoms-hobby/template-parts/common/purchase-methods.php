@@ -4,15 +4,35 @@
  *
  * @package BuyBuyComs_Hobby
  */
+
+$purchase_methods_variant = isset( $args['variant'] ) && in_array( $args['variant'], array( 'column-tabs', 'column-auto-tabs' ), true ) ? $args['variant'] : 'default';
+$purchase_methods_class   = 'hb__p-method-ui hb__p-method--tabs';
+$purchase_methods_instance = isset( $args['instance'] ) ? sanitize_key( $args['instance'] ) : 'default';
+
+if ( '' === $purchase_methods_instance ) {
+	$purchase_methods_instance = 'default';
+}
+
+$purchase_methods_title_id = 'hb-column-methods-title-' . $purchase_methods_instance;
+
+if ( 'default' !== $purchase_methods_variant ) {
+	$purchase_methods_class .= ' hb__p-method-ui--' . $purchase_methods_variant;
+}
 ?>
-<div class="hb__p-method-ui hb__p-method--tabs">
+<?php if ( 'default' !== $purchase_methods_variant ) : ?>
+  <section class="hb__p-column-methods" aria-labelledby="<?php echo esc_attr( $purchase_methods_title_id ); ?>">
+    <h2 class="hb__p-column-methods__title" id="<?php echo esc_attr( $purchase_methods_title_id ); ?>">
+      <?php esc_html_e( 'あなたに合わせて選べる、3つの買取方法', 'buybuycoms-hobby' ); ?>
+    </h2>
+<?php endif; ?>
+<div class="<?php echo esc_attr( $purchase_methods_class ); ?>">
   <div class="hb__p-method-tabs" role="tablist" aria-label="買取方法を選択">
     <button
       class="hb__p-method-tab hb__is-active"
       type="button"
       role="tab"
-      id="method-tab-takuhai"
-      aria-controls="method-panel-takuhai"
+      id="method-tab-takuhai-<?php echo esc_attr( $purchase_methods_instance ); ?>"
+      aria-controls="method-panel-takuhai-<?php echo esc_attr( $purchase_methods_instance ); ?>"
       aria-selected="true"
       data-method-tab="takuhai"
     >
@@ -22,8 +42,8 @@
       class="hb__p-method-tab"
       type="button"
       role="tab"
-      id="method-tab-shuccho"
-      aria-controls="method-panel-shuccho"
+      id="method-tab-shuccho-<?php echo esc_attr( $purchase_methods_instance ); ?>"
+      aria-controls="method-panel-shuccho-<?php echo esc_attr( $purchase_methods_instance ); ?>"
       aria-selected="false"
       data-method-tab="shuccho"
     >
@@ -33,8 +53,8 @@
       class="hb__p-method-tab"
       type="button"
       role="tab"
-      id="method-tab-store"
-      aria-controls="method-panel-store"
+      id="method-tab-store-<?php echo esc_attr( $purchase_methods_instance ); ?>"
+      aria-controls="method-panel-store-<?php echo esc_attr( $purchase_methods_instance ); ?>"
       aria-selected="false"
       data-method-tab="store"
     >
@@ -44,9 +64,9 @@
   <div class="hb__p-method-grid">
     <article
       class="hb__p-method-card hb__is-active"
-      id="method-panel-takuhai"
+      id="method-panel-takuhai-<?php echo esc_attr( $purchase_methods_instance ); ?>"
       role="tabpanel"
-      aria-labelledby="method-tab-takuhai"
+      aria-labelledby="method-tab-takuhai-<?php echo esc_attr( $purchase_methods_instance ); ?>"
       data-method-panel="takuhai"
     >
       <figure class="hb__p-method-image">
@@ -73,9 +93,9 @@
     </article>
     <article
       class="hb__p-method-card"
-      id="method-panel-shuccho"
+      id="method-panel-shuccho-<?php echo esc_attr( $purchase_methods_instance ); ?>"
       role="tabpanel"
-      aria-labelledby="method-tab-shuccho"
+      aria-labelledby="method-tab-shuccho-<?php echo esc_attr( $purchase_methods_instance ); ?>"
       data-method-panel="shuccho"
     >
       <figure class="hb__p-method-image">
@@ -101,9 +121,9 @@
     </article>
     <article
       class="hb__p-method-card"
-      id="method-panel-store"
+      id="method-panel-store-<?php echo esc_attr( $purchase_methods_instance ); ?>"
       role="tabpanel"
-      aria-labelledby="method-tab-store"
+      aria-labelledby="method-tab-store-<?php echo esc_attr( $purchase_methods_instance ); ?>"
       data-method-panel="store"
     >
       <figure class="hb__p-method-image">
@@ -129,3 +149,6 @@
     </article>
   </div>
 </div>
+<?php if ( 'default' !== $purchase_methods_variant ) : ?>
+  </section>
+<?php endif; ?>

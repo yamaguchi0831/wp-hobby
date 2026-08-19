@@ -136,8 +136,8 @@ function buybuycoms_hobby_purchase_price_csv_price( $value ) {
 	}
 
 	$price = (int) $numeric;
-	if ( $price < 1000 || $price > 10000000 ) {
-		return new WP_Error( 'price_out_of_range', __( '金額は1,000円以上10,000,000円以下で入力してください。', 'buybuycoms-hobby' ) );
+	if ( $price < 50 || $price > 10000000 ) {
+		return new WP_Error( 'price_out_of_range', __( '金額は50円以上10,000,000円以下で入力してください。', 'buybuycoms-hobby' ) );
 	}
 
 	return $price;
@@ -542,7 +542,7 @@ function buybuycoms_hobby_render_purchase_price_csv_page() {
 
 		<h2><?php esc_html_e( '2. CSVを検証', 'buybuycoms-hobby' ); ?></h2>
 		<p><?php esc_html_e( '新規作成する場合は行を追加し、post_idを空欄にして、タイトル、既存genre名、フラグ、価格を入力してください。複数genreは「 | 」で区切ります。新規投稿は公開状態で作成されます。', 'buybuycoms-hobby' ); ?></p>
-		<p><?php esc_html_e( '空欄の価格はASKとして扱います。入力する場合は1,000円以上10,000,000円以下にしてください。エラーが1件でもあるCSVは更新・新規作成できません。', 'buybuycoms-hobby' ); ?></p>
+		<p><?php esc_html_e( '空欄の価格はASKとして扱います。入力する場合は50円以上10,000,000円以下にしてください。エラーが1件でもあるCSVは更新・新規作成できません。', 'buybuycoms-hobby' ); ?></p>
 		<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" enctype="multipart/form-data" method="post">
 			<input type="hidden" name="action" value="buybuycoms_hobby_upload_purchase_price_csv" />
 			<?php wp_nonce_field( 'buybuycoms_hobby_upload_purchase_price_csv' ); ?>

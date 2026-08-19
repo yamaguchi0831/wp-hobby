@@ -626,3 +626,115 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/page-contact.php`、`theme/buybuycoms-hobby/asset/css/page-static.css`、`theme/buybuycoms-hobby/images/icon/icon-link.svg`、`WORK-LOG.md`
 - 未完了事項: WordPress実行環境でのリンク遷移・PC／モバイル表示確認。
 - 次回の着手点: 同意文のリンクとアイコン、チェックボックス操作が自然に機能することを確認する。
+
+## 2026-08-19 フォームに郵便番号検索と分割住所入力を追加
+
+- 状態: 完了
+- 実施内容: お客様情報に郵便番号、都道府県・市区町村、番地、建物名・部屋番号を追加。郵便番号7桁入力時はzipcloud APIで町域まで含む住所を自動入力し、失敗時は手入力できるようにした。サーバー側の入力検証、管理者宛・自動返信メール、メールタグも分割住所へ対応した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/page-contact.php`、`theme/buybuycoms-hobby/asset/js/pages/page-contact.js`、`theme/buybuycoms-hobby/asset/css/page-static.css`、`theme/buybuycoms-hobby/inc/contact-form.php`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境での郵便番号検索、送信、管理者宛・自動返信メールの実機確認。
+- 次回の着手点: 有効・無効郵便番号、住所の手入力、住所未入力、メール本文の各住所項目を確認する。
+
+## 2026-08-19 郵便番号欄の表示幅を調整
+
+- 状態: 完了
+- 実施内容: お問い合わせフォームの郵便番号入力欄だけを `8em` 幅にし、他の入力欄の全幅表示は維持した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/page-static.css`、`WORK-LOG.md`
+- 未完了事項: ブラウザでの最終表示確認。
+- 次回の着手点: 郵便番号入力欄がPC・モバイルで意図した幅になっていることを確認する。
+
+## 2026-08-19 郵便番号欄を縦並びへ調整
+
+- 状態: 完了
+- 実施内容: 郵便番号入力欄をブロック要素に変更し、ラベルの下に表示されるようにした。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/page-static.css`、`WORK-LOG.md`
+- 未完了事項: ブラウザでの最終表示確認。
+- 次回の着手点: 郵便番号入力欄がラベルの下に表示されることをPC・モバイルで確認する。
+
+## 2026-08-19 郵便番号欄の幅を再調整
+
+- 状態: 完了
+- 実施内容: 郵便番号欄のプレースホルダーが見切れないよう、入力欄の幅を `8em` から `10em` へ変更した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/page-static.css`、`WORK-LOG.md`
+- 未完了事項: ブラウザでの最終表示確認。
+- 次回の着手点: 郵便番号のプレースホルダーがPC・モバイルで見切れないことを確認する。
+
+## 2026-08-19 本番環境での郵便番号検索の動作条件を確認
+
+- 状態: 確認完了
+- 実施内容: お問い合わせページで郵便番号検索用JavaScriptがenqueueされることを確認。zipcloud APIは7桁郵便番号と住所フィールドを提供し、API応答に`Access-Control-Allow-Origin: *`が付くことを確認した。
+- 主な変更ファイル: `WORK-LOG.md`
+- 未完了事項: 本番環境での実機確認。
+- 次回の着手点: 本番公開後に、有効な郵便番号で住所が自動入力されることを確認する。
+
+## 2026-08-19 買取価格CSVの最低金額を変更
+
+- 状態: 完了
+- 実施内容: 買取価格CSV一括更新・新規登録の入力可能な最低金額を1,000円から50円へ変更し、管理画面の注意書きとバリデーションエラー文も更新した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/inc/purchase-price-csv.php`、`WORK-LOG.md`
+- 未完了事項: WordPress管理画面でのCSV実機確認。
+- 次回の着手点: 50円、49円、空欄（ASK）のCSVをそれぞれ検証する。
+
+## 2026-08-19 買取実績カードに地域表示を追加
+
+- 状態: 完了
+- 実施内容: 買取実績カードに投稿日時を `Y/n/j` 形式で表示し、直後にカスタムフィールド `item-purchase-date` の値と「で買取」を続ける表示へ変更した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/purchase-records.php`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境での実データ表示確認。
+- 次回の着手点: `item-purchase-date` に都道府県を設定した実績カードが「2026/7/27 千葉県で買取」と表示されることを確認する。
+
+## 2026-08-19 買取実績カードの地域フィールドを訂正
+
+- 状態: 完了
+- 実施内容: 買取地域の取得元を誤っていた `item-purchase-date` から、正しいカスタムフィールド `item-purchase-area` へ変更した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/purchase-records.php`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境での実データ表示確認。
+- 次回の着手点: `item-purchase-area` に都道府県を設定した実績カードが「2026/7/27 千葉県で買取」と表示されることを確認する。
+
+## 2026-08-19 買取実績詳細の日時・地域表示を動的化
+
+- 状態: 完了
+- 実施内容: 買取実績詳細の固定文言を、`item-purchase-date` と `item-purchase-area` のカスタムフィールドによる「日付 地域で宅配買取」表示へ変更した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/single-purchase-record.php`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境での実データ表示確認。
+- 次回の着手点: 両フィールドを設定した買取実績詳細で表示内容を確認する。
+
+## 2026-08-19 コラム用の買取方法コンポーネント確認ページを追加
+
+- 状態: 完了
+- 実施内容: TOPで利用している買取方法パーツにコラム用バリエーションを追加。635px幅ではタブ＋選択中のカード1枚を表示し、見出しをコラム本文と同じ左ボーダー形式にした。確認用ページテンプレートも追加した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/purchase-methods.php`、`theme/buybuycoms-hobby/asset/css/component.css`、`theme/buybuycoms-hobby/asset/css/page-static.css`、`theme/buybuycoms-hobby/page-column-purchase-methods-preview.php`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境でのPC・モバイル表示確認。
+- 次回の着手点: 固定ページへ「コラム用買取方法コンポーネント確認」テンプレートを設定し、カード幅とタブ操作を確認する。
+
+## 2026-08-19 コラム用買取方法コンポーネントの表示パターンを追加
+
+- 状態: 完了
+- 実施内容: 常時タブ表示パターンの最大幅を400pxにして中央揃えへ変更。あわせて、親ボックス幅が450px未満の場合だけタブ表示に切り替わるカード一覧優先パターンを確認ページへ追加した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/purchase-methods.php`、`theme/buybuycoms-hobby/asset/css/component.css`、`theme/buybuycoms-hobby/page-column-purchase-methods-preview.php`、`theme/buybuycoms-hobby/asset/css/page-static.css`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境でのPC・モバイル表示確認。
+- 次回の着手点: 確認ページで400pxのタブ表示と、450px境界での一覧・タブ切替を確認する。
+
+## 2026-08-19 カード一覧優先パターンを3列表示へ変更
+
+- 状態: 完了
+- 実施内容: コラム用のカード一覧優先パターンで、親ボックス幅が450px以上の場合は買取方法カードを横3列で表示するように変更した。450px未満では従来どおりタブ＋1枚表示へ切り替わる。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/component.css`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境での境界幅表示確認。
+- 次回の着手点: 確認ページで450px以上の3列表示と、450px未満のタブ表示を確認する。
+
+## 2026-08-19 コラム用買取方法の細幅3列カードを調整
+
+- 状態: 完了
+- 実施内容: 450px以上の3列表示時だけ、カード間隔・内側余白・文字サイズを細幅向けに調整し、本文・リスト・ボタンの折返しを許可した。縦長でも内容が切れずに表示されるようにした。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/component.css`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境での3列表示の視覚確認。
+- 次回の着手点: 450px以上でカード内テキストとボタンが切れず、450px未満でタブ表示に切り替わることを確認する。
+
+## 2026-08-19 コラム用買取方法を動的ブロックとして登録
+
+- 状態: 完了
+- 実施内容: ブロックエディターから挿入できる「買取方法（コラム用）」動的ブロックを追加。公開画面では既存の `column-auto-tabs` コンポーネントをPHPで出力し、編集画面では同じコンポーネントをプレビュー表示する。
+- 主な変更ファイル: `theme/buybuycoms-hobby/inc/blocks.php`、`theme/buybuycoms-hobby/asset/js/blocks/column-purchase-methods.js`、`theme/buybuycoms-hobby/functions.php`、`WORK-LOG.md`
+- 未完了事項: WordPress管理画面でのブロック挿入・公開画面でのタブ操作確認。
+- 次回の着手点: コラム投稿編集画面で「買取方法（コラム用）」を挿入し、プレビューと公開画面の表示を確認する。

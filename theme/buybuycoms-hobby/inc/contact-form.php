@@ -15,9 +15,9 @@ function buybuycoms_hobby_contact_default_settings() {
 		'recipient'        => get_option( 'admin_email' ),
 		'auto_reply_from_name' => '売買コムズ hobbyベース',
 		'admin_subject'    => '[site_name] お問い合わせ',
-		'admin_body'       => "お問い合わせを受け付けました。\n\nお名前：[customer-name]\nメールアドレス：[mailaddress]\n住所：[address]\n電話番号：[telephone]\n買取方法：[inq-type]\n買取点数・物量：[purchase-quantity]\nダンボールの準備：[box-preparation]\n希望ダンボール：Sサイズ：[box-s] / Mサイズ：[box-m] / Lサイズ：[box-l] / LLサイズ：[box-ll]\n第1希望日：[preferred-date-1]\n第1希望時間：[preferred-time-1]\n第2希望日：[preferred-date-2]\n第2希望時間：[preferred-time-2]\n第3希望日：[preferred-date-3]\n第3希望時間：[preferred-time-3]\n\nお問い合わせ内容：\n[body]",
+		'admin_body'       => "お問い合わせを受け付けました。\n\nお名前：[customer-name]\nメールアドレス：[mailaddress]\n郵便番号：[postal-code]\n都道府県・市区町村：[address-locality]\n番地：[address-street]\n建物名・部屋番号：[address-building]\n電話番号：[telephone]\n買取方法：[inq-type]\n買取点数・物量：[purchase-quantity]\nダンボールの準備：[box-preparation]\n希望ダンボール：Sサイズ：[box-s] / Mサイズ：[box-m] / Lサイズ：[box-l] / LLサイズ：[box-ll]\n第1希望日：[preferred-date-1]\n第1希望時間：[preferred-time-1]\n第2希望日：[preferred-date-2]\n第2希望時間：[preferred-time-2]\n第3希望日：[preferred-date-3]\n第3希望時間：[preferred-time-3]\n\nお問い合わせ内容：\n[body]",
 		'auto_reply_subject' => '[site_name] お問い合わせありがとうございます',
-		'auto_reply_body'  => "[customer-name]様\n\nお問い合わせありがとうございます。\n内容を確認のうえ、担当者よりご連絡いたします。\n\n--------------------\nお名前：[customer-name]\nメールアドレス：[mailaddress]\n電話番号：[telephone]\n住所：[address]\n買取方法：[inq-type]\n\nお問い合わせ内容\n[body]",
+		'auto_reply_body'  => "[customer-name]様\n\nお問い合わせありがとうございます。\n内容を確認のうえ、担当者よりご連絡いたします。\n\n--------------------\nお名前：[customer-name]\nメールアドレス：[mailaddress]\n郵便番号：[postal-code]\n都道府県・市区町村：[address-locality]\n番地：[address-street]\n建物名・部屋番号：[address-building]\n電話番号：[telephone]\n買取方法：[inq-type]\n\nお問い合わせ内容\n[body]",
 		'redirect_page_id' => '',
 	);
 }
@@ -31,12 +31,20 @@ function buybuycoms_hobby_contact_settings() {
 	$saved = get_option( 'buybuycoms_hobby_contact_settings', array() );
 	$saved = is_array( $saved ) ? $saved : array();
 	$legacy_admin_body = "お問い合わせを受け付けました。\n\nお名前: [name]\nメールアドレス: [email]\n住所: [address]\n電話番号: [tel]\n買取方法: [purchase_type]\n[details]\n\nお問い合わせ内容:\n[message]";
+	$previous_admin_body = "お問い合わせを受け付けました。\n\nお名前：[customer-name]\nメールアドレス：[mailaddress]\n住所：[address]\n電話番号：[telephone]\n買取方法：[inq-type]\n買取点数・物量：[purchase-quantity]\nダンボールの準備：[box-preparation]\n希望ダンボール：Sサイズ：[box-s] / Mサイズ：[box-m] / Lサイズ：[box-l] / LLサイズ：[box-ll]\n第1希望日：[preferred-date-1]\n第1希望時間：[preferred-time-1]\n第2希望日：[preferred-date-2]\n第2希望時間：[preferred-time-2]\n第3希望日：[preferred-date-3]\n第3希望時間：[preferred-time-3]\n\nお問い合わせ内容：\n[body]";
+	$previous_auto_reply_body = "[customer-name]様\n\nお問い合わせありがとうございます。\n内容を確認のうえ、担当者よりご連絡いたします。\n\n--------------------\nお名前：[customer-name]\nメールアドレス：[mailaddress]\n電話番号：[telephone]\n住所：[address]\n買取方法：[inq-type]\n\nお問い合わせ内容\n[body]";
 
 	if ( ! isset( $saved['auto_reply_body'] ) && isset( $saved['auto_reply'] ) && is_string( $saved['auto_reply'] ) ) {
 		$saved['auto_reply_body'] = $saved['auto_reply'];
 	}
 	if ( isset( $saved['admin_body'] ) && $legacy_admin_body === str_replace( "\r\n", "\n", $saved['admin_body'] ) ) {
 		unset( $saved['admin_body'] );
+	}
+	if ( isset( $saved['admin_body'] ) && $previous_admin_body === str_replace( "\r\n", "\n", $saved['admin_body'] ) ) {
+		unset( $saved['admin_body'] );
+	}
+	if ( isset( $saved['auto_reply_body'] ) && $previous_auto_reply_body === str_replace( "\r\n", "\n", $saved['auto_reply_body'] ) ) {
+		unset( $saved['auto_reply_body'] );
 	}
 
 	return wp_parse_args( $saved, buybuycoms_hobby_contact_default_settings() );
@@ -121,6 +129,10 @@ function buybuycoms_hobby_contact_render_mail_tags() {
 		'[mailaddress]',
 		'[telephone]',
 		'[address]',
+		'[postal-code]',
+		'[address-locality]',
+		'[address-street]',
+		'[address-building]',
 		'[inq-type]',
 		'[purchase-quantity]',
 		'[box-preparation]',
@@ -276,6 +288,32 @@ function buybuycoms_hobby_contact_post_value( $values, $key ) {
 }
 
 /**
+ * Normalize a Japanese postal code to seven ASCII digits.
+ *
+ * @param string $postal_code Postal-code input.
+ * @return string
+ */
+function buybuycoms_hobby_contact_normalize_postal_code( $postal_code ) {
+	$postal_code = strtr(
+		$postal_code,
+		array(
+			'０' => '0',
+			'１' => '1',
+			'２' => '2',
+			'３' => '3',
+			'４' => '4',
+			'５' => '5',
+			'６' => '6',
+			'７' => '7',
+			'８' => '8',
+			'９' => '9',
+		)
+	);
+
+	return preg_replace( '/[^0-9]/', '', $postal_code );
+}
+
+/**
  * Return a string length without requiring a specific WordPress version.
  *
  * @param string $value Text to measure.
@@ -325,7 +363,10 @@ function buybuycoms_hobby_handle_contact_form() {
 	$values = array(
 		'name'          => sanitize_text_field( buybuycoms_hobby_contact_post_value( $raw, 'customer_name' ) ),
 		'email'         => sanitize_email( buybuycoms_hobby_contact_post_value( $raw, 'customer_email' ) ),
-		'address'       => sanitize_text_field( buybuycoms_hobby_contact_post_value( $raw, 'customer_address' ) ),
+		'postal_code'   => buybuycoms_hobby_contact_normalize_postal_code( buybuycoms_hobby_contact_post_value( $raw, 'customer_postal_code' ) ),
+		'address_locality' => sanitize_text_field( buybuycoms_hobby_contact_post_value( $raw, 'customer_address_locality' ) ),
+		'address_street' => sanitize_text_field( buybuycoms_hobby_contact_post_value( $raw, 'customer_address_street' ) ),
+		'address_building' => sanitize_text_field( buybuycoms_hobby_contact_post_value( $raw, 'customer_address_building' ) ),
 		'tel'           => sanitize_text_field( buybuycoms_hobby_contact_post_value( $raw, 'customer_tel' ) ),
 		'message'       => sanitize_textarea_field( buybuycoms_hobby_contact_post_value( $raw, 'message' ) ),
 		'purchase_type' => sanitize_key( buybuycoms_hobby_contact_post_value( $raw, 'purchase_type' ) ),
@@ -337,7 +378,10 @@ function buybuycoms_hobby_handle_contact_form() {
 		! in_array( $values['purchase_type'], $valid_types, true ) ||
 		'' === $values['name'] || buybuycoms_hobby_contact_string_length( $values['name'] ) > 100 ||
 		! is_email( $values['email'] ) ||
-		'' === $values['address'] || buybuycoms_hobby_contact_string_length( $values['address'] ) > 255 ||
+		! preg_match( '/^\d{7}$/', $values['postal_code'] ) ||
+		'' === $values['address_locality'] || buybuycoms_hobby_contact_string_length( $values['address_locality'] ) > 255 ||
+		'' === $values['address_street'] || buybuycoms_hobby_contact_string_length( $values['address_street'] ) > 255 ||
+		buybuycoms_hobby_contact_string_length( $values['address_building'] ) > 255 ||
 		! preg_match( '/^0\\d{9,10}$/', $telephone ) ||
 		buybuycoms_hobby_contact_string_length( $values['message'] ) > 4000 ||
 		'agree' !== buybuycoms_hobby_contact_post_value( $raw, 'agreement' )
@@ -345,6 +389,17 @@ function buybuycoms_hobby_handle_contact_form() {
 		buybuycoms_hobby_contact_redirect_error( 'error' );
 	}
 	$values['tel'] = $telephone;
+	$values['address'] = implode(
+		' ',
+		array_filter(
+			array(
+				'〒' . $values['postal_code'],
+				$values['address_locality'],
+				$values['address_street'],
+				$values['address_building'],
+			)
+		)
+	);
 	$values = array_merge(
 		$values,
 		array(
@@ -426,6 +481,10 @@ function buybuycoms_hobby_handle_contact_form() {
 	$values['customer-name']     = $values['name'];
 	$values['mailaddress']       = $values['email'];
 	$values['telephone']         = $values['tel'];
+	$values['postal-code']       = $values['postal_code'];
+	$values['address-locality']  = $values['address_locality'];
+	$values['address-street']    = $values['address_street'];
+	$values['address-building']  = $values['address_building'];
 	$values['inq-type']          = $values['purchase_type'];
 	$values['purchase-quantity'] = $values['purchase_quantity'];
 	$values['box-preparation']   = $values['box_preparation'];

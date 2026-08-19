@@ -1323,6 +1323,11 @@
         padding: var(--hb-space-sm) var(--hb-space-md);
       }
 
+      #customer-postal-code {
+        display: block;
+        width: 10em;
+      }
+
       .hb__p-form textarea {
         min-height: 264px;
         resize: vertical;
@@ -1347,6 +1352,16 @@
 
       .hb__p-form__field-error[hidden] {
         display: none;
+      }
+
+      .hb__p-form__postal-status {
+        margin: var(--hb-space-xs) 0 0;
+        color: var(--hb-color-text-muted);
+        font-size: var(--hb-font-size-caption);
+      }
+
+      .hb__p-form__postal-status--error {
+        color: var(--hb-color-error);
       }
 
       .hb__p-form input:focus,
@@ -4671,6 +4686,47 @@
   display: flex;
   justify-content: center;
   margin-top: var(--hb-space-3xl);
+}
+
+/* ============================================================
+   Project: Column purchase-methods preview
+============================================================ */
+
+.hb-column-methods-preview__p-article {
+  display: grid;
+  max-width: 635px;
+  gap: var(--hb-space-xl);
+  margin-inline: auto;
+}
+
+.hb-column-methods-preview__p-title {
+  margin: 0;
+  color: var(--hb-color-text-deep);
+  font-size: var(--hb-font-size-h1);
+  font-weight: 900;
+  line-height: 1.5;
+}
+
+.hb-column-methods-preview__p-lead {
+  margin: 0;
+  color: var(--hb-color-text-muted);
+  font-size: var(--hb-font-size-body);
+  line-height: 1.8;
+}
+
+.hb-column-methods-preview__p-alternative {
+  display: grid;
+  gap: var(--hb-space-xl);
+}
+
+.hb-column-methods-preview__p-alternative-title {
+  margin: var(--hb-space-lg) 0 0;
+  padding-left: var(--hb-space-md);
+  border-left: 4px solid var(--hb-color-primary-500);
+  color: var(--hb-color-text-deep);
+  font-size: var(--hb-font-size-h2);
+  font-weight: 900;
+  line-height: 1.5;
 }
 
 @media (max-width: 767px) {

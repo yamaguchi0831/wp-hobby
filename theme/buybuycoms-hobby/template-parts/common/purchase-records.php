@@ -106,8 +106,10 @@ $format_purchase_record_price = static function ( $price ) {
 		$purchase_record_id      = get_the_ID();
 		$item_image              = $get_purchase_record_field( 'item-image', $purchase_record_id );
 		$item_excerpt            = $get_purchase_record_field( 'item-excerpt', $purchase_record_id );
-		$item_purchase_date      = $get_purchase_record_field( 'item-purchase-date', $purchase_record_id );
+		$item_purchase_area      = $get_purchase_record_field( 'item-purchase-area', $purchase_record_id );
 		$item_price              = $get_purchase_record_field( 'item-price', $purchase_record_id );
+		$purchase_record_date    = get_the_date( 'Y/n/j' );
+		$purchase_record_datetime = get_the_date( 'c' );
 		$item_image_markup       = '';
 		$item_image_fallback_alt = get_the_title();
 
@@ -179,17 +181,17 @@ $format_purchase_record_price = static function ( $price ) {
 				<h3 class="hb__p-cases-title">
 					<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 				</h3>
-				<?php if ( '' !== trim( (string) $item_excerpt ) || '' !== trim( (string) $item_purchase_date ) ) : ?>
+				<?php if ( '' !== trim( (string) $item_excerpt ) || '' !== trim( (string) $item_purchase_area ) ) : ?>
 					<p class="hb__p-cases-text">
 						<?php if ( '' !== trim( (string) $item_excerpt ) ) : ?>
 							<?php echo esc_html( $item_excerpt ); ?>
-						<?php endif; ?>
-						<?php if ( '' !== trim( (string) $item_excerpt ) && '' !== trim( (string) $item_purchase_date ) ) : ?>
 							<br />
 						<?php endif; ?>
-						<?php if ( '' !== trim( (string) $item_purchase_date ) ) : ?>
-							<?php echo esc_html( $item_purchase_date ); ?>
-						<?php endif; ?>
+						<time datetime="<?php echo esc_attr( $purchase_record_datetime ); ?>"><?php echo esc_html( $purchase_record_date ); ?></time><?php
+						if ( '' !== trim( (string) $item_purchase_area ) ) {
+							echo esc_html( ' ' . trim( (string) $item_purchase_area ) . 'で買取' );
+						}
+						?>
 					</p>
 				<?php endif; ?>
 				<div class="hb__p-cases-foot">

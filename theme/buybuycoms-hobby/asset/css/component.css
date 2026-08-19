@@ -701,6 +701,127 @@
   color: var(--hb-color-white);
 }
 
+.hb__p-column-methods {
+  display: grid;
+  gap: var(--hb-space-xl);
+}
+
+.hb__p-column-methods__title {
+  margin: var(--hb-space-lg) 0 0;
+  padding-left: var(--hb-space-md);
+  border-left: 4px solid var(--hb-color-primary-500);
+  color: var(--hb-color-text-deep);
+  font-size: var(--hb-font-size-h2);
+  font-weight: 900;
+  line-height: 1.5;
+}
+
+.hb__p-method-ui--column-tabs {
+  --hb-method-card-min: 0;
+  --hb-method-tab-max: none;
+  max-width: 400px;
+  margin-inline: auto;
+}
+
+.hb__p-method-ui--column-tabs .hb__p-method-tabs {
+  display: grid;
+}
+
+.hb__p-method-ui--column-tabs .hb__p-method-grid {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: none;
+}
+
+.hb__p-method-ui--column-tabs.hb__p-method--tabs .hb__p-method-card {
+  display: none;
+}
+
+.hb__p-method-ui--column-tabs.hb__p-method--tabs .hb__p-method-card.hb__is-active {
+  display: grid;
+}
+
+.hb__p-method-ui--column-auto-tabs {
+  --hb-method-card-min: 0;
+  --hb-method-tab-max: none;
+  container-type: inline-size;
+}
+
+.hb__p-method-ui--column-auto-tabs .hb__p-method-tabs {
+  display: none;
+}
+
+.hb__p-method-ui--column-auto-tabs .hb__p-method-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: none;
+}
+
+.hb__p-method-ui--column-auto-tabs.hb__p-method--tabs .hb__p-method-card {
+  display: grid;
+}
+
+@container (min-width: 450px) {
+  .hb__p-method-ui--column-auto-tabs .hb__p-method-grid {
+    gap: var(--hb-space-xs);
+  }
+
+  .hb__p-method-ui--column-auto-tabs .hb__p-method-title {
+    padding: var(--hb-space-sm) var(--hb-space-xs) 0;
+    font-size: var(--hb-font-size-body);
+    overflow-wrap: anywhere;
+  }
+
+  .hb__p-method-ui--column-auto-tabs .hb__p-method-text {
+    padding: var(--hb-space-xs) var(--hb-space-xs) 0;
+    font-size: var(--hb-font-size-caption);
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+  }
+
+  .hb__p-method-ui--column-auto-tabs .hb__p-method-list {
+    gap: var(--hb-space-xs);
+    margin: var(--hb-space-sm) var(--hb-space-xs) 0;
+    padding-top: var(--hb-space-sm);
+  }
+
+  .hb__p-method-ui--column-auto-tabs .hb__p-method-list li {
+    padding-left: var(--hb-space-md);
+    font-size: var(--hb-font-size-caption);
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  .hb__p-method-ui--column-auto-tabs .hb__p-method-action {
+    min-width: 0;
+    padding: var(--hb-space-sm) var(--hb-space-xs);
+  }
+
+  .hb__p-method-ui--column-auto-tabs .hb__p-method-action .hb__c-btn {
+    min-width: 0;
+    padding: var(--hb-space-sm) var(--hb-space-xs);
+    font-size: var(--hb-font-size-caption);
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+@container (max-width: 449px) {
+  .hb__p-method-ui--column-auto-tabs .hb__p-method-tabs {
+    display: grid;
+  }
+
+  .hb__p-method-ui--column-auto-tabs .hb__p-method-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hb__p-method-ui--column-auto-tabs.hb__p-method--tabs .hb__p-method-card {
+    display: none;
+  }
+
+  .hb__p-method-ui--column-auto-tabs.hb__p-method--tabs .hb__p-method-card.hb__is-active {
+    display: grid;
+  }
+}
+
 @media (max-width: 1012px) {
   .hb__p-method-tabs {
     display: grid;
