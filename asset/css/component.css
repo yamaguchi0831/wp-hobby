@@ -757,11 +757,14 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--hb-space-lg);
+  justify-items: center;
 }
 
 .hb__p-review {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 325px;
   gap: var(--hb-space-md);
   padding: var(--hb-space-xl);
   border: 1px solid var(--hb-color-border-muted);

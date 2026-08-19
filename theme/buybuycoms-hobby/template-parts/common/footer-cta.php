@@ -43,7 +43,7 @@
         </span>
       </a>
 
-      <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="hb__p-footer-cta__ch hb__p-footer-cta__ch--line">
+      <a href="<?php echo esc_url( 'https://line.me/R/ti/p/@081xadbs' ); ?>" class="hb__p-footer-cta__ch hb__p-footer-cta__ch--line">
         <span class="hb__p-footer-cta__icon">
           <img src="<?php echo esc_url( get_theme_file_uri( '/images/icon/cta-ican02.svg' ) ); ?>" alt="" />
         </span>

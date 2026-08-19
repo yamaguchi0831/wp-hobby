@@ -132,7 +132,7 @@ if ( is_string( $genre_faq_json ) && '' !== trim( $genre_faq_json ) ) {
                 >
               </a>
               <a
-                href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"
+                href="<?php echo esc_url( 'https://line.me/R/ti/p/@081xadbs' ); ?>"
                 class="hb-item-genre__p-hero__cta hb-item-genre__p-hero__cta--line"
               >
                 <img

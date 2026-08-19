@@ -196,7 +196,7 @@ function buybuycoms_hobby_brand() {
 		</span>
 		<span class="hb__c-brand__text">
 			<span class="hb__c-brand__name">売買コムズ</span>
-			<span class="hb__c-brand__sub">hobbyベース</span>
+			<span class="hb__c-brand__sub">Hobbyベース</span>
 		</span>
 	</a>
 	<?php

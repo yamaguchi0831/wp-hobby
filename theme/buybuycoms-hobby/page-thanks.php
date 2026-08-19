@@ -45,7 +45,7 @@ get_header();
 					</div>
 					<div>
 						<dt>メールアドレス</dt>
-						<dd><a href="mailto:info@byebyecoms.com">info@byebyecoms.com</a></dd>
+						<dd>info@byebyecoms.com</dd>
 					</div>
 				</dl>
 

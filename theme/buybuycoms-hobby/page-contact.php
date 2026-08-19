@@ -555,8 +555,8 @@ $requested_purchase_type = in_array( $requested_purchase_type, array( 'takuhai',
                   value="agree"
                   required
                 />
-                <span
-                  >注意事項とプライバシーポリシー・利用規約に同意します</span
+                <span class="hb__p-form__agree-text"
+                  >注意事項と<a class="hb__p-form__agree-link" href="<?php echo esc_url( home_url( '/privacy/' ) ); ?>">プライバシーポリシー<img class="hb__p-form__agree-link-icon" src="<?php echo esc_url( get_theme_file_uri( '/images/icon/icon-link.svg' ) ); ?>" alt="" /></a>・利用規約に同意します</span
                 >
               </label>
 

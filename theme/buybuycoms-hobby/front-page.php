@@ -48,7 +48,7 @@
                     <div class="hb-front__p-hero__action">
                         <div class="hb-front__p-hero__ctas">
                             <a
-                                href="#cta"
+                                href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"
                                 class="hb-front__p-hero__cta hb-front__p-hero__cta--primary"
                             >
                                 <img
@@ -65,7 +65,7 @@
                                 >
                             </a>
                             <a
-                                href="#cta"
+                                href="<?php echo esc_url( 'https://line.me/R/ti/p/@081xadbs' ); ?>"
                                 class="hb-front__p-hero__cta hb-front__p-hero__cta--line"
                             >
                                 <img

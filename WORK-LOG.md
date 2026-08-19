@@ -562,3 +562,67 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/inc/setup.php`、`WORK-LOG.md`
 - 未完了事項: 本番管理画面での表示確認
 - 次回の着手点: 管理画面にログインし、コメントメニューが表示されないことを確認する。
+
+## 2026-08-19 ヘッダー・フッターロゴの表記を統一
+
+- 状態: 完了
+- 実施内容: 共通ブランド出力の表記を「hobbyベース」から「Hobbyベース」へ変更し、ヘッダーとフッターのロゴ表記を統一した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/inc/template-functions.php`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境での表示確認。
+- 次回の着手点: ヘッダーとフッターで「Hobbyベース」と表示されることを確認する。
+
+## 2026-08-19 お客様の声カードの最大幅を調整
+
+- 状態: 完了
+- 実施内容: お客様の声セクションの各カードへ最大幅 `325px` を設定し、表示幅が余る画面ではカードをグリッド内で中央配置するようにした。
+- 主な変更ファイル: `asset/css/component.css`、`theme/buybuycoms-hobby/asset/css/component.css`、`WORK-LOG.md`
+- 未完了事項: PC・モバイルの実表示確認。
+- 次回の着手点: 各ページのお客様の声セクションで、カード幅と中央配置を確認する。
+
+## 2026-08-19 電話番号の自動リンク化を無効化
+
+- 状態: 完了
+- 実施内容: 共通ヘッダーに `format-detection` の電話番号自動検出を無効化するmetaタグを追加し、WordPressテーマの全公開ページへ適用した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/header.php`、`WORK-LOG.md`
+- 未完了事項: iOS Safariでの表示確認。
+- 次回の着手点: 電話番号テキストが意図しない自動リンクにならないことを確認する。
+
+## 2026-08-19 メインビジュアルCTAの遷移先を更新
+
+- 状態: 完了
+- 実施内容: TOPページとジャンル詳細ページのメインビジュアルにある「無料査定を申し込む」を `/contact/` へ、「LINEで写真査定する」をLINE公式アカウントへ遷移するよう変更した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/front-page.php`、`theme/buybuycoms-hobby/taxonomy-genre.php`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境での各CTA遷移確認。
+- 次回の着手点: TOPページとジャンル詳細ページのメインビジュアルから、指定URLへ遷移することを確認する。
+
+## 2026-08-19 フッターCTAのLINE査定リンクを更新
+
+- 状態: 完了
+- 実施内容: フッターCTA内の「LINEで写真査定する」ボタンを、指定のLINE公式アカウントURLへ変更した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/footer-cta.php`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境でのリンク遷移確認。
+- 次回の着手点: フッターCTAのLINE査定ボタンから、指定URLへ遷移することを確認する。
+
+## 2026-08-19 お問い合わせ完了ページのメールリンクを削除
+
+- 状態: 完了
+- 実施内容: `/thanks/` ページに表示するメールアドレスから `mailto:` リンクを外し、テキスト表示へ変更した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/page-thanks.php`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境での表示確認。
+- 次回の着手点: `/thanks/` ページでメールアドレスがリンクにならないことを確認する。
+
+## 2026-08-19 宅配買取の少量時モーダル文言を更新
+
+- 状態: 完了
+- 実施内容: 宅配買取で「9点以下」を選択した際のモーダルについて、タイトルと本文の「商品点数が10点未満の場合」を「商品点数が9点以下の場合」へ変更した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/js/pages/page-contact.js`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境でのモーダル表示確認。
+- 次回の着手点: 宅配買取・9点以下を選択し、モーダルのタイトルと本文を確認する。
+
+## 2026-08-19 フォーム同意文のプライバシーポリシーをリンク化
+
+- 状態: 完了
+- 実施内容: フォーム下部の同意文にある「プライバシーポリシー」を `/privacy/` へのテキストリンクに変更し、添付のリンクアイコンを右側に配置した。キーボードフォーカス時の視認性も追加した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/page-contact.php`、`theme/buybuycoms-hobby/asset/css/page-static.css`、`theme/buybuycoms-hobby/images/icon/icon-link.svg`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境でのリンク遷移・PC／モバイル表示確認。
+- 次回の着手点: 同意文のリンクとアイコン、チェックボックス操作が自然に機能することを確認する。
