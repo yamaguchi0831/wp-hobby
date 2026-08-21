@@ -738,3 +738,11 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/inc/blocks.php`、`theme/buybuycoms-hobby/asset/js/blocks/column-purchase-methods.js`、`theme/buybuycoms-hobby/functions.php`、`WORK-LOG.md`
 - 未完了事項: WordPress管理画面でのブロック挿入・公開画面でのタブ操作確認。
 - 次回の着手点: コラム投稿編集画面で「買取方法（コラム用）」を挿入し、プレビューと公開画面の表示を確認する。
+
+## 2026-08-21 買取方法カードの見た目と名称を統一
+
+- 状態: 完了
+- 実施内容: 共通の「3つの買取方法」カードから宅配買取だけに設定されていた緑の枠線を削除し、他カードと統一した。あわせて、表示名・代替テキスト・導線ラベルを「持ち込み買取」から「店頭買取」へ変更した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/purchase-methods.php`、`theme/buybuycoms-hobby/asset/css/component.css`、`components/purchase-methods.html`、`asset/css/component.css`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境でのTOPページと`/flow/`ページの表示確認。
+- 次回の着手点: 3枚のカードが同じ枠線で表示され、店頭買取の文言が反映されていることを確認する。

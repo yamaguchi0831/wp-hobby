@@ -547,10 +547,6 @@
   box-shadow: var(--hb-shadow-sm);
 }
 
-.hb__p-method-card[data-method-panel="takuhai"] {
-  border: 3px solid var(--hb-color-secondary-500);
-}
-
 .hb__p-method-image {
   position: relative;
   margin: 0;

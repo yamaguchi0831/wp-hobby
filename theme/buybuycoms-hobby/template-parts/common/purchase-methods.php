@@ -129,10 +129,10 @@ if ( 'default' !== $purchase_methods_variant ) {
       <figure class="hb__p-method-image">
         <img
           src="<?php echo esc_url( get_theme_file_uri( '/images/3.tentou.webp' ) ); ?>"
-          alt="持ち込み買取のイメージ"
+          alt="店頭買取のイメージ"
         />
       </figure>
-      <h3 class="hb__p-method-title">持ち込み買取</h3>
+      <h3 class="hb__p-method-title">店頭買取</h3>
       <p class="hb__p-method-text">
         店頭へお持ち込みいただくと、その場でスピーディに査定・お支払いいたします。
       </p>
@@ -143,7 +143,7 @@ if ( 'default' !== $purchase_methods_variant ) {
       </ul>
       <div class="hb__p-method-action">
         <a class="hb__c-btn hb__c-btn--ghost" href="<?php echo esc_url( add_query_arg( 'type', 'mochikomi', home_url( '/contact/' ) ) ); ?>"
-          >持ち込み買取はこちら</a
+          >店頭買取はこちら</a
         >
       </div>
     </article>
