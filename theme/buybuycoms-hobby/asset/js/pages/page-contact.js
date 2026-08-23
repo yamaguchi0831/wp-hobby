@@ -45,7 +45,7 @@
           "takuhai-qty": ["takuhai_qty"],
           "shuccho-qty": ["shuccho_qty"],
           "box-prep": ["box_prep"],
-          "shuccho-date": ["shuccho_date_1", "shuccho_time_1"],
+          "shuccho-date": ["shuccho_date_1"],
           customer: [
             "customer_name",
             "customer_email",
@@ -459,7 +459,6 @@
           clearTimeout(postalLookupTimer);
           if (7 !== postalCodeField.value.length) {
             setPostalStatus("");
-            validatePostalCode();
             return;
           }
           postalLookupTimer = setTimeout(lookupPostalCode, 300);

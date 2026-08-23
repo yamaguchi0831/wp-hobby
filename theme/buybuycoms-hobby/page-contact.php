@@ -289,16 +289,19 @@ $requested_purchase_type = in_array( $requested_purchase_type, array( 'takuhai',
                   出張希望日時を入力してください
                 </h2>
                 <p class="hb__p-form__note">
-                  任意(お申込み後に日時調整をおこなう)
+                  第1希望の日付は必須です。時間帯・第2希望・第3希望は任意です。
                 </p>
               </div>
               <div class="hb__p-form__fields">
                 <div class="hb__p-form__wish-row">
-                  <span class="hb__p-form__wish-label">第1希望</span>
+                  <span class="hb__p-form__wish-label"
+                    >第1希望 <span class="hb__p-form__required">必須</span></span
+                  >
                   <input
                     type="date"
                     name="shuccho_date_1"
                     aria-label="出張第1希望日付"
+                    required
                   />
                   <select name="shuccho_time_1" aria-label="出張第1希望時間帯">
                     <option value="">時間帯を選択</option>

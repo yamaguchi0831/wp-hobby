@@ -13,11 +13,15 @@
 function buybuycoms_hobby_contact_default_settings() {
 	return array(
 		'recipient'        => get_option( 'admin_email' ),
-		'auto_reply_from_name' => '売買コムズ hobbyベース',
+		'auto_reply_from_name' => '売買コムズ ホビーベース',
 		'admin_subject'    => '[site_name] お問い合わせ',
-		'admin_body'       => "お問い合わせを受け付けました。\n\nお名前：[customer-name]\nメールアドレス：[mailaddress]\n郵便番号：[postal-code]\n都道府県・市区町村：[address-locality]\n番地：[address-street]\n建物名・部屋番号：[address-building]\n電話番号：[telephone]\n買取方法：[inq-type]\n買取点数・物量：[purchase-quantity]\nダンボールの準備：[box-preparation]\n希望ダンボール：Sサイズ：[box-s] / Mサイズ：[box-m] / Lサイズ：[box-l] / LLサイズ：[box-ll]\n第1希望日：[preferred-date-1]\n第1希望時間：[preferred-time-1]\n第2希望日：[preferred-date-2]\n第2希望時間：[preferred-time-2]\n第3希望日：[preferred-date-3]\n第3希望時間：[preferred-time-3]\n\nお問い合わせ内容：\n[body]",
+		'admin_body'       => "以下のとおり、お問い合わせを受け付けました。\n--------------------------------------------------\n■お客様情報\nお名前：[customer-name]\nメールアドレス：[mailaddress]\n郵便番号：[postal-code]\n住所：[address]\n電話番号：[telephone]\n\n--------------------------------------------------\n[detail]\n\n--------------------------------------------------\n■お問い合わせ内容\n[body]\n\n--------------------------------------------------\n■ご依頼番号\n[request-number]",
+		'admin_detail_takuhai_kit'  => "■お申込内容\n買取方法：[inq-type]\n\n買取点数・物量：[purchase-quantity]\n\nダンボールの準備：必要\n\n希望ダンボール：\n・Sサイズ：[box-s]\n・Mサイズ：[box-m]\n・Lサイズ：[box-l]\n・LLサイズ：[box-ll]",
+		'admin_detail_takuhai_self' => "■お申込内容\n買取方法：[inq-type]\n\n買取点数・物量：[purchase-quantity]\n\nダンボールの準備：不要",
+		'admin_detail_shuccho'      => "■お申込内容\n買取方法：[inq-type]\n\n■出張買取の希望\n第1希望日：[preferred-date-1]\n第1希望時間：[preferred-time-1]\n\n第2希望日：[preferred-date-2]\n第2希望時間：[preferred-time-2]\n\n第3希望日：[preferred-date-3]\n第3希望時間：[preferred-time-3]",
+		'admin_detail_mochikomi'    => "■お申込内容\n買取方法：[inq-type]\n\n■店頭買取の希望\n第1希望日：[preferred-date-1]\n第1希望時間：[preferred-time-1]\n\n第2希望日：[preferred-date-2]\n第2希望時間：[preferred-time-2]\n\n第3希望日：[preferred-date-3]\n第3希望時間：[preferred-time-3]",
 		'auto_reply_subject' => '[site_name] お問い合わせありがとうございます',
-		'auto_reply_body'  => "[customer-name]様\n\nお問い合わせありがとうございます。\n内容を確認のうえ、担当者よりご連絡いたします。\n\n--------------------\nお名前：[customer-name]\nメールアドレス：[mailaddress]\n郵便番号：[postal-code]\n都道府県・市区町村：[address-locality]\n番地：[address-street]\n建物名・部屋番号：[address-building]\n電話番号：[telephone]\n買取方法：[inq-type]\n\nお問い合わせ内容\n[body]",
+		'auto_reply_body'  => "[customer-name]様\n\nお問い合わせありがとうございます。\n内容を確認のうえ、担当者よりご連絡いたします。\n\n--------------------\nお名前：[customer-name]\nメールアドレス：[mailaddress]\n郵便番号：[postal-code]\n都道府県・市区町村：[address-locality]\n番地：[address-street]\n建物名・部屋番号：[address-building]\n電話番号：[telephone]\n\n[detail]\n\nお問い合わせ内容\n[body]",
 		'redirect_page_id' => '',
 	);
 }
@@ -45,6 +49,12 @@ function buybuycoms_hobby_contact_settings() {
 	}
 	if ( isset( $saved['auto_reply_body'] ) && $previous_auto_reply_body === str_replace( "\r\n", "\n", $saved['auto_reply_body'] ) ) {
 		unset( $saved['auto_reply_body'] );
+	}
+	if ( isset( $saved['auto_reply_from_name'] ) && '売買コムズ hobbyベース' === $saved['auto_reply_from_name'] ) {
+		$saved['auto_reply_from_name'] = '売買コムズ ホビーベース';
+	}
+	if ( isset( $saved['admin_body'] ) && false === strpos( $saved['admin_body'], '[request-number]' ) ) {
+		$saved['admin_body'] .= "\n\n--------------------------------------------------\n■ご依頼番号\n[request-number]";
 	}
 
 	return wp_parse_args( $saved, buybuycoms_hobby_contact_default_settings() );
@@ -88,7 +98,13 @@ function buybuycoms_hobby_sanitize_contact_settings( $settings ) {
 		$auto_reply_from_name = $defaults['auto_reply_from_name'];
 	}
 
-	return array(
+	$detail_keys = array( 'admin_detail_takuhai_kit', 'admin_detail_takuhai_self', 'admin_detail_shuccho', 'admin_detail_mochikomi' );
+	$sanitized_details = array();
+	foreach ( $detail_keys as $detail_key ) {
+		$sanitized_details[ $detail_key ] = isset( $settings[ $detail_key ] ) ? sanitize_textarea_field( wp_unslash( $settings[ $detail_key ] ) ) : $defaults[ $detail_key ];
+	}
+
+	return array_merge( array(
 		'recipient'          => $recipient,
 		'auto_reply_from_name' => $auto_reply_from_name,
 		'admin_subject'      => isset( $settings['admin_subject'] ) ? sanitize_text_field( wp_unslash( $settings['admin_subject'] ) ) : $defaults['admin_subject'],
@@ -96,7 +112,7 @@ function buybuycoms_hobby_sanitize_contact_settings( $settings ) {
 		'auto_reply_subject' => isset( $settings['auto_reply_subject'] ) ? sanitize_text_field( wp_unslash( $settings['auto_reply_subject'] ) ) : $defaults['auto_reply_subject'],
 		'auto_reply_body'    => isset( $settings['auto_reply_body'] ) ? sanitize_textarea_field( wp_unslash( $settings['auto_reply_body'] ) ) : $defaults['auto_reply_body'],
 		'redirect_page_id' => isset( $settings['redirect_page_id'] ) ? (string) absint( $settings['redirect_page_id'] ) : '',
-	);
+	), $sanitized_details );
 }
 
 /**
@@ -116,6 +132,28 @@ function buybuycoms_hobby_add_contact_settings_page() {
 	);
 }
 add_action( 'admin_menu', 'buybuycoms_hobby_add_contact_settings_page' );
+
+/**
+ * Load the contact-form settings interactions only on its settings page.
+ *
+ * @param string $hook Current admin page hook.
+ * @return void
+ */
+function buybuycoms_hobby_contact_enqueue_admin_assets( $hook ) {
+	if ( 'toplevel_page_buybuycoms-hobby-contact' !== $hook ) {
+		return;
+	}
+
+	$script_path = get_theme_file_path( 'asset/js/admin/contact-form-settings.js' );
+	wp_enqueue_script(
+		'buybuycoms-hobby-contact-settings',
+		get_theme_file_uri( 'asset/js/admin/contact-form-settings.js' ),
+		array(),
+		file_exists( $script_path ) ? (string) filemtime( $script_path ) : null,
+		true
+	);
+}
+add_action( 'admin_enqueue_scripts', 'buybuycoms_hobby_contact_enqueue_admin_assets' );
 
 /**
  * Render the mail tags available in contact email templates.
@@ -146,6 +184,8 @@ function buybuycoms_hobby_contact_render_mail_tags() {
 		'[preferred-time-2]',
 		'[preferred-date-3]',
 		'[preferred-time-3]',
+		'[detail]',
+		'[request-number]',
 		'[body]',
 	);
 	?>
@@ -185,10 +225,37 @@ function buybuycoms_hobby_render_contact_settings_page() {
 					<td><input class="large-text" id="hb-contact-admin-subject" name="buybuycoms_hobby_contact_settings[admin_subject]" type="text" value="<?php echo esc_attr( $settings['admin_subject'] ); ?>" required /></td>
 				</tr>
 				<tr>
-					<th scope="row"><label for="hb-contact-admin-body"><?php esc_html_e( '管理者宛メールの本文', 'buybuycoms-hobby' ); ?></label></th>
+					<th scope="row"><label for="hb-contact-admin-body"><?php esc_html_e( '管理者宛メールの共通本文', 'buybuycoms-hobby' ); ?></label></th>
 					<td>
 						<?php buybuycoms_hobby_contact_render_mail_tags(); ?>
+						<p class="description"><?php esc_html_e( 'お客様情報・お問い合わせ内容・ご依頼番号を含む共通部分は、ここで編集します。買取方法ごとに切り替えるお申込内容は [detail] で差し込みます。', 'buybuycoms-hobby' ); ?></p>
 						<textarea class="large-text" id="hb-contact-admin-body" name="buybuycoms_hobby_contact_settings[admin_body]" rows="14" required><?php echo esc_textarea( $settings['admin_body'] ); ?></textarea>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><?php esc_html_e( 'お申込内容の文面', 'buybuycoms-hobby' ); ?></th>
+					<td data-hb-contact-detail-tabs>
+						<p class="description"><?php esc_html_e( '管理者宛メールの [detail] に、選択された買取方法の文面が差し込まれます。', 'buybuycoms-hobby' ); ?></p>
+						<p role="tablist" aria-label="<?php esc_attr_e( '買取方法別の申込内容', 'buybuycoms-hobby' ); ?>">
+							<button class="button button-primary" type="button" role="tab" aria-selected="true" aria-controls="hb-contact-detail-takuhai-kit" id="hb-contact-tab-takuhai-kit" data-hb-contact-detail-tab="takuhai-kit"><?php esc_html_e( '宅配：ダンボール必要', 'buybuycoms-hobby' ); ?></button>
+							<button class="button" type="button" role="tab" aria-selected="false" aria-controls="hb-contact-detail-takuhai-self" id="hb-contact-tab-takuhai-self" data-hb-contact-detail-tab="takuhai-self"><?php esc_html_e( '宅配：ダンボール不要', 'buybuycoms-hobby' ); ?></button>
+							<button class="button" type="button" role="tab" aria-selected="false" aria-controls="hb-contact-detail-shuccho" id="hb-contact-tab-shuccho" data-hb-contact-detail-tab="shuccho"><?php esc_html_e( '出張買取', 'buybuycoms-hobby' ); ?></button>
+							<button class="button" type="button" role="tab" aria-selected="false" aria-controls="hb-contact-detail-mochikomi" id="hb-contact-tab-mochikomi" data-hb-contact-detail-tab="mochikomi"><?php esc_html_e( '店頭買取', 'buybuycoms-hobby' ); ?></button>
+						</p>
+						<?php
+						$detail_fields = array(
+							'takuhai-kit'  => 'admin_detail_takuhai_kit',
+							'takuhai-self' => 'admin_detail_takuhai_self',
+							'shuccho'      => 'admin_detail_shuccho',
+							'mochikomi'    => 'admin_detail_mochikomi',
+						);
+						foreach ( $detail_fields as $tab => $field ) :
+							?>
+							<div id="hb-contact-detail-<?php echo esc_attr( $tab ); ?>" role="tabpanel" aria-labelledby="hb-contact-tab-<?php echo esc_attr( $tab ); ?>" data-hb-contact-detail-panel="<?php echo esc_attr( $tab ); ?>"<?php echo 'takuhai-kit' !== $tab ? ' hidden' : ''; ?>>
+								<?php buybuycoms_hobby_contact_render_mail_tags(); ?>
+								<textarea class="large-text" name="buybuycoms_hobby_contact_settings[<?php echo esc_attr( $field ); ?>]" rows="14" required><?php echo esc_textarea( $settings[ $field ] ); ?></textarea>
+							</div>
+						<?php endforeach; ?>
 					</td>
 				</tr>
 				<tr>
@@ -335,6 +402,40 @@ function buybuycoms_hobby_contact_auto_reply_from_name() {
 }
 
 /**
+ * Generate the next site-wide contact request number.
+ *
+ * @return string
+ */
+function buybuycoms_hobby_contact_next_request_number() {
+	global $wpdb;
+
+	$option_name = 'buybuycoms_hobby_contact_request_number';
+	$updated = $wpdb->query(
+		$wpdb->prepare(
+			"UPDATE {$wpdb->options} SET option_value = LAST_INSERT_ID( CAST( option_value AS UNSIGNED ) + 1 ) WHERE option_name = %s",
+			$option_name
+		)
+	);
+
+	if ( 1 === $updated ) {
+		return (string) $wpdb->get_var( 'SELECT LAST_INSERT_ID()' );
+	}
+
+	if ( add_option( $option_name, '1000000', '', false ) ) {
+		return '1000000';
+	}
+
+	$wpdb->query(
+		$wpdb->prepare(
+			"UPDATE {$wpdb->options} SET option_value = LAST_INSERT_ID( CAST( option_value AS UNSIGNED ) + 1 ) WHERE option_name = %s",
+			$option_name
+		)
+	);
+
+	return (string) $wpdb->get_var( 'SELECT LAST_INSERT_ID()' );
+}
+
+/**
  * Handle the public contact-form request.
  *
  * @return void
@@ -418,7 +519,8 @@ function buybuycoms_hobby_handle_contact_form() {
 		)
 	);
 
-	$details = array();
+	$details  = array();
+	$box_prep = '';
 	if ( 'takuhai' === $values['purchase_type'] ) {
 		$quantity = sanitize_key( buybuycoms_hobby_contact_post_value( $raw, 'takuhai_qty' ) );
 		$box_prep = sanitize_key( buybuycoms_hobby_contact_post_value( $raw, 'box_prep' ) );
@@ -459,6 +561,9 @@ function buybuycoms_hobby_handle_contact_form() {
 		for ( $index = 1; $index <= 3; $index++ ) {
 			$date = buybuycoms_hobby_contact_post_value( $raw, $prefix . '_date_' . $index );
 			$time = buybuycoms_hobby_contact_post_value( $raw, $prefix . '_time_' . $index );
+			if ( 'shuccho' === $prefix && 1 === $index && '' === $date ) {
+				buybuycoms_hobby_contact_redirect_error( 'error' );
+			}
 			if ( ( '' !== $date && ! preg_match( '/^\\d{4}-\\d{2}-\\d{2}$/', $date ) ) || ! in_array( $time, $allowed_times, true ) ) {
 				buybuycoms_hobby_contact_redirect_error( 'error' );
 			}
@@ -470,7 +575,16 @@ function buybuycoms_hobby_handle_contact_form() {
 		}
 	}
 
+	$detail_template_keys = array(
+		'takuhai'  => 'kit' === $box_prep ? 'admin_detail_takuhai_kit' : 'admin_detail_takuhai_self',
+		'shuccho'  => 'admin_detail_shuccho',
+		'mochikomi' => 'admin_detail_mochikomi',
+	);
+	$detail_template_key = $detail_template_keys[ $values['purchase_type'] ];
 	$labels = array( 'takuhai' => '宅配買取', 'shuccho' => '出張買取', 'mochikomi' => '持込買取' );
+	$values['inq-type'] = $labels[ $values['purchase_type'] ];
+	$settings = buybuycoms_hobby_contact_settings();
+
 	$values['purchase_type'] = $labels[ $values['purchase_type'] ];
 	$detail_lines = array();
 	foreach ( $details as $label => $detail ) {
@@ -499,9 +613,11 @@ function buybuycoms_hobby_handle_contact_form() {
 	$values['preferred-date-3']  = $values['preferred_date_3'];
 	$values['preferred-time-3']  = $values['preferred_time_3'];
 	$values['body']              = $values['message'];
+	$values['request-number']    = buybuycoms_hobby_contact_next_request_number();
+	$values['detail']            = buybuycoms_hobby_contact_replace_placeholders( $settings[ $detail_template_key ], $values );
 
-	$settings = buybuycoms_hobby_contact_settings();
 	$headers  = array( 'Content-Type: text/plain; charset=UTF-8', 'Reply-To: ' . $values['email'] );
+	add_filter( 'wp_mail_from_name', 'buybuycoms_hobby_contact_auto_reply_from_name' );
 	$sent     = wp_mail(
 		$settings['recipient'],
 		buybuycoms_hobby_contact_replace_placeholders( $settings['admin_subject'], $values ),
@@ -510,11 +626,11 @@ function buybuycoms_hobby_handle_contact_form() {
 	);
 
 	if ( ! $sent ) {
+		remove_filter( 'wp_mail_from_name', 'buybuycoms_hobby_contact_auto_reply_from_name' );
 		buybuycoms_hobby_contact_redirect_error( 'error' );
 	}
 
 	set_transient( $rate_key, (int) get_transient( $rate_key ) + 1, 10 * MINUTE_IN_SECONDS );
-	add_filter( 'wp_mail_from_name', 'buybuycoms_hobby_contact_auto_reply_from_name' );
 	wp_mail(
 		$values['email'],
 		buybuycoms_hobby_contact_replace_placeholders( $settings['auto_reply_subject'], $values ),
