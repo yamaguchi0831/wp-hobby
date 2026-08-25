@@ -810,3 +810,10 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/inc/contact-form.php`、`WORK-LOG.md`
 - 未完了事項: WordPress実行環境で4種類の買取方法別メールを確認。
 - 次回の着手点: 各買取方法でテスト送信し、管理者宛・入力者宛メールの `[detail]` が置換されることを確認する。
+## 2026-08-25 Google Tag Managerを設定
+
+- 状態: 完了
+- 実施内容: コンテナID `GTM-5BPG8RCN` のGoogle Tag Managerスニペットを共通ヘッダーに追加。head内の上部へスクリプトを、開始bodyタグ直後へnoscript iframeを配置し、全公開ページで読み込まれるようにした。
+- 主な変更ファイル: `theme/buybuycoms-hobby/header.php`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境でGTMプレビューおよびタグ配信を確認する。
+- 次回の着手点: GTMのプレビュー機能で対象ページへの接続とイベント受信を確認する。
