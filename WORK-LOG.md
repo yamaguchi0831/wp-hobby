@@ -833,3 +833,11 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/inc/contact-form.php`、`WORK-LOG.md`
 - 未完了事項: SMTPを設定したWordPress実行環境でのメールヘッダーとGmailスレッド表示の確認。
 - 次回の着手点: 管理者宛件名へ `[request-number]` を設定し、テスト送信で各メールのMessage-IDとGmail上のスレッドを確認する。
+
+## 2026-08-27 Google広告用GCLIDの取得・保持・メール連携を追加
+
+- 状態: 完了
+- 実施内容: 全ページでURLの`gclid`を90日間・Path `/`・SameSite=LaxのファーストパーティCookieへ保存し、申込フォームのhidden項目へ設定する処理を追加。管理者宛メールで使える`[GCLID]`と`[application-date]`を追加し、未取得時はGCLIDを`ID:なし`として出力する。
+- 主な変更ファイル: `theme/buybuycoms-hobby/inc/gclid.php`、`theme/buybuycoms-hobby/asset/js/gclid.js`、`theme/buybuycoms-hobby/inc/contact-form.php`、`theme/buybuycoms-hobby/inc/enqueue.php`、`theme/buybuycoms-hobby/page-contact.php`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境とGmailでのCookie・hidden項目・メールタグの実機確認。
+- 次回の着手点: `?gclid=`付きURLからフォーム送信を行い、Cookie保存期間と管理者メールのGCLID・申込日時を確認する。

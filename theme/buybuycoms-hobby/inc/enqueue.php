@@ -59,6 +59,14 @@ function buybuycoms_hobby_enqueue_assets() {
 		true
 	);
 
+	wp_enqueue_script(
+		'buybuycoms-hobby-gclid',
+		get_theme_file_uri( '/asset/js/gclid.js' ),
+		array(),
+		buybuycoms_hobby_asset_version( '/asset/js/gclid.js' ),
+		true
+	);
+
 	$page_script = buybuycoms_hobby_get_page_script();
 	if ( $page_script ) {
 		wp_enqueue_script(

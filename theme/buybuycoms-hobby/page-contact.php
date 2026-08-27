@@ -34,6 +34,7 @@ $requested_purchase_type = in_array( $requested_purchase_type, array( 'takuhai',
             novalidate
           >
             <input type="hidden" name="action" value="buybuycoms_hobby_contact" />
+            <input type="hidden" name="gclid" value="" />
             <?php wp_nonce_field( 'buybuycoms_hobby_contact', 'buybuycoms_hobby_contact_nonce' ); ?>
             <div class="hb__p-form__honeypot" aria-hidden="true">
               <label for="hb-contact-website">Webサイト</label>

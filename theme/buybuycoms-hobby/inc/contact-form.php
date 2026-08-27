@@ -15,7 +15,7 @@ function buybuycoms_hobby_contact_default_settings() {
 		'recipient'        => get_option( 'admin_email' ),
 		'auto_reply_from_name' => '売買コムズ ホビーベース',
 		'admin_subject'    => '[site_name] お問い合わせ',
-		'admin_body'       => "以下のとおり、お問い合わせを受け付けました。\n--------------------------------------------------\n■お客様情報\nお名前：[customer-name]\nメールアドレス：[mailaddress]\n郵便番号：[postal-code]\n住所：[address]\n電話番号：[telephone]\n\n--------------------------------------------------\n[detail]\n\n--------------------------------------------------\n■お問い合わせ内容\n[body]\n\n--------------------------------------------------\n■ご依頼番号\n[request-number]",
+		'admin_body'       => "以下のとおり、お問い合わせを受け付けました。\n--------------------------------------------------\n■お客様情報\nお名前：[customer-name]\nメールアドレス：[mailaddress]\n郵便番号：[postal-code]\n住所：[address]\n電話番号：[telephone]\n\n--------------------------------------------------\n[detail]\n\n--------------------------------------------------\n■お問い合わせ内容\n[body]\n\n--------------------------------------------------\n■ご依頼番号\n[request-number]\n\n--------------------------------------------------\n■広告計測情報\nGCLID：[GCLID]\n申込日時：[application-date]",
 		'admin_detail_takuhai_kit'  => "■お申込内容\n買取方法：[inq-type]\n\n買取点数・物量：[purchase-quantity]\n\nダンボールの準備：必要\n\n希望ダンボール：\n・Sサイズ：[box-s]\n・Mサイズ：[box-m]\n・Lサイズ：[box-l]\n・LLサイズ：[box-ll]",
 		'admin_detail_takuhai_self' => "■お申込内容\n買取方法：[inq-type]\n\n買取点数・物量：[purchase-quantity]\n\nダンボールの準備：不要",
 		'admin_detail_shuccho'      => "■お申込内容\n買取方法：[inq-type]\n\n■出張買取の希望\n第1希望日：[preferred-date-1]\n第1希望時間：[preferred-time-1]\n\n第2希望日：[preferred-date-2]\n第2希望時間：[preferred-time-2]\n\n第3希望日：[preferred-date-3]\n第3希望時間：[preferred-time-3]",
@@ -55,6 +55,12 @@ function buybuycoms_hobby_contact_settings() {
 	}
 	if ( isset( $saved['admin_body'] ) && false === strpos( $saved['admin_body'], '[request-number]' ) ) {
 		$saved['admin_body'] .= "\n\n--------------------------------------------------\n■ご依頼番号\n[request-number]";
+	}
+	if ( isset( $saved['admin_body'] ) && false === strpos( $saved['admin_body'], '[GCLID]' ) ) {
+		$saved['admin_body'] .= "\n\n--------------------------------------------------\n■広告計測情報\nGCLID：[GCLID]";
+	}
+	if ( isset( $saved['admin_body'] ) && false === strpos( $saved['admin_body'], '[application-date]' ) ) {
+		$saved['admin_body'] .= "\n申込日時：[application-date]";
 	}
 
 	return wp_parse_args( $saved, buybuycoms_hobby_contact_default_settings() );
@@ -186,6 +192,8 @@ function buybuycoms_hobby_contact_render_mail_tags() {
 		'[preferred-time-3]',
 		'[detail]',
 		'[request-number]',
+		'[GCLID]',
+		'[application-date]',
 		'[body]',
 	);
 	?>
@@ -504,6 +512,11 @@ function buybuycoms_hobby_handle_contact_form() {
 		buybuycoms_hobby_contact_redirect_error( 'rate_limited' );
 	}
 
+	$submitted_gclid = buybuycoms_hobby_sanitize_gclid( buybuycoms_hobby_contact_post_value( $raw, 'gclid' ) );
+	if ( '' === $submitted_gclid ) {
+		$submitted_gclid = buybuycoms_hobby_get_gclid();
+	}
+
 	$values = array(
 		'name'          => sanitize_text_field( buybuycoms_hobby_contact_post_value( $raw, 'customer_name' ) ),
 		'email'         => sanitize_email( buybuycoms_hobby_contact_post_value( $raw, 'customer_email' ) ),
@@ -513,6 +526,7 @@ function buybuycoms_hobby_handle_contact_form() {
 		'address_building' => sanitize_text_field( buybuycoms_hobby_contact_post_value( $raw, 'customer_address_building' ) ),
 		'tel'           => sanitize_text_field( buybuycoms_hobby_contact_post_value( $raw, 'customer_tel' ) ),
 		'message'       => sanitize_textarea_field( buybuycoms_hobby_contact_post_value( $raw, 'message' ) ),
+		'gclid'         => $submitted_gclid,
 		'purchase_type' => sanitize_key( buybuycoms_hobby_contact_post_value( $raw, 'purchase_type' ) ),
 	);
 
@@ -657,6 +671,8 @@ function buybuycoms_hobby_handle_contact_form() {
 	$values['preferred-time-3']  = $values['preferred_time_3'];
 	$values['body']              = $values['message'];
 	$values['request-number']    = buybuycoms_hobby_contact_next_request_number();
+	$values['GCLID']             = '' !== $values['gclid'] ? $values['gclid'] : 'ID:なし';
+	$values['application-date']  = wp_date( 'Y-m-d H:i:s', time(), new DateTimeZone( 'Asia/Tokyo' ) );
 	$values['detail']            = buybuycoms_hobby_contact_replace_placeholders( $settings[ $detail_template_key ], $values );
 
 	$headers  = array(
