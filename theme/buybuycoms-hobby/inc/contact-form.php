@@ -496,6 +496,43 @@ function buybuycoms_hobby_contact_send_mail( $to, $subject, $message, $headers, 
 }
 
 /**
+ * Create a one-time conversion token for a completed application.
+ *
+ * @param string $method Google Tag Manager buyback method value.
+ * @return string
+ */
+function buybuycoms_hobby_contact_create_conversion_token( $method ) {
+	$allowed_methods = array( 'delivery', 'home_visit', 'store' );
+	if ( ! in_array( $method, $allowed_methods, true ) ) {
+		return '';
+	}
+
+	$token = wp_generate_uuid4();
+	set_transient( 'buybuycoms_hobby_contact_conversion_' . $token, $method, 10 * MINUTE_IN_SECONDS );
+
+	return $token;
+}
+
+/**
+ * Consume the one-time conversion token from the success redirect URL.
+ *
+ * @return string Google Tag Manager buyback method value, or an empty string.
+ */
+function buybuycoms_hobby_contact_consume_conversion_method() {
+	$token = isset( $_GET['contact_conversion'] ) && is_string( $_GET['contact_conversion'] ) ? wp_unslash( $_GET['contact_conversion'] ) : '';
+	$token = preg_replace( '/[^A-Za-z0-9-]/', '', $token );
+	if ( ! is_string( $token ) || ! preg_match( '/^[A-Za-z0-9-]{36}$/', $token ) ) {
+		return '';
+	}
+
+	$transient_key = 'buybuycoms_hobby_contact_conversion_' . $token;
+	$method        = get_transient( $transient_key );
+	delete_transient( $transient_key );
+
+	return in_array( $method, array( 'delivery', 'home_visit', 'store' ), true ) ? $method : '';
+}
+
+/**
  * Handle the public contact-form request.
  *
  * @return void
@@ -648,6 +685,8 @@ function buybuycoms_hobby_handle_contact_form() {
 	);
 	$detail_template_key = $detail_template_keys[ $values['purchase_type'] ];
 	$labels = array( 'takuhai' => '宅配買取', 'shuccho' => '出張買取', 'mochikomi' => '持込買取' );
+	$conversion_methods = array( 'takuhai' => 'delivery', 'shuccho' => 'home_visit', 'mochikomi' => 'store' );
+	$conversion_method  = $conversion_methods[ $values['purchase_type'] ];
 	$values['inq-type'] = $labels[ $values['purchase_type'] ];
 	$settings = buybuycoms_hobby_contact_settings();
 
@@ -722,7 +761,12 @@ function buybuycoms_hobby_handle_contact_form() {
 	remove_filter( 'wp_mail_from', 'buybuycoms_hobby_contact_from_address', PHP_INT_MAX );
 
 	$redirect = (int) $settings['redirect_page_id'] ? get_permalink( (int) $settings['redirect_page_id'] ) : buybuycoms_hobby_thanks_page_url();
-	wp_safe_redirect( add_query_arg( 'contact_status', 'sent', $redirect ? $redirect : buybuycoms_hobby_contact_page_url() ), 303 );
+	$redirect_args = array( 'contact_status' => 'sent' );
+	$conversion_token = buybuycoms_hobby_contact_create_conversion_token( $conversion_method );
+	if ( '' !== $conversion_token ) {
+		$redirect_args['contact_conversion'] = $conversion_token;
+	}
+	wp_safe_redirect( add_query_arg( $redirect_args, $redirect ? $redirect : buybuycoms_hobby_contact_page_url() ), 303 );
 	exit;
 }
 add_action( 'admin_post_nopriv_buybuycoms_hobby_contact', 'buybuycoms_hobby_handle_contact_form' );

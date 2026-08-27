@@ -849,3 +849,19 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/inc/contact-form.php`、`WORK-LOG.md`
 - 未完了事項: SMTP実行環境でのFromヘッダーと配送可否の確認。
 - 次回の着手点: テスト送信後にGmailのメッセージソースでFromが `info@byebyecoms.com` となっていることを確認する。
+
+## 2026-08-27 申込完了時のGoogle Tag Managerコンバージョンイベントを追加
+
+- 状態: 完了
+- 実施内容: 管理者宛メールの送信成功後、完了画面への303リダイレクトに一度だけ利用できるトークンを付与。遷移先でのみ `buyback_complete` をdataLayerへ送信し、買取方法に応じて `delivery`、`home_visit`、`store` を設定する。
+- 主な変更ファイル: `theme/buybuycoms-hobby/inc/contact-form.php`、`theme/buybuycoms-hobby/inc/enqueue.php`、`theme/buybuycoms-hobby/asset/js/buyback-complete.js`、`WORK-LOG.md`
+- 未完了事項: GTMプレビューとGA4 DebugViewでの実機確認。
+- 次回の着手点: 各買取方法でテスト送信し、完了画面でイベントが1回だけ発火することを確認する。
+
+## 2026-08-27 Localテーマのジャンクションを復旧
+
+- 状態: 完了
+- 実施内容: 通常ディレクトリへ置き換わっていたLocal側テーマを作業フォルダへ復元し、Localのテーマパスを作業フォルダへのジャンクションとして再作成した。既存のLocalテーマはバックアップとして退避した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/`、`WORK-LOG.md`
+- 未完了事項: 各機能の実機操作確認。
+- 次回の着手点: Localでフォーム送信、メール、GTMイベントを確認する。

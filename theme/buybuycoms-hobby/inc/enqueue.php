@@ -67,6 +67,22 @@ function buybuycoms_hobby_enqueue_assets() {
 		true
 	);
 
+	$conversion_method = buybuycoms_hobby_contact_consume_conversion_method();
+	if ( $conversion_method ) {
+		wp_enqueue_script(
+			'buybuycoms-hobby-buyback-complete',
+			get_theme_file_uri( '/asset/js/buyback-complete.js' ),
+			array(),
+			buybuycoms_hobby_asset_version( '/asset/js/buyback-complete.js' ),
+			true
+		);
+		wp_add_inline_script(
+			'buybuycoms-hobby-buyback-complete',
+			'window.buybuycomsHobbyConversion = ' . wp_json_encode( array( 'buybackMethod' => $conversion_method ) ) . ';',
+			'before'
+		);
+	}
+
 	$page_script = buybuycoms_hobby_get_page_script();
 	if ( $page_script ) {
 		wp_enqueue_script(
