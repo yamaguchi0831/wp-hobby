@@ -841,3 +841,11 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/inc/gclid.php`、`theme/buybuycoms-hobby/asset/js/gclid.js`、`theme/buybuycoms-hobby/inc/contact-form.php`、`theme/buybuycoms-hobby/inc/enqueue.php`、`theme/buybuycoms-hobby/page-contact.php`、`WORK-LOG.md`
 - 未完了事項: WordPress実行環境とGmailでのCookie・hidden項目・メールタグの実機確認。
 - 次回の着手点: `?gclid=`付きURLからフォーム送信を行い、Cookie保存期間と管理者メールのGCLID・申込日時を確認する。
+
+## 2026-08-27 お問い合わせメールの送信元アドレスを固定
+
+- 状態: 完了
+- 実施内容: 申込みフォームが送る管理者宛メールと自動返信メールの送信元アドレスを `info@byebyecoms.com` に固定した。フォーム外のWordPressメールには影響しない。
+- 主な変更ファイル: `theme/buybuycoms-hobby/inc/contact-form.php`、`WORK-LOG.md`
+- 未完了事項: SMTP実行環境でのFromヘッダーと配送可否の確認。
+- 次回の着手点: テスト送信後にGmailのメッセージソースでFromが `info@byebyecoms.com` となっていることを確認する。

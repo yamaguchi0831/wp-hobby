@@ -410,6 +410,15 @@ function buybuycoms_hobby_contact_auto_reply_from_name() {
 }
 
 /**
+ * Set the sender address for contact-form emails only.
+ *
+ * @return string
+ */
+function buybuycoms_hobby_contact_from_address() {
+	return 'info@byebyecoms.com';
+}
+
+/**
  * Generate the next site-wide contact request number.
  *
  * @return string
@@ -677,10 +686,12 @@ function buybuycoms_hobby_handle_contact_form() {
 
 	$headers  = array(
 		'Content-Type: text/plain; charset=UTF-8',
+		'From: info@byebyecoms.com',
 		'Reply-To: ' . $values['email'],
 		'X-Contact-Request-Number: ' . $values['request-number'],
 	);
 	add_filter( 'wp_mail_from_name', 'buybuycoms_hobby_contact_auto_reply_from_name' );
+	add_filter( 'wp_mail_from', 'buybuycoms_hobby_contact_from_address', PHP_INT_MAX );
 	$sent     = buybuycoms_hobby_contact_send_mail(
 		$settings['recipient'],
 		buybuycoms_hobby_contact_replace_placeholders( $settings['admin_subject'], $values ),
@@ -691,6 +702,7 @@ function buybuycoms_hobby_handle_contact_form() {
 
 	if ( ! $sent ) {
 		remove_filter( 'wp_mail_from_name', 'buybuycoms_hobby_contact_auto_reply_from_name' );
+		remove_filter( 'wp_mail_from', 'buybuycoms_hobby_contact_from_address', PHP_INT_MAX );
 		buybuycoms_hobby_contact_redirect_error( 'error' );
 	}
 
@@ -701,11 +713,13 @@ function buybuycoms_hobby_handle_contact_form() {
 		buybuycoms_hobby_contact_replace_placeholders( $settings['auto_reply_body'], $values ),
 		array(
 			'Content-Type: text/plain; charset=UTF-8',
+			'From: info@byebyecoms.com',
 			'X-Contact-Request-Number: ' . $values['request-number'],
 		),
 		buybuycoms_hobby_contact_message_id( $values['request-number'], 'auto-reply' )
 	);
 	remove_filter( 'wp_mail_from_name', 'buybuycoms_hobby_contact_auto_reply_from_name' );
+	remove_filter( 'wp_mail_from', 'buybuycoms_hobby_contact_from_address', PHP_INT_MAX );
 
 	$redirect = (int) $settings['redirect_page_id'] ? get_permalink( (int) $settings['redirect_page_id'] ) : buybuycoms_hobby_thanks_page_url();
 	wp_safe_redirect( add_query_arg( 'contact_status', 'sent', $redirect ? $redirect : buybuycoms_hobby_contact_page_url() ), 303 );
