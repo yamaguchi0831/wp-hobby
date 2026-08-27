@@ -817,3 +817,19 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/header.php`、`WORK-LOG.md`
 - 未完了事項: WordPress実行環境でGTMプレビューおよびタグ配信を確認する。
 - 次回の着手点: GTMのプレビュー機能で対象ページへの接続とイベント受信を確認する。
+
+## 2026-08-27 お問い合わせフォームのプライバシーポリシーリンクを移動
+
+- 状態: 完了
+- 実施内容: 送信ボタン直前の同意文からプライバシーポリシーのリンクとリンクアイコンを削除し、注意事項リスト内の「プライバシーポリシー」へ正しいURLとリンクアイコンを設定した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/page-contact.php`、`theme/buybuycoms-hobby/asset/css/page-static.css`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境での表示確認。
+- 次回の着手点: 各買取方法の注意事項に、プライバシーポリシーリンクとアイコンが表示されることを確認する。
+
+## 2026-08-27 お問い合わせメールへ依頼番号付きMessage-IDを設定
+
+- 状態: 完了
+- 実施内容: 各お問い合わせの管理者宛メールと自動返信メールに、依頼番号を含む個別のMessage-IDと `X-Contact-Request-Number` ヘッダーを設定した。両メールのMessage-IDは重複しないよう区別している。
+- 主な変更ファイル: `theme/buybuycoms-hobby/inc/contact-form.php`、`WORK-LOG.md`
+- 未完了事項: SMTPを設定したWordPress実行環境でのメールヘッダーとGmailスレッド表示の確認。
+- 次回の着手点: 管理者宛件名へ `[request-number]` を設定し、テスト送信で各メールのMessage-IDとGmail上のスレッドを確認する。

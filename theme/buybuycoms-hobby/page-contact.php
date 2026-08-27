@@ -568,7 +568,7 @@ $requested_purchase_type = in_array( $requested_purchase_type, array( 'takuhai',
                     プラモデルの完成品は品物の特性上、買取キャンセルおよび返送対応を致しかねます。
                   </li>
                   <li>
-                    <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">プライバシーポリシー・利用規約</a>
+                    <a class="hb__p-form__notes-link" href="<?php echo esc_url( home_url( '/privacy/' ) ); ?>">プライバシーポリシー<img class="hb__p-form__notes-link-icon" src="<?php echo esc_url( get_theme_file_uri( '/images/icon/icon-link.svg' ) ); ?>" alt="" /></a>・利用規約
                   </li>
                 </ul>
                 <ul class="hb__p-form__notes-list" data-notes="shuccho" hidden>
@@ -577,7 +577,7 @@ $requested_purchase_type = in_array( $requested_purchase_type, array( 'takuhai',
                   <li>訪問可能点数は段ボール5箱分以上からのお伺いです。</li>
                   <li>出張エリアは関西圏のみとなります。</li>
                   <li>
-                    <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">プライバシーポリシー・利用規約</a>
+                    <a class="hb__p-form__notes-link" href="<?php echo esc_url( home_url( '/privacy/' ) ); ?>">プライバシーポリシー<img class="hb__p-form__notes-link-icon" src="<?php echo esc_url( get_theme_file_uri( '/images/icon/icon-link.svg' ) ); ?>" alt="" /></a>・利用規約
                   </li>
                 </ul>
                 <ul
@@ -593,7 +593,7 @@ $requested_purchase_type = in_array( $requested_purchase_type, array( 'takuhai',
                     買取ができない商品はお持ち帰りいただく場合があります。
                   </li>
                   <li>
-                    <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">プライバシーポリシー・利用規約</a>
+                    <a class="hb__p-form__notes-link" href="<?php echo esc_url( home_url( '/privacy/' ) ); ?>">プライバシーポリシー<img class="hb__p-form__notes-link-icon" src="<?php echo esc_url( get_theme_file_uri( '/images/icon/icon-link.svg' ) ); ?>" alt="" /></a>・利用規約
                   </li>
                 </ul>
               </div>
@@ -605,9 +605,7 @@ $requested_purchase_type = in_array( $requested_purchase_type, array( 'takuhai',
                   value="agree"
                   required
                 />
-                <span class="hb__p-form__agree-text"
-                  >注意事項と<a class="hb__p-form__agree-link" href="<?php echo esc_url( home_url( '/privacy/' ) ); ?>">プライバシーポリシー<img class="hb__p-form__agree-link-icon" src="<?php echo esc_url( get_theme_file_uri( '/images/icon/icon-link.svg' ) ); ?>" alt="" /></a>・利用規約に同意します</span
-                >
+                <span class="hb__p-form__agree-text">注意事項とプライバシーポリシー・利用規約に同意します</span>
               </label>
 
               <div class="hb__p-form__actions">

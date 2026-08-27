@@ -436,6 +436,49 @@ function buybuycoms_hobby_contact_next_request_number() {
 }
 
 /**
+ * Build a unique Message-ID for a contact-form email.
+ *
+ * @param string $request_number Site-wide contact request number.
+ * @param string $message_type   Email type identifier.
+ * @return string
+ */
+function buybuycoms_hobby_contact_message_id( $request_number, $message_type ) {
+	$host = wp_parse_url( network_home_url( '/' ), PHP_URL_HOST );
+	$host = is_string( $host ) ? strtolower( $host ) : '';
+	$host = preg_replace( '/[^a-z0-9.-]/', '', $host );
+	$host = $host ? $host : 'localhost';
+
+	return sprintf(
+		'<contact-%d-%s@%s>',
+		absint( $request_number ),
+		sanitize_key( $message_type ),
+		$host
+	);
+}
+
+/**
+ * Send a contact-form email with a caller-supplied Message-ID.
+ *
+ * @param string          $to         Recipient address.
+ * @param string          $subject    Email subject.
+ * @param string          $message    Email body.
+ * @param array<int, string> $headers Email headers.
+ * @param string          $message_id RFC-compliant Message-ID.
+ * @return bool
+ */
+function buybuycoms_hobby_contact_send_mail( $to, $subject, $message, $headers, $message_id ) {
+	$set_message_id = static function ( $phpmailer ) use ( $message_id ) {
+		$phpmailer->MessageID = $message_id;
+	};
+
+	add_action( 'phpmailer_init', $set_message_id, PHP_INT_MAX );
+	$sent = wp_mail( $to, $subject, $message, $headers );
+	remove_action( 'phpmailer_init', $set_message_id, PHP_INT_MAX );
+
+	return $sent;
+}
+
+/**
  * Handle the public contact-form request.
  *
  * @return void
@@ -616,13 +659,18 @@ function buybuycoms_hobby_handle_contact_form() {
 	$values['request-number']    = buybuycoms_hobby_contact_next_request_number();
 	$values['detail']            = buybuycoms_hobby_contact_replace_placeholders( $settings[ $detail_template_key ], $values );
 
-	$headers  = array( 'Content-Type: text/plain; charset=UTF-8', 'Reply-To: ' . $values['email'] );
+	$headers  = array(
+		'Content-Type: text/plain; charset=UTF-8',
+		'Reply-To: ' . $values['email'],
+		'X-Contact-Request-Number: ' . $values['request-number'],
+	);
 	add_filter( 'wp_mail_from_name', 'buybuycoms_hobby_contact_auto_reply_from_name' );
-	$sent     = wp_mail(
+	$sent     = buybuycoms_hobby_contact_send_mail(
 		$settings['recipient'],
 		buybuycoms_hobby_contact_replace_placeholders( $settings['admin_subject'], $values ),
 		buybuycoms_hobby_contact_replace_placeholders( $settings['admin_body'], $values ),
-		$headers
+		$headers,
+		buybuycoms_hobby_contact_message_id( $values['request-number'], 'admin' )
 	);
 
 	if ( ! $sent ) {
@@ -631,11 +679,15 @@ function buybuycoms_hobby_handle_contact_form() {
 	}
 
 	set_transient( $rate_key, (int) get_transient( $rate_key ) + 1, 10 * MINUTE_IN_SECONDS );
-	wp_mail(
+	buybuycoms_hobby_contact_send_mail(
 		$values['email'],
 		buybuycoms_hobby_contact_replace_placeholders( $settings['auto_reply_subject'], $values ),
 		buybuycoms_hobby_contact_replace_placeholders( $settings['auto_reply_body'], $values ),
-		array( 'Content-Type: text/plain; charset=UTF-8' )
+		array(
+			'Content-Type: text/plain; charset=UTF-8',
+			'X-Contact-Request-Number: ' . $values['request-number'],
+		),
+		buybuycoms_hobby_contact_message_id( $values['request-number'], 'auto-reply' )
 	);
 	remove_filter( 'wp_mail_from_name', 'buybuycoms_hobby_contact_auto_reply_from_name' );
 
