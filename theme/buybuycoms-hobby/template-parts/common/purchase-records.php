@@ -106,12 +106,28 @@ $format_purchase_record_price = static function ( $price ) {
 		$purchase_record_id      = get_the_ID();
 		$item_image              = $get_purchase_record_field( 'item-image', $purchase_record_id );
 		$item_excerpt            = $get_purchase_record_field( 'item-excerpt', $purchase_record_id );
+		$item_purchase_date      = $get_purchase_record_field( 'item-purchase-date', $purchase_record_id );
 		$item_purchase_area      = $get_purchase_record_field( 'item-purchase-area', $purchase_record_id );
 		$item_price              = $get_purchase_record_field( 'item-price', $purchase_record_id );
 		$purchase_record_date    = get_the_date( 'Y/n/j' );
 		$purchase_record_datetime = get_the_date( 'c' );
 		$item_image_markup       = '';
 		$item_image_fallback_alt = get_the_title();
+		$item_purchase_date      = is_scalar( $item_purchase_date ) ? trim( (string) $item_purchase_date ) : '';
+
+		if ( '' !== $item_purchase_date ) {
+			$purchase_date_object = preg_match( '/^\d{8}$/', $item_purchase_date )
+				? DateTimeImmutable::createFromFormat( '!Ymd', $item_purchase_date, wp_timezone() )
+				: date_create_immutable( $item_purchase_date, wp_timezone() );
+
+			if ( $purchase_date_object instanceof DateTimeImmutable ) {
+				$purchase_record_date     = wp_date( 'Y/n/j', $purchase_date_object->getTimestamp() );
+				$purchase_record_datetime = wp_date( 'Y-m-d', $purchase_date_object->getTimestamp() );
+			} else {
+				$purchase_record_date     = $item_purchase_date;
+				$purchase_record_datetime = '';
+			}
+		}
 
 		if ( is_array( $item_image ) ) {
 			$item_image_id = ! empty( $item_image['ID'] )
@@ -187,7 +203,7 @@ $format_purchase_record_price = static function ( $price ) {
 							<?php echo esc_html( $item_excerpt ); ?>
 							<br />
 						<?php endif; ?>
-						<time datetime="<?php echo esc_attr( $purchase_record_datetime ); ?>"><?php echo esc_html( $purchase_record_date ); ?></time><?php
+						<time<?php if ( '' !== $purchase_record_datetime ) : ?> datetime="<?php echo esc_attr( $purchase_record_datetime ); ?>"<?php endif; ?>><?php echo esc_html( $purchase_record_date ); ?></time><?php
 						if ( '' !== trim( (string) $item_purchase_area ) ) {
 							echo esc_html( ' ' . trim( (string) $item_purchase_area ) . 'で買取' );
 						}
