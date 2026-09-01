@@ -15,7 +15,7 @@ function buybuycoms_hobby_primary_menu_fallback() {
 	$links = array(
 		home_url( '/flow/' )       => __( '買取方法', 'buybuycoms-hobby' ),
 		home_url( '/reason/' )     => __( '選ばれる理由', 'buybuycoms-hobby' ),
-		home_url( '/genre-list/' ) => __( 'カテゴリー一覧', 'buybuycoms-hobby' ),
+		home_url( '/genre-list/' ) => __( '買取品目一覧', 'buybuycoms-hobby' ),
 		$column_archive_url ?: home_url( '/column/' ) => __( 'コラム', 'buybuycoms-hobby' ),
 		home_url( '/faq/' )        => __( 'よくある質問', 'buybuycoms-hobby' ),
 		home_url( '/company/' )    => __( '会社概要', 'buybuycoms-hobby' ),
@@ -31,6 +31,28 @@ function buybuycoms_hobby_primary_menu_fallback() {
 	}
 	echo '</ul>';
 }
+
+/**
+ * Rename the genre list item in the primary navigation.
+ *
+ * @param string   $title Menu item title.
+ * @param WP_Post  $item  Menu item object.
+ * @param stdClass $args  Menu arguments.
+ * @param int      $depth Menu item depth.
+ * @return string
+ */
+function buybuycoms_hobby_primary_menu_item_title( $title, $item, $args, $depth ) {
+	if ( empty( $args->theme_location ) || 'primary' !== $args->theme_location ) {
+		return $title;
+	}
+
+	if ( 'カテゴリー一覧' !== wp_strip_all_tags( $title ) ) {
+		return $title;
+	}
+
+	return __( '買取品目一覧', 'buybuycoms-hobby' );
+}
+add_filter( 'nav_menu_item_title', 'buybuycoms_hobby_primary_menu_item_title', 10, 4 );
 
 /**
  * Set the number of column posts shown on each archive page.
