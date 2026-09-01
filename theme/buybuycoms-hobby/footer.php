@@ -78,7 +78,7 @@
 		<div class="hb__l-container hb__p-footer__legal-inner">
 			<span>兵庫県公安委員会 第631331400008号</span>
 			<span class="hb__p-footer__dot" aria-hidden="true"></span>
-			<span>© <?php echo esc_html( wp_date( 'Y' ) ); ?> BaiBaiComs Inc. All rights reserved.</span>
+			<span>Copyright © 2013-2026 byebyecoms all rights reserved.</span>
 		</div>
 	</div>
 </footer>

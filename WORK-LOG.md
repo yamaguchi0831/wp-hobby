@@ -873,3 +873,11 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/purchase-records.php`、`WORK-LOG.md`
 - 未完了事項: WordPress実行環境で、入力した買取日が一覧・関連実績・トップの買取事例セクションへ表示されることを確認する。
 - 次回の着手点: `item-purchase-date` を設定した買取実績を複数用意し、日付表示と並び順を確認する。
+
+## 2026-09-01 フッターの著作権表記を更新
+
+- 状態: 完了
+- 実施内容: フッターの著作権表記を「Copyright © 2013-2026 byebyecoms all rights reserved.」へ変更した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/footer.php`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境での表示確認。
+- 次回の着手点: フッターの著作権表記が全ページで指定どおり表示されることを確認する。
