@@ -8,7 +8,7 @@
 
   registerBlockType("buybuycoms-hobby/internal-link-card", {
     apiVersion: 2,
-    title: __("ページ内リンクカード", "buybuycoms-hobby"),
+    title: __("サイト内リンクカード", "buybuycoms-hobby"),
     description: __(
       "取り扱いジャンルまたはコラムへのリンクカードを挿入します。",
       "buybuycoms-hobby",
