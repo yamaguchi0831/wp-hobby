@@ -2257,6 +2257,13 @@
   line-height: 1.55;
 }
 
+.hb__p-internal-link-card__description {
+  color: var(--hb-color-text-muted);
+  font-size: var(--hb-font-size-body--sm);
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
 .hb__p-internal-link-card__divider {
   display: block;
   height: 1px;

@@ -12,10 +12,11 @@ if ( ! $content_id ) {
 	return;
 }
 
-$link       = '';
-$title      = '';
+$link        = '';
+$title       = '';
+$description = '';
 $button_text = '';
-$image_html = '';
+$image_html  = '';
 
 if ( 'genre' === $content_type ) {
 	$genre_term = get_term( $content_id, 'genre' );
@@ -37,6 +38,7 @@ if ( 'genre' === $content_type ) {
 
 	$link        = get_permalink( $column );
 	$title       = get_the_title( $column );
+	$description = buybuycoms_hobby_get_internal_link_card_column_description( $column );
 	$button_text = '詳細をみる';
 	$image_id    = get_post_thumbnail_id( $column );
 	$image_html  = $image_id
@@ -54,6 +56,9 @@ if ( is_wp_error( $link ) || '' === $link || '' === $title || '' === $image_html
 	</figure>
 	<span class="hb__p-internal-link-card__body">
 		<span class="hb__p-internal-link-card__title"><?php echo esc_html( $title ); ?></span>
+		<?php if ( '' !== $description ) : ?>
+			<span class="hb__p-internal-link-card__description"><?php echo esc_html( $description ); ?></span>
+		<?php endif; ?>
 		<span class="hb__p-internal-link-card__divider" aria-hidden="true"></span>
 		<span class="hb__p-internal-link-card__button"><?php echo esc_html( $button_text ); ?></span>
 	</span>

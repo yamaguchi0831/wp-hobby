@@ -69,6 +69,67 @@ function buybuycoms_hobby_get_internal_link_card_genre_image( $genre_term ) {
 }
 
 /**
+ * Return a shortened, post-specific AIOSEO description for an internal link card.
+ *
+ * @param WP_Post $column Column post object.
+ * @return string
+ */
+function buybuycoms_hobby_get_internal_link_card_column_description( $column ) {
+	if ( ! $column instanceof WP_Post ) {
+		return '';
+	}
+
+	$description = '';
+
+	if ( function_exists( 'aioseo' ) ) {
+		$aioseo = aioseo();
+
+		if (
+			isset( $aioseo->meta, $aioseo->meta->metaData, $aioseo->meta->description ) &&
+			method_exists( $aioseo->meta->metaData, 'getMetaData' ) &&
+			method_exists( $aioseo->meta->description, 'getPostDescription' )
+		) {
+			$meta_data = $aioseo->meta->metaData->getMetaData( $column );
+
+			if ( $meta_data && ! empty( $meta_data->description ) ) {
+				$description = $aioseo->meta->description->getPostDescription( $column );
+			}
+		}
+	}
+
+	if ( '' === $description ) {
+		foreach ( array( '_aioseo_description', 'aioseo_description', '_aioseop_description' ) as $meta_key ) {
+			$description = get_post_meta( $column->ID, $meta_key, true );
+
+			if ( is_string( $description ) && '' !== $description ) {
+				break;
+			}
+		}
+	}
+
+	$description = is_string( $description ) ? $description : '';
+	$description = html_entity_decode( wp_strip_all_tags( $description ), ENT_QUOTES, get_bloginfo( 'charset' ) );
+	$description = preg_replace( '/\s+/u', ' ', $description );
+	$description = is_string( $description ) ? trim( $description ) : '';
+
+	if ( '' === $description ) {
+		return '';
+	}
+
+	if ( function_exists( 'mb_strlen' ) && function_exists( 'mb_substr' ) && mb_strlen( $description, 'UTF-8' ) > 50 ) {
+		return mb_substr( $description, 0, 50, 'UTF-8' ) . '…';
+	}
+
+	$characters = preg_split( '//u', $description, -1, PREG_SPLIT_NO_EMPTY );
+
+	if ( is_array( $characters ) && count( $characters ) > 50 ) {
+		return implode( '', array_slice( $characters, 0, 50 ) ) . '…';
+	}
+
+	return $description;
+}
+
+/**
  * Render the internal link card block.
  *
  * @param array<string, mixed> $attributes Block attributes.
