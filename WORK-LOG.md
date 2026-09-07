@@ -953,3 +953,11 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/component.css`、`asset/css/component.css`、`WORK-LOG.md`
 - 未完了事項: WordPress実行環境での表示確認。
 - 次回の着手点: 透明背景・縦長・横長の各画像で、表示領域から切り抜かれないことを確認する。
+
+## 2026-09-07 マルチサイズ対応のファビコンを追加
+
+- 状態: 完了
+- 実施内容: 指定された透明PNGを16・32・48・64・128・192pxを含むICOへ変換し、テーマ共通ヘッダーから読み込むよう設定した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/images/favicon.ico`、`theme/buybuycoms-hobby/header.php`、`WORK-LOG.md`
+- 未完了事項: ブラウザでのアイコン表示確認。
+- 次回の着手点: キャッシュを更新して、ブラウザのタブおよびブックマークでファビコンが表示されることを確認する。

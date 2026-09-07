@@ -14,6 +14,7 @@
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="format-detection" content="telephone=no">
+	<link rel="icon" href="<?php echo esc_url( get_theme_file_uri( '/images/favicon.ico' ) ); ?>" type="image/x-icon" sizes="any">
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
