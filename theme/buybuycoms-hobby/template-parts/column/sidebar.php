@@ -102,7 +102,7 @@ if ( $column_post_ids && taxonomy_exists( 'column-tag' ) ) {
 							<a class="<?php echo esc_attr( $column_sidebar_prefix . '__p-post-link' ); ?>" href="<?php the_permalink(); ?>">
 								<span class="<?php echo esc_attr( $column_sidebar_prefix . '__p-post-thumb' ); ?>">
 									<?php if ( has_post_thumbnail() ) : ?>
-										<?php the_post_thumbnail( 'thumbnail', array( 'loading' => 'lazy' ) ); ?>
+									<?php the_post_thumbnail( 'full', array( 'loading' => 'lazy' ) ); ?>
 									<?php else : ?>
 										<img
 											class="<?php echo esc_attr( $column_sidebar_prefix . '__p-no-image' ); ?>"
@@ -143,7 +143,7 @@ if ( $column_post_ids && taxonomy_exists( 'column-tag' ) ) {
 							<a class="<?php echo esc_attr( $column_sidebar_prefix . '__p-post-link' ); ?>" href="<?php the_permalink(); ?>">
 								<span class="<?php echo esc_attr( $column_sidebar_prefix . '__p-post-thumb' ); ?>">
 									<?php if ( has_post_thumbnail() ) : ?>
-										<?php the_post_thumbnail( 'thumbnail', array( 'loading' => 'lazy' ) ); ?>
+									<?php the_post_thumbnail( 'full', array( 'loading' => 'lazy' ) ); ?>
 									<?php else : ?>
 										<img
 											class="<?php echo esc_attr( $column_sidebar_prefix . '__p-no-image' ); ?>"

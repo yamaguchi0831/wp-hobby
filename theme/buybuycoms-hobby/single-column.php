@@ -120,7 +120,7 @@ while ( have_posts() ) :
                             <?php if ( has_post_thumbnail() ) : ?>
                               <?php
                               the_post_thumbnail(
-                                'medium',
+                                'full',
                                 array(
                                   'loading' => 'lazy',
                                 )

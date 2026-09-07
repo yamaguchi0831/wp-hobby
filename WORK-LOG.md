@@ -1002,3 +1002,45 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/images/favicon.ico`、`WORK-LOG.md`
 - 未完了事項: ブラウザでの表示確認。
 - 次回の着手点: キャッシュを更新して、ブラウザのタブおよびブックマークでHBロゴが表示されることを確認する。
+
+## 2026-09-07 コラム画像をトリミングなしの全体表示へ変更
+
+- 状態: 完了
+- 実施内容: コラム詳細のアイキャッチとコラム一覧のサムネイルを、固定比率の表示領域内で`object-fit: contain`により全体表示するよう変更した。画像が領域より大きい場合は縦横比を保って縮小し、余白には`--hb-color-surface-thumbnail`を使用する。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/page-static.css`、`asset/css/tokens.css`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境での縦長・横長アイキャッチの表示確認。
+- 次回の着手点: コラム詳細と一覧で、画像が切り抜かれず、背景色付きの表示領域内に収まることを確認する。
+
+## 2026-09-07 コラム画像の全体表示を強化
+
+- 状態: 完了
+- 実施内容: コラム詳細アイキャッチと一覧サムネイルの画像要素を表示領域の幅・高さ100%に固定し、`object-fit: contain`で領域内に必ず収めるよう変更した。詳細右カラムの関連記事・新着記事サムネイルにも同じ設定と`--hb-color-surface-thumbnail`背景を適用した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/page-static.css`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境での縦長・横長アイキャッチの表示確認。
+- 次回の着手点: コラム詳細のアイキャッチと右カラム、一覧サムネイルで、画像全体が領域内に収まることを確認する。
+
+## 2026-09-07 コラムのサムネイル取得サイズを元画像へ変更
+
+- 状態: 完了
+- 実施内容: 一覧・関連記事・右カラムのコラムサムネイルで、切り抜き済みの可能性がある`thumbnail`、`medium`、`medium_large`ではなく、元画像を取得する`full`サイズを使用するよう変更した。既存の`object-fit: contain`と合わせ、画像全体を表示領域内に収める。
+- 主な変更ファイル: `theme/buybuycoms-hobby/archive-column.php`、`theme/buybuycoms-hobby/single-column.php`、`theme/buybuycoms-hobby/template-parts/column/sidebar.php`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境での画像全体表示確認。
+- 次回の着手点: 縦長のコラムアイキャッチで、一覧・詳細・右カラムのすべてに全身が表示されることを確認する。
+
+## 2026-09-07 コラム画像のはみ出しを修正
+
+- 状態: 完了
+- 実施内容: 開発者ツールで、縦長画像が親要素の220×165pxに対して220×293pxで表示されていることを確認。`aspect-ratio`のみの親要素に対する画像の`height: 100%`は高さが確定しないため、親要素を相対配置、画像を`inset: 0`の絶対配置に変更した。`object-fit: contain`が確実に効き、画像全体を領域内へ縮小表示する。詳細アイキャッチ、一覧、関連記事、右カラムに適用した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/page-static.css`、`WORK-LOG.md`
+- 検証: Localのコラム一覧とコラム詳細で、縦長・横長画像の親子サイズが一致し、アイキャッチと右カラムで画像全体が表示されることを確認した。
+- 未完了事項: 本番反映後のキャッシュ環境での確認。
+- 次回の着手点: 本番環境へアップロード後、スーパーリロードして同じコラム画像の表示を確認する。
+
+## 2026-09-07 コラム一覧サイドバーの画像表示を統一
+
+- 状態: 完了
+- 実施内容: 一覧・詳細とも共通の`template-parts/column/sidebar.php`を使用していることを確認。ページごとに付与するclass接頭辞ごとのCSSに差があり、一覧側だけが`object-fit: cover`でトリミングする旧設定だったため、詳細側と同じ絶対配置・`object-fit: contain`・`--hb-color-surface-thumbnail`背景へ統一した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/page-static.css`、`WORK-LOG.md`
+- 検証: Localのコラム一覧サイドバーで、縦長画像が88×66pxの画像枠内に全体表示されることを確認した。
+- 未完了事項: 本番反映後のキャッシュ環境での確認。
+- 次回の着手点: 本番で一覧・詳細のサイドバーが同じ画像表示になることを確認する。

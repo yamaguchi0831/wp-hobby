@@ -51,7 +51,7 @@ get_header();
                                         >
                                             <span class="hb-archive-column__p-column-thumb">
                                                 <?php if ( has_post_thumbnail() ) : ?>
-                                                    <?php the_post_thumbnail( 'medium_large' ); ?>
+                                                    <?php the_post_thumbnail( 'full', array( 'loading' => 'lazy' ) ); ?>
                                                 <?php else : ?>
                                                     <img
                                                         class="hb-archive-column__p-no-image"
