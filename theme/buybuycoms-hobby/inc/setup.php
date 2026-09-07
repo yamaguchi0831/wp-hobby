@@ -23,6 +23,7 @@ function buybuycoms_hobby_setup() {
 		array(
 			'asset/css/tokens.css',
 			'asset/css/editor-style.css',
+			'asset/css/component.css',
 		)
 	);
 	add_theme_support(

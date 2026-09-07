@@ -961,3 +961,28 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/images/favicon.ico`、`theme/buybuycoms-hobby/header.php`、`WORK-LOG.md`
 - 未完了事項: ブラウザでのアイコン表示確認。
 - 次回の着手点: キャッシュを更新して、ブラウザのタブおよびブックマークでファビコンが表示されることを確認する。
+
+## 2026-09-07 Localテーマのジャンクションを復旧
+
+- 状態: 完了
+- 実施内容: Local管理画面からのテーマアップロード後に作業フォルダ側のテーマが空となり、ジャンクションが消失していることを確認。Local側に残ったテーマ本体を作業フォルダへ復元し、最新コミットとの全193追跡ファイルのハッシュ照合で欠損・内容差分ともに0件を確認した。Local側の通常フォルダはバックアップへ移動して保持した上で、作業フォルダを参照するジャンクションを再作成した。
+- 主な確認対象: `theme/buybuycoms-hobby/`、`C:\Users\yamag\Local Sites\test-hobby\app\public\wp-content\themes\buybuycoms-hobby/`
+- バックアップ: `C:\Users\yamag\Local Sites\test-hobby\app\public\wp-content\themes\buybuycoms-hobby.backup-20260907/`
+- 未完了事項: Local管理画面と公開画面でテーマが通常どおり認識・表示されるかの確認。
+- 次回の着手点: Localを再読み込みし、テーマ有効化状態と最新変更（ファビコン・リンクカード）を確認する。
+
+## 2026-09-07 本番エディターの内部リンクカード表示を調査
+
+- 状態: 原因特定
+- 実施内容: 本番エディターのカード表示崩れを確認。`add_editor_style()`では`tokens.css`と`editor-style.css`だけを読み込み、カード定義を持つ`component.css`は`enqueue_block_editor_assets`だけで読み込んでいるため、本文iframe内へ届かないWordPress環境では生のリンクと画像だけが表示される。あわせて、ジャンルカードの`No Image`は本番の`genre-mv`が未設定、またはACF／タームメタが未移行・未有効である場合のフォールバック表示であることを確認した。
+- 主な確認ファイル: `theme/buybuycoms-hobby/inc/blocks.php`、`theme/buybuycoms-hobby/inc/setup.php`、`theme/buybuycoms-hobby/asset/css/editor-style.css`
+- 未完了事項: `component.css`をエディターiframeへ読み込む修正、本番のACF有効化・`genre-mv`データ確認。
+- 次回の着手点: エディター用スタイル読込を修正し、LEGOタームの`genre-mv`とメディアデータを本番で確認する。
+
+## 2026-09-07 エディター内リンクカードのレイアウト崩れを修正
+
+- 状態: 完了
+- 実施内容: ブロックエディター本文iframeへ`component.css`を読み込むよう、`add_editor_style()`へ追加した。公開側と同じカード定義がエディター本文でも適用されるため、画像・タイトル・ボタンがカードレイアウトで表示される。
+- 主な変更ファイル: `theme/buybuycoms-hobby/inc/setup.php`、`WORK-LOG.md`
+- 未完了事項: 本番エディターでの実表示確認。
+- 次回の着手点: 本番環境でコラムとジャンルのリンクカードを開き、カードレイアウトが公開側と整合することを確認する。
