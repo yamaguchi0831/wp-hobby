@@ -89,10 +89,11 @@ while ( have_posts() ) :
                 <?php
                 if ( $column_primary_genre ) {
                   get_template_part(
-                    'template-parts/content/blog-card',
+                    'template-parts/content/internal-link-card',
                     null,
                     array(
-                      'genre_term' => $column_primary_genre,
+                      'content_type' => 'genre',
+                      'content_id'   => $column_primary_genre->term_id,
                     )
                   );
                 }

@@ -169,7 +169,6 @@ get_header();
               </div>
             </section>
           <?php endif; ?>
-          <?php get_template_part( 'template-parts/content/blog-card' ); ?>
         </div>
       </article>
 

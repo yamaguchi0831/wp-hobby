@@ -1956,13 +1956,14 @@
 }
 
 /* ============================================================
-   Project: Blog card (.hb__p-blog-card)
+   Project: Internal link card (.hb__p-internal-link-card)
 ============================================================ */
 
-.hb__p-blog-card {
+.hb__p-internal-link-card {
   display: grid;
   grid-template-columns: 180px minmax(0, 1fr);
   gap: var(--hb-space-lg);
+  width: min(100%, 600px);
   max-width: 600px;
   margin: var(--hb-space-xl) auto 0;
   padding: var(--hb-space-md);
@@ -1974,34 +1975,41 @@
   box-shadow: var(--hb-shadow-sm);
 }
 
-.hb__p-blog-card:hover {
+.hb__p-internal-link-card:hover {
   color: var(--hb-color-primary-800);
   box-shadow: var(--hb-shadow-md);
   opacity: 1;
 }
 
-.hb__p-blog-card__image {
-  overflow: hidden;
+.hb__p-internal-link-card__image {
+  display: grid;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  align-self: center;
+  place-items: center;
+  overflow: visible;
   margin: 0;
   border-radius: var(--hb-radius-sm);
+  background: var(--hb-color-surface-green-light);
 }
 
-.hb__p-blog-card__image img {
+.hb__p-internal-link-card__image img {
   display: block;
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
 }
 
-.hb__p-blog-card__body {
+.hb__p-internal-link-card__body {
   display: grid;
   align-content: center;
   gap: var(--hb-space-xs);
   min-width: 0;
 }
 
-.hb__p-blog-card__title {
+.hb__p-internal-link-card__title {
   margin: 0;
   color: inherit;
   font-size: var(--hb-font-size-h4);
@@ -2009,14 +2017,7 @@
   line-height: 1.55;
 }
 
-.hb__p-blog-card__text {
-  margin: 0;
-  color: inherit;
-  font-size: var(--hb-font-size-body--sm);
-  line-height: 1.75;
-}
-
-.hb__p-blog-card__divider {
+.hb__p-internal-link-card__divider {
   display: block;
   height: 1px;
   margin-top: var(--hb-space-xs);
@@ -2029,7 +2030,7 @@
   );
 }
 
-.hb__p-blog-card__button {
+.hb__p-internal-link-card__button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2047,11 +2048,12 @@
 }
 
 @media (max-width: 640px) {
-  .hb__p-blog-card {
+  .hb__p-internal-link-card {
     grid-template-columns: 1fr;
+    width: 100%;
   }
 
-  .hb__p-blog-card__button {
+  .hb__p-internal-link-card__button {
     justify-self: stretch;
     min-width: 0;
   }

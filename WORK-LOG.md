@@ -905,3 +905,51 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/inc/template-functions.php`、`WORK-LOG.md`
 - 未完了事項: WordPress実行環境での表示確認。
 - 次回の着手点: PC・モバイルのヘッダーで「買取品目一覧」と表示され、リンク先が従来どおり `genre-list` ページであることを確認する。
+
+## 2026-09-07 汎用ページ内リンクカードブロックを追加
+
+- 状態: 完了
+- 実施内容: 既存のジャンル用blog-cardを説明文なしの汎用internal-link-cardへ移行し、エディターで「ジャンル」または「コラム」を選択後、タイトル検索可能な候補からリンク先を指定できる動的ブロックを追加した。ジャンルはカスタムフィールド`genre-mv`、コラムはアイキャッチを表示する。コラムのボタン文言は「詳細をみる」。
+- 主な変更ファイル: `theme/buybuycoms-hobby/inc/blocks.php`、`theme/buybuycoms-hobby/asset/js/blocks/internal-link-card.js`、`theme/buybuycoms-hobby/template-parts/content/internal-link-card.php`、`theme/buybuycoms-hobby/asset/css/component.css`、`WORK-LOG.md`
+- 未完了事項: WordPress管理画面での候補検索・プレビュー、およびジャンル画像・コラム画像の実表示確認。
+- 次回の着手点: ジャンルとコラムをそれぞれ選択してブロックを挿入し、公開画面のリンク先、画像、モバイル表示を確認する。
+
+## 2026-09-07 汎用ページ内リンクカードの幅を調整
+
+- 状態: 完了
+- 実施内容: `internal-link-card` の最大幅を646pxへ変更した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/component.css`、`asset/css/component.css`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境での表示確認。
+- 次回の着手点: エディターと公開画面で、カードが646pxを上限に自然に収まることを確認する。
+
+## 2026-09-07 汎用ページ内リンクカードの横幅を明示
+
+- 状態: 完了
+- 実施内容: 横方向の自動マージンを外し、カード幅を`min(100%, 646px)`で明示した。親コンテナに十分な幅がある場合は646pxで表示し、狭い画面では横幅100%で収まる。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/component.css`、`asset/css/component.css`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境でのPC・モバイル表示確認。
+- 次回の着手点: コラム本文と通常のブロック本文で、カードが左寄せかつ646px上限で表示されることを確認する。
+
+## 2026-09-07 汎用ページ内リンクカードを600px中央揃えへ変更
+
+- 状態: 完了
+- 実施内容: 最大幅を600pxに変更し、横方向の自動マージンで中央揃えに戻した。狭い画面では横幅100%で表示する。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/component.css`、`asset/css/component.css`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境での表示確認。
+- 次回の着手点: コラム本文でカードが600pxを上限に中央揃えで表示されることを確認する。
+
+## 2026-09-07 汎用ページ内リンクカードの画像を全体表示へ変更
+
+- 状態: 完了
+- 実施内容: 画像領域を4:3に固定し、画像を`object-fit: contain`で中央表示するよう統一した。縦長・横長いずれの画像もトリミングせず、領域内へ縮小して全体を表示する。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/component.css`、`asset/css/component.css`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境で、縦長・横長のアイキャッチを使った表示確認。
+- 次回の着手点: ジャンルの`genre-mv`とコラムのアイキャッチで、画像全体が見切れないことを確認する。
+
+## 2026-09-07 汎用ページ内リンクカードの画像縮小を強化
+
+- 状態: 完了
+- 実施内容: 画像を幅・高さとも最大値で制約し、元画像の縦横比を保ったまま画像領域内へ縮小する指定へ変更した。親要素のクリッピングも解除し、画像が見切れないようにした。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/component.css`、`asset/css/component.css`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境での表示確認。
+- 次回の着手点: 透明背景・縦長・横長の各画像で、表示領域から切り抜かれないことを確認する。
