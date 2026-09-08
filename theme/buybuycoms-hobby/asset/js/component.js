@@ -1,3 +1,94 @@
+const activateMethodTab = (section, target) => {
+  const tabs = section.querySelectorAll("[data-method-tab]");
+  const panels = section.querySelectorAll("[data-method-panel]");
+  const activeTab = Array.from(tabs).find(
+    (tab) => tab.dataset.methodTab === target,
+  );
+
+  if (!activeTab) {
+    return false;
+  }
+
+  tabs.forEach((item) => {
+    const isActive = item === activeTab;
+    item.classList.toggle("hb__is-active", isActive);
+    item.setAttribute("aria-selected", String(isActive));
+  });
+
+  panels.forEach((panel) => {
+    panel.classList.toggle(
+      "hb__is-active",
+      panel.dataset.methodPanel === target,
+    );
+  });
+
+  return true;
+};
+
+const getHashTarget = (hash) => {
+  if (!hash) {
+    return null;
+  }
+
+  try {
+    return document.getElementById(decodeURIComponent(hash.slice(1)));
+  } catch (error) {
+    return null;
+  }
+};
+
+const activateMethodTabForTarget = (targetElement) => {
+  if (!targetElement) {
+    return false;
+  }
+
+  const panel = targetElement.closest("[data-method-panel]");
+  const section = panel?.closest(".hb__p-method--tabs");
+
+  if (!panel || !section) {
+    return false;
+  }
+
+  return activateMethodTab(section, panel.dataset.methodPanel);
+};
+
+const revealMethodTabForHash = () => {
+  const targetElement = getHashTarget(window.location.hash);
+
+  if (!activateMethodTabForTarget(targetElement)) {
+    return;
+  }
+
+  window.requestAnimationFrame(() => {
+    targetElement.scrollIntoView({ block: "start" });
+  });
+};
+
+document.addEventListener(
+  "click",
+  (event) => {
+    const link = event.target.closest('a[href*="#"]');
+
+    if (!link) {
+      return;
+    }
+
+    const linkUrl = new URL(link.href, window.location.href);
+    const isCurrentPage =
+      linkUrl.origin === window.location.origin &&
+      linkUrl.pathname === window.location.pathname &&
+      linkUrl.search === window.location.search;
+
+    if (isCurrentPage) {
+      activateMethodTabForTarget(getHashTarget(linkUrl.hash));
+    }
+  },
+  true,
+);
+
+window.addEventListener("hashchange", revealMethodTabForHash);
+revealMethodTabForHash();
+
 document.addEventListener("click", (event) => {
   const faqButton = event.target.closest("[data-hb-faq-question]");
 
@@ -58,22 +149,7 @@ document.addEventListener("click", (event) => {
     return;
   }
 
-  const target = tab.dataset.methodTab;
-  const tabs = section.querySelectorAll("[data-method-tab]");
-  const panels = section.querySelectorAll("[data-method-panel]");
-
-  tabs.forEach((item) => {
-    const isActive = item === tab;
-    item.classList.toggle("hb__is-active", isActive);
-    item.setAttribute("aria-selected", String(isActive));
-  });
-
-  panels.forEach((panel) => {
-    panel.classList.toggle(
-      "hb__is-active",
-      panel.dataset.methodPanel === target,
-    );
-  });
+  activateMethodTab(section, tab.dataset.methodTab);
 });
 document.querySelectorAll("[data-hb-purchase-records]").forEach((grid) => {
   const cards = Array.from(grid.children).filter((card) =>

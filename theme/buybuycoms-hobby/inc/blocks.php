@@ -69,6 +69,43 @@ function buybuycoms_hobby_get_internal_link_card_genre_image( $genre_term ) {
 }
 
 /**
+ * Return a shortened genre excerpt for an internal link card.
+ *
+ * @param WP_Term $genre_term Genre term.
+ * @return string
+ */
+function buybuycoms_hobby_get_internal_link_card_genre_description( $genre_term ) {
+	if ( ! $genre_term instanceof WP_Term ) {
+		return '';
+	}
+
+	$context     = 'genre_' . $genre_term->term_id;
+	$description = function_exists( 'get_field' )
+		? get_field( 'genre-excerpt', $context )
+		: get_term_meta( $genre_term->term_id, 'genre-excerpt', true );
+	$description = is_string( $description ) ? $description : '';
+	$description = html_entity_decode( wp_strip_all_tags( $description ), ENT_QUOTES, get_bloginfo( 'charset' ) );
+	$description = preg_replace( '/\s+/u', ' ', $description );
+	$description = is_string( $description ) ? trim( $description ) : '';
+
+	if ( '' === $description ) {
+		return '';
+	}
+
+	if ( function_exists( 'mb_strlen' ) && function_exists( 'mb_substr' ) && mb_strlen( $description, 'UTF-8' ) > 50 ) {
+		return mb_substr( $description, 0, 50, 'UTF-8' ) . '…';
+	}
+
+	$characters = preg_split( '//u', $description, -1, PREG_SPLIT_NO_EMPTY );
+
+	if ( is_array( $characters ) && count( $characters ) > 50 ) {
+		return implode( '', array_slice( $characters, 0, 50 ) ) . '…';
+	}
+
+	return $description;
+}
+
+/**
  * Return a shortened, post-specific AIOSEO description for an internal link card.
  *
  * @param WP_Post $column Column post object.

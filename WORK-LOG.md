@@ -1052,3 +1052,24 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/inc/blocks.php`、`theme/buybuycoms-hobby/template-parts/content/internal-link-card.php`、`theme/buybuycoms-hobby/asset/css/component.css`、`WORK-LOG.md`
 - 未完了事項: AIOSEOが有効な本番または検証環境で、説明文の実データ表示確認。
 - 次回の着手点: メタディスクリプションが50文字を超えるコラムを選択し、カードの省略表示を確認する。
+# 2026-09-08 プロジェクト構成・進捗確認
+
+- 状態: 確認完了
+- 実施内容: 静的参照データ、WordPressテーマ本体、設計資料、完了チェックリスト、直近の作業ログを確認した。テーマはクラシックテーマとして主要テンプレート、テンプレートパーツ、アセット、フォーム・CSV・ブロック関連の責務別実装を備える。静的制作専用の`[data-hb-include]`および`include-components.js`はテーマPHP内で検出されなかった。
+- 主な確認ファイル: `theme/buybuycoms-hobby/`、`WP-THEME-CONVERSION-PLAN.md`、`THEME-COMPLETION-CHECKLIST.md`、`theme/buybuycoms-hobby/PHASE-1-STATUS.md`
+- 未完了事項: CPT／タクソノミー／ACFの登録主体と運用仕様の文書化、SMTPを含むフォームの実環境検証、エディター・レスポンシブ・空データ・境界値・公開前チェックの実表示確認。PHP CLIがこの実行環境で利用できず、今回の構文再検査は未実施。
+- 次回の着手点: Localまたは本番相当のWordPress環境で、未確認項目を優先度順に実画面検証する。
+# 2026-09-08 サイト内リンクカードのジャンル説明文表示
+
+- 状態: 完了
+- 実施内容: カスタムブロック「サイト内リンクカード」で`genre`を選択した場合、タームのカスタムフィールド`genre-excerpt`を説明文として表示するよう追加した。ACFが利用できない環境ではタームメタをフォールバックとして参照する。コラム用説明文と同様にHTML・連続空白を除去し、50文字を超える場合は末尾を`…`で省略する。未入力時は説明文を出力しない。
+- 主な変更ファイル: `theme/buybuycoms-hobby/inc/blocks.php`、`theme/buybuycoms-hobby/template-parts/content/internal-link-card.php`、`WORK-LOG.md`
+- 未完了事項: WordPress実行環境で、`genre-excerpt`が入力済み・空・51文字以上の場合の表示確認。
+- 次回の着手点: ジャンルを選択したリンクカードをエディターと公開画面で開き、説明文表示と省略位置を確認する。
+# 2026-09-08 目次リンクに連動したコラム用買取方法タブの表示
+
+- 状態: 完了
+- 実施内容: Table of Contents Plusが生成する見出しアンカーを押した際、対象の`h3`を含むコラム用買取方法カードが非表示であれば、対応するタブを先に開く処理を追加した。目次リンクのクリック時、URLハッシュの変更時、ハッシュ付きURLを直接開いた場合に対応する。スクロール位置の余白はテーマ側で追加せず、プラグイン設定で管理する。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/js/component.js`、`WORK-LOG.md`
+- 未完了事項: Localのスマホ幅で、TOC+の「宅配買取」「出張買取」「店頭買取」各リンク、ハッシュ付きURLの直接表示、ブラウザ履歴での動作確認。
+- 次回の着手点: TOC+の固定ヘッダーオフセット設定後、上記の実機相当テストを行う。

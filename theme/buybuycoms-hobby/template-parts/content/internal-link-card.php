@@ -27,6 +27,7 @@ if ( 'genre' === $content_type ) {
 
 	$link        = get_term_link( $genre_term );
 	$title       = $genre_term->name . 'をまとめて高価買取';
+	$description = buybuycoms_hobby_get_internal_link_card_genre_description( $genre_term );
 	$button_text = $genre_term->name . 'の買取ページを見る';
 	$image_html  = buybuycoms_hobby_get_internal_link_card_genre_image( $genre_term );
 } elseif ( 'column' === $content_type ) {
