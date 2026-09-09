@@ -760,6 +760,11 @@
     gap: var(--hb-space-xs);
   }
 
+  .hb__p-method-ui--column-auto-tabs .hb__p-method-badge {
+    bottom: var(--hb-space-2xs);
+    transform: translateX(-50%);
+  }
+
   .hb__p-method-ui--column-auto-tabs .hb__p-method-title {
     padding: var(--hb-space-sm) var(--hb-space-xs) 0;
     font-size: var(--hb-font-size-body);

@@ -69,6 +69,9 @@ if ( 'default' !== $purchase_methods_variant ) {
       aria-labelledby="method-tab-takuhai-<?php echo esc_attr( $purchase_methods_instance ); ?>"
       data-method-panel="takuhai"
     >
+      <?php if ( 'column-auto-tabs' === $purchase_methods_variant ) : ?>
+        <h3 class="hb__p-method-title">宅配買取</h3>
+      <?php endif; ?>
       <figure class="hb__p-method-image">
         <img
           src="<?php echo esc_url( get_theme_file_uri( '/images/1.takuhai.webp' ) ); ?>"
@@ -76,7 +79,9 @@ if ( 'default' !== $purchase_methods_variant ) {
         />
         <span class="hb__p-method-badge">おすすめ</span>
       </figure>
-      <h3 class="hb__p-method-title">宅配買取</h3>
+      <?php if ( 'column-auto-tabs' !== $purchase_methods_variant ) : ?>
+        <h3 class="hb__p-method-title">宅配買取</h3>
+      <?php endif; ?>
       <p class="hb__p-method-text">
         ご自宅から段ボールに詰めて発送するだけ。手間なく全国どこからでもご利用いただけます。
       </p>
@@ -98,13 +103,18 @@ if ( 'default' !== $purchase_methods_variant ) {
       aria-labelledby="method-tab-shuccho-<?php echo esc_attr( $purchase_methods_instance ); ?>"
       data-method-panel="shuccho"
     >
+      <?php if ( 'column-auto-tabs' === $purchase_methods_variant ) : ?>
+        <h3 class="hb__p-method-title">出張買取</h3>
+      <?php endif; ?>
       <figure class="hb__p-method-image">
         <img
           src="<?php echo esc_url( get_theme_file_uri( '/images/2.shucchou.webp' ) ); ?>"
           alt="出張買取のイメージ"
         />
       </figure>
-      <h3 class="hb__p-method-title">出張買取</h3>
+      <?php if ( 'column-auto-tabs' !== $purchase_methods_variant ) : ?>
+        <h3 class="hb__p-method-title">出張買取</h3>
+      <?php endif; ?>
       <p class="hb__p-method-text">
         スタッフがご自宅まで直接お伺いします。大量にある場合や重い商品でも安心してご利用いただけます。
       </p>
@@ -126,13 +136,18 @@ if ( 'default' !== $purchase_methods_variant ) {
       aria-labelledby="method-tab-store-<?php echo esc_attr( $purchase_methods_instance ); ?>"
       data-method-panel="store"
     >
+      <?php if ( 'column-auto-tabs' === $purchase_methods_variant ) : ?>
+        <h3 class="hb__p-method-title">店頭買取</h3>
+      <?php endif; ?>
       <figure class="hb__p-method-image">
         <img
           src="<?php echo esc_url( get_theme_file_uri( '/images/3.tentou.webp' ) ); ?>"
           alt="店頭買取のイメージ"
         />
       </figure>
-      <h3 class="hb__p-method-title">店頭買取</h3>
+      <?php if ( 'column-auto-tabs' !== $purchase_methods_variant ) : ?>
+        <h3 class="hb__p-method-title">店頭買取</h3>
+      <?php endif; ?>
       <p class="hb__p-method-text">
         店頭へお持ち込みいただくと、その場でスピーディに査定・お支払いいたします。
       </p>
