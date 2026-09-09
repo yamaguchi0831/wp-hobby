@@ -1097,3 +1097,11 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/component.css`、`WORK-LOG.md`
 - 未完了事項: WordPressのブロックエディターと公開画面における表示確認。
 - 次回の着手点: PC幅で画像下端とおすすめバッジの余白を確認する。
+
+# 2026-09-09 ジャンル個別ページのヒーローバッジ内余白を追加
+
+- 状態: 完了
+- 実施内容: カスタムタクソノミー`genre`の個別ページにあるヒーローバッジへ、12px相当の`--hb-space-sm`を全方向の内側余白として追加した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/page-static.css`、`WORK-LOG.md`
+- 未完了事項: WordPress環境でのPC・モバイル表示確認。
+- 次回の着手点: ヒーローバッジ内の複数行テキストが円形の内側に適切な余白を保って収まることを確認する。

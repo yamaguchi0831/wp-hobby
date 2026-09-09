@@ -3771,6 +3771,7 @@
         width: 136px;
         aspect-ratio: 1;
         place-items: center;
+        padding: var(--hb-space-sm);
         border-radius: var(--hb-radius-full);
         background: #ffdf25;
         color: var(--hb-color-primary-800);
