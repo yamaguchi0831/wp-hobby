@@ -29,15 +29,31 @@
 			</ul>
 		</div>
 
-		<div class="hb__p-footer__col">
-			<h2 class="hb__p-footer__col-title">買取品目</h2>
-			<ul class="hb__p-footer__list" role="list">
-				<li><a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>">フィギュア</a></li>
-				<li><a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>">プラモデル</a></li>
-				<li><a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>">レトロゲーム</a></li>
-				<li><a href="<?php echo esc_url( home_url( '/genre-list/' ) ); ?>">トレーディングカード</a></li>
-			</ul>
-		</div>
+		<?php
+		$footer_genre_terms = taxonomy_exists( 'genre' )
+			? get_terms(
+				array(
+					'taxonomy'   => 'genre',
+					'hide_empty' => false,
+				)
+			)
+			: array();
+
+		if ( ! is_wp_error( $footer_genre_terms ) && ! empty( $footer_genre_terms ) ) :
+			$footer_genre_terms = buybuycoms_hobby_sort_genre_terms( $footer_genre_terms );
+			?>
+			<div class="hb__p-footer__col">
+				<h2 class="hb__p-footer__col-title">買取品目</h2>
+				<ul class="hb__p-footer__list" role="list">
+					<?php foreach ( $footer_genre_terms as $footer_genre_term ) : ?>
+						<?php $footer_genre_link = get_term_link( $footer_genre_term ); ?>
+						<?php if ( ! is_wp_error( $footer_genre_link ) ) : ?>
+							<li><a href="<?php echo esc_url( $footer_genre_link ); ?>"><?php echo esc_html( $footer_genre_term->name ); ?></a></li>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+		<?php endif; ?>
 
 		<div class="hb__p-footer__col">
 			<h2 class="hb__p-footer__col-title">サポート</h2>
