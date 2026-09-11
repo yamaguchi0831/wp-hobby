@@ -1148,3 +1148,12 @@
 - 検証: XAMPP同梱PHPによる`footer.php`の構文検証とGit差分の空白エラー確認を実施。
 - 未完了事項: WordPress実行環境で追加リンクの遷移確認。
 - 次回の着手点: フッターの全リンクをPC・モバイルで確認する。
+
+# 2026-09-11 お客様の声の標準アバターをWebP化
+
+- 状態: 完了
+- 実施内容: 64px表示に対して過大だった1254px角・約759KBの標準アバターPNGを、128px角・品質82のWebPへ変換した。PHPの参照先をWebPへ切り替え、旧PNGを削除した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/images/icon/review-default-avatar.webp`、`theme/buybuycoms-hobby/images/icon/review-default-avatar.png`（削除）、`theme/buybuycoms-hobby/template-parts/common/customer-reviews.php`、`WORK-LOG.md`
+- 検証: 生成WebPの形式・128px角・358Bを確認し、表示内容を目視確認。テーマ内の旧PNG参照が残っていないこと、`customer-reviews.php`のPHP構文、Git差分の空白エラーを確認。
+- 未完了事項: WordPress実行環境で、お客様の声にアイキャッチが未設定の投稿を表示して確認する。
+- 次回の着手点: 実画面で標準アバターの表示とネットワーク上のWebP配信を確認する。

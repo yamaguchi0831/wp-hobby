@@ -92,7 +92,7 @@ $get_review_field = static function ( $field_name, $post_id ) {
 				<?php else : ?>
 					<img
 						class="hb__p-review__avatar"
-						src="<?php echo esc_url( get_theme_file_uri( '/images/icon/review-default-avatar.png' ) ); ?>"
+						src="<?php echo esc_url( get_theme_file_uri( '/images/icon/review-default-avatar.webp' ) ); ?>"
 						alt=""
 						width="64"
 						height="64"
