@@ -19,74 +19,80 @@
 			</p>
 		</div>
 
-		<div class="hb__p-footer__col">
-			<h2 class="hb__p-footer__col-title">サービス</h2>
-			<ul class="hb__p-footer__list" role="list">
-				<li><a href="<?php echo esc_url( home_url( '/flow/#takuhai-flow' ) ); ?>">宅配買取</a></li>
-				<li><a href="<?php echo esc_url( home_url( '/flow/#shuccho-flow' ) ); ?>">出張買取</a></li>
-				<li><a href="<?php echo esc_url( home_url( '/flow/#store-flow' ) ); ?>">店頭買取</a></li>
-				<li><a href="<?php echo esc_url( home_url( '/flow/' ) ); ?>">買取の流れ</a></li>
-			</ul>
-		</div>
-
-		<?php
-		$footer_genre_terms = taxonomy_exists( 'genre' )
-			? get_terms(
-				array(
-					'taxonomy'   => 'genre',
-					'hide_empty' => false,
-				)
-			)
-			: array();
-
-		if ( ! is_wp_error( $footer_genre_terms ) && ! empty( $footer_genre_terms ) ) :
-			$footer_genre_terms = buybuycoms_hobby_sort_genre_terms( $footer_genre_terms );
-			?>
-			<div class="hb__p-footer__col">
-				<h2 class="hb__p-footer__col-title">買取品目</h2>
-				<ul class="hb__p-footer__list" role="list">
-					<?php foreach ( $footer_genre_terms as $footer_genre_term ) : ?>
-						<?php $footer_genre_link = get_term_link( $footer_genre_term ); ?>
-						<?php if ( ! is_wp_error( $footer_genre_link ) ) : ?>
-							<li><a href="<?php echo esc_url( $footer_genre_link ); ?>"><?php echo esc_html( $footer_genre_term->name ); ?></a></li>
-						<?php endif; ?>
-					<?php endforeach; ?>
-				</ul>
-			</div>
-		<?php endif; ?>
-
-		<div class="hb__p-footer__col">
-			<h2 class="hb__p-footer__col-title">サポート</h2>
+		<div class="hb__p-footer__navigation">
 			<?php
-			if ( has_nav_menu( 'footer' ) ) {
-				wp_nav_menu(
+			$footer_genre_terms = taxonomy_exists( 'genre' )
+				? get_terms(
 					array(
-						'theme_location' => 'footer',
-						'container'      => false,
-						'menu_class'     => 'hb__p-footer__list',
-						'depth'          => 1,
+						'taxonomy'   => 'genre',
+						'hide_empty' => false,
 					)
-				);
-			} else {
-				?>
-				<ul class="hb__p-footer__list" role="list">
-					<li><a href="<?php echo esc_url( home_url( '/faq/' ) ); ?>">よくある質問</a></li>
-					<li><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">お問い合わせ</a></li>
-					<li><a href="<?php echo esc_url( home_url( '/info/' ) ); ?>">お知らせ</a></li>
-					<li><a href="<?php echo esc_url( home_url( '/' ) ); ?>">サイトトップ</a></li>
-				</ul>
-				<?php
-			}
-			?>
-		</div>
+				)
+				: array();
 
-		<div class="hb__p-footer__col">
-			<h2 class="hb__p-footer__col-title">会社情報</h2>
-			<ul class="hb__p-footer__list" role="list">
-				<li><a href="<?php echo esc_url( home_url( '/company/' ) ); ?>">会社概要</a></li>
-				<li><a href="<?php echo esc_url( home_url( '/privacy/' ) ); ?>">プライバシーポリシー</a></li>
-				<li><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">お問い合わせ</a></li>
-			</ul>
+			if ( ! is_wp_error( $footer_genre_terms ) && ! empty( $footer_genre_terms ) ) :
+				$footer_genre_terms = buybuycoms_hobby_sort_genre_terms( $footer_genre_terms );
+				?>
+				<div class="hb__p-footer__genre">
+					<h2 class="hb__p-footer__col-title">買取品目</h2>
+					<ul class="hb__p-footer__list hb__p-footer__genre-list" role="list">
+						<?php foreach ( $footer_genre_terms as $footer_genre_term ) : ?>
+							<?php $footer_genre_link = get_term_link( $footer_genre_term ); ?>
+							<?php if ( ! is_wp_error( $footer_genre_link ) ) : ?>
+								<li><a href="<?php echo esc_url( $footer_genre_link ); ?>"><?php echo esc_html( $footer_genre_term->name ); ?></a></li>
+							<?php endif; ?>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+			<?php endif; ?>
+
+			<div class="hb__p-footer__links">
+				<div class="hb__p-footer__col">
+					<h2 class="hb__p-footer__col-title">サービス</h2>
+					<ul class="hb__p-footer__list" role="list">
+						<li><a href="<?php echo esc_url( home_url( '/flow/#takuhai-flow' ) ); ?>">宅配買取</a></li>
+						<li><a href="<?php echo esc_url( home_url( '/flow/#shuccho-flow' ) ); ?>">出張買取</a></li>
+						<li><a href="<?php echo esc_url( home_url( '/flow/#store-flow' ) ); ?>">店頭買取</a></li>
+						<li><a href="<?php echo esc_url( home_url( '/flow/' ) ); ?>">買取の流れ</a></li>
+						<li><a href="<?php echo esc_url( home_url( '/reason/' ) ); ?>">選ばれる理由</a></li>
+						<li><a href="<?php echo esc_url( home_url( '/column/' ) ); ?>">コラム</a></li>
+					</ul>
+				</div>
+
+				<div class="hb__p-footer__col">
+					<h2 class="hb__p-footer__col-title">サポート</h2>
+					<?php
+					if ( has_nav_menu( 'footer' ) ) {
+						wp_nav_menu(
+							array(
+								'theme_location' => 'footer',
+								'container'      => false,
+								'menu_class'     => 'hb__p-footer__list',
+								'depth'          => 1,
+							)
+						);
+					} else {
+						?>
+						<ul class="hb__p-footer__list" role="list">
+							<li><a href="<?php echo esc_url( home_url( '/faq/' ) ); ?>">よくある質問</a></li>
+							<li><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">お問い合わせ</a></li>
+							<li><a href="<?php echo esc_url( home_url( '/info/' ) ); ?>">お知らせ</a></li>
+							<li><a href="<?php echo esc_url( home_url( '/' ) ); ?>">サイトトップ</a></li>
+						</ul>
+						<?php
+					}
+					?>
+				</div>
+
+				<div class="hb__p-footer__col">
+					<h2 class="hb__p-footer__col-title">会社情報</h2>
+					<ul class="hb__p-footer__list" role="list">
+						<li><a href="<?php echo esc_url( home_url( '/company/' ) ); ?>">会社概要</a></li>
+						<li><a href="<?php echo esc_url( home_url( '/privacy/' ) ); ?>">プライバシーポリシー</a></li>
+						<li><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">お問い合わせ</a></li>
+					</ul>
+				</div>
+			</div>
 		</div>
 	</div>
 
