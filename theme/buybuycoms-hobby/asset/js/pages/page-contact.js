@@ -354,7 +354,7 @@
           if (value === "under") {
             openModal({
               title: "商品点数が9点以下の場合",
-              body: '<p>商品点数が9点以下の場合、まずは事前査定をお願いいたします。</p><div class="hb__p-form-modal__links"><a class="hb__p-form-modal__text-link" href="tel:0120000000">電話査定はこちら</a><a class="hb__p-form-modal__text-link" href="https://line.me/R/ti/p/@081xadbs">LINE写真査定はこちら</a></div>',
+              body: '<p>商品点数が9点以下の場合、まずは事前査定をお願いいたします。</p><div class="hb__p-form-modal__links"><a class="hb__p-form-modal__text-link" href="tel:0120371147">電話査定はこちら</a><a class="hb__p-form-modal__text-link" href="https://line.me/R/ti/p/@081xadbs">LINE写真査定はこちら</a></div>',
               actions: [
                 modalButton("閉じる", "hb__p-form-modal__close", closeModal),
               ],
