@@ -1970,7 +1970,7 @@
         display: block;
         width: 100%;
         aspect-ratio: 4 / 2.45;
-        object-fit: cover;
+        object-fit: contain;
       }
 
       .hb-single-purchase-record__p-image--empty {
