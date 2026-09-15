@@ -15,6 +15,21 @@ $post_ids        = isset( $args['post_ids'] ) && is_array( $args['post_ids'] ) ?
 $all_post_ids    = isset( $args['all_post_ids'] ) && is_array( $args['all_post_ids'] ) ? array_values( array_filter( array_map( 'absint', $args['all_post_ids'] ) ) ) : array();
 $filter_term_ids_by_post_id = isset( $args['filter_term_ids_by_post_id'] ) && is_array( $args['filter_term_ids_by_post_id'] ) ? $args['filter_term_ids_by_post_id'] : array();
 $default_filter_id = isset( $args['default_filter_id'] ) ? absint( $args['default_filter_id'] ) : 0;
+$grid_classes      = array( 'hb__p-cases-grid' );
+
+if ( ! empty( $args['grid_class'] ) && is_string( $args['grid_class'] ) ) {
+	$additional_grid_classes = preg_split( '/\s+/', $args['grid_class'] );
+
+	if ( is_array( $additional_grid_classes ) ) {
+		foreach ( $additional_grid_classes as $additional_grid_class ) {
+			$additional_grid_class = sanitize_html_class( $additional_grid_class );
+
+			if ( $additional_grid_class ) {
+				$grid_classes[] = $additional_grid_class;
+			}
+		}
+	}
+}
 
 $purchase_record_query_args = array(
 	'post_type'           => 'purchase-record',
@@ -30,6 +45,7 @@ $purchase_record_genre_ids  = array();
 if ( $post_ids ) {
 	$purchase_record_query_args['post__in']       = $post_ids;
 	$purchase_record_query_args['posts_per_page'] = count( $post_ids );
+	$purchase_record_query_args['orderby']        = 'post__in';
 } elseif ( is_tax( 'genre' ) ) {
 	$queried_genre = get_queried_object();
 
@@ -89,7 +105,7 @@ $format_purchase_record_price = static function ( $price ) {
 };
 ?>
 <div
-	class="hb__p-cases-grid"
+	class="<?php echo esc_attr( implode( ' ', array_unique( $grid_classes ) ) ); ?>"
 	<?php if ( $grid_id ) : ?>id="<?php echo esc_attr( $grid_id ); ?>"<?php endif; ?>
 	<?php if ( 0 < $initial_visible ) : ?>
 		data-hb-purchase-records
