@@ -198,6 +198,8 @@ Template Name: FAQ
                 <div class="hb-faq__p-faq-answer-body">
                   <p class="hb-faq__p-faq-text">
                     弊社の買取サービスは全て完全無料です。査定料・送料・出張費・振込み手数料等は一切頂いておりませんのでご安心してご依頼下さい。（査定のみも無料です）
+                    <br>
+                    ※ただし、査定合計5,000円未満時、送料及び返送料は無料対象外となりますのでご注意ください。
                   </p>
                 </div>
                 <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
@@ -475,6 +477,8 @@ Template Name: FAQ
                 <div class="hb-faq__p-faq-answer-body">
                   <p class="hb-faq__p-faq-text">
                     ご安心ください。梱包キットの進呈・商品をお送り頂く際も完全無料（弊社負担）でご利用頂けます。
+                    <br>
+                    ※ただし、査定合計5,000円未満時、送料及び返送料は無料対象外となりますのでご注意ください。
                   </p>
                 </div>
                 <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
