@@ -897,7 +897,7 @@ Template Name: FAQ
                 <span class="hb-faq__p-faq-icon hb-faq__p-faq-icon--a">A</span>
                 <div class="hb-faq__p-faq-answer-body">
                   <p class="hb-faq__p-faq-text">
-                    10:00〜19:00で買取可能です。混雑を避けるため、あらかじめお電話にてご予約をお願い致します。
+                    持込は10:00～17:00で買取可能です。あらかじめフォームまたはお電話にてご予約が必要となります。
                   </p>
                 </div>
                 <?php get_template_part( 'template-parts/common/parts-cta' ); ?>

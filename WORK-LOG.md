@@ -1175,3 +1175,65 @@
 - 検証: JSON構文、11件の設定項目、コピー元と保存先のSHA-256一致、機密情報を示す代表的な文字列がないことを確認した。
 - 未完了事項: ACF Local JSONの導入、および別WordPress環境でのインポート確認。
 - 次回の着手点: 必要に応じてテーマ内に`acf-json`を導入し、設定を個別JSONとしてGit管理する。
+
+# 2026-09-15 プロジェクト現況確認
+
+- 状態: 確認完了
+- 実施内容: プロジェクト構成、Git状態、テーマ化計画、進捗資料、完了チェックリスト、ACF設定バックアップ、配布ZIPを確認した。クラシックテーマ本体には主要テンプレート、共通パーツ、責務別の`inc/`、CSS・JavaScript・画像が揃っている。XAMPP同梱PHPでテーマ内48ファイルを構文検査し、エラーがないことを確認した。配布ZIPはテーマ本体193ファイルとファイル件数・サイズが一致した。
+- 主な確認ファイル: `theme/buybuycoms-hobby/`、`WP-THEME-CONVERSION-PLAN.md`、`THEME-COMPLETION-CHECKLIST.md`、`theme/buybuycoms-hobby/PHASE-1-STATUS.md`、`theme/buybuycoms-hobby/README.md`、`config/acf-export/README.md`、`theme/buybuycoms-hobby.zip`
+- 未完了事項: 完了チェックリストは確認済み80件・未確認290件。WordPress実行環境でのPC・モバイル、エディター、空データ・境界値、フォーム配送、本番キャッシュの検証が残る。CPT・タクソノミー・ACFの登録主体と運用仕様、最低対応バージョン等の文書化も未完了。テーマ内には`placehold.co`参照が残り、`header.php`にはGTMのインラインスクリプトがある。Git上の未追跡ファイルは配布用ZIPのみ。
+- 次回の着手点: WordPress実行環境で直近のUI変更と主要導線をPC・モバイルで確認し、空データ・境界値・メール送信を優先して完了チェックリストを更新する。あわせてACFエクスポートを基に登録主体と復元・運用手順を文書化する。
+
+# 2026-09-15 FAQの送料無料条件に関する注意書きを追加
+
+- 状態: 完了
+- 実施内容: 質問「送料・査定料・返送料は本当に無料ですか？」の既存回答後に改行を加え、「※ただし、査定合計5,000円未満時、送料及び返送料は無料対象外となりますのでご注意ください。」を追記した。対象質問があるトップ、買取方法、買取品目一覧、買取実績一覧・詳細の静的HTMLとWordPressテンプレートを同時に更新した。
+- 主な変更ファイル: `pages/front.html`、`pages/page-flow.html`、`pages/page-genre-list.html`、`pages/archive-purchase-record.html`、`pages/single-purchase-record.html`、`theme/buybuycoms-hobby/front-page.php`、`theme/buybuycoms-hobby/page-flow.php`、`theme/buybuycoms-hobby/page-genre-list.php`、`theme/buybuycoms-hobby/archive-purchase-record.php`、`theme/buybuycoms-hobby/single-purchase-record.php`、`WORK-LOG.md`
+- 検証: 対象質問を含む10ファイルすべてに注意書きが1件ずつ存在すること、変更したPHP 5ファイルの構文エラーがないこと、Git差分に空白エラーがないことを確認した。
+- 未完了事項: WordPress実行環境で、FAQを展開した際の改行位置とPC・モバイル表示を確認する。
+- 次回の着手点: 対象5画面のFAQを開き、注意書きが既存回答の次行に表示されることを確認する。
+
+# 2026-09-15 店頭買取の営業時間に関するFAQ回答を更新
+
+- 状態: 完了
+- 実施内容: 質問「店頭買取の営業時間を教えてください。」の回答を「持込は10:00～17:00で買取可能です。あらかじめフォームまたはお電話にてご予約が必要となります。」へ差し替えた。FAQ専用ページの静的HTMLとWordPressテンプレートを同時に更新した。
+- 主な変更ファイル: `pages/page-faq.html`、`theme/buybuycoms-hobby/page-faq.php`、`WORK-LOG.md`
+- 検証: 指定した回答が2ファイルへ反映され、旧回答が残っていないこと、`page-faq.php`にPHP構文エラーがないこと、Git差分に空白エラーがないことを確認した。
+- 未完了事項: WordPress実行環境でのFAQ展開表示確認。
+- 次回の着手点: FAQページで対象項目を展開し、営業時間と予約案内が正しく表示されることを確認する。
+
+# 2026-09-15 プライバシーポリシーの返送条件を更新
+
+- 状態: 完了
+- 実施内容: プライバシーポリシーページの「返送について」にある「以下の場合、返送は着払いとなります。」の箇条書きへ、「査定合計5,000円未満時」を追加した。静的HTMLとWordPressテンプレートを同時に更新した。
+- 主な変更ファイル: `pages/page-privacy.html`、`theme/buybuycoms-hobby/page-privacy.php`、`WORK-LOG.md`
+- 検証: 追加項目が2ファイルへ反映されていること、`page-privacy.php`にPHP構文エラーがないこと、Git差分に空白エラーがないことを確認した。
+- 未完了事項: WordPress実行環境での表示確認。
+- 次回の着手点: プライバシーポリシーページをPC・モバイルで開き、追加項目の箇条書き表示を確認する。
+
+# 2026-09-15 プライバシーポリシーの連絡方法を更新
+
+- 状態: 完了
+- 実施内容: プライバシーポリシーページの「連絡方法について」にある連絡手段の記述を、「ご登録をいただいたパソコン・携帯電話へメールまたはお電話にてご連絡致します。」へ変更した。静的HTMLとWordPressテンプレートを同時に更新した。
+- 主な変更ファイル: `pages/page-privacy.html`、`theme/buybuycoms-hobby/page-privacy.php`、`WORK-LOG.md`
+- 検証: 修正文が2ファイルへ反映され、旧文が残っていないこと、`page-privacy.php`にPHP構文エラーがないこと、Git差分に空白エラーがないことを確認した。
+- 未完了事項: WordPress実行環境での表示確認。
+- 次回の着手点: プライバシーポリシーページを開き、「連絡方法について」の文章が正しく表示されることを確認する。
+
+# 2026-09-15 宅配買取フォームのスマホ用段ボール画像を修正
+
+- 状態: 完了
+- 実施内容: 宅配買取で「買取キットを請求する」を選択した際の段ボールサイズ画像について、WordPressテンプレートのスマホ用`source`に残っていた静的HTML用相対パスを、`get_theme_file_uri()`で生成するテーマ画像URLへ変更した。画面幅767px以下では`box-sizes-sp.webp`、それより広い画面では従来どおり`box-sizes.webp`を表示する。
+- 主な変更ファイル: `theme/buybuycoms-hobby/page-contact.php`、`WORK-LOG.md`
+- 検証: スマホ用画像ファイルがテーマ内に存在すること、テーマPHP内に`../images/`形式の画像参照が残っていないこと、`page-contact.php`にPHP構文エラーがないこと、Git差分に空白エラーがないことを確認した。
+- 未完了事項: WordPress実行環境のスマホ幅で、フォーム操作後に画像が正常表示されることの確認。
+- 次回の着手点: 767px以下で宅配買取、10点以上、買取キット希望の順に選択し、`box-sizes-sp.webp`が404にならず表示されることを確認する。
+
+# 2026-09-15 宅配買取フォームの段ボール重量目安を追加
+
+- 状態: 完了
+- 実施内容: 宅配買取フォームの「段ボールのサイズと枚数を選択してください」画面で、各サイズの寸法に続けて内容量の上限目安を追加した。Sは10kg未満、Mは15kg未満、Lは20kg未満、LLは25kg未満とし、静的HTMLとWordPressテンプレートを同時に更新した。
+- 主な変更ファイル: `pages/page-contact.html`、`theme/buybuycoms-hobby/page-contact.php`、`WORK-LOG.md`
+- 検証: 4サイズの重量注記が2ファイルへ反映され、寸法のみの旧表記が残っていないこと、`page-contact.php`にPHP構文エラーがないこと、Git差分に空白エラーがないことを確認した。
+- 未完了事項: WordPress実行環境でのPC・モバイル表示確認。
+- 次回の着手点: 宅配買取で買取キット希望まで進み、各行の寸法・重量注記と枚数選択欄がPC・モバイルで崩れないことを確認する。

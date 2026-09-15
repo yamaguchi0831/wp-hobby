@@ -207,7 +207,7 @@ $requested_purchase_type = in_array( $requested_purchase_type, array( 'takuhai',
               </div>
               <picture class="hb__p-form__kit-image">
                 <source
-                  srcset="../images/box-sizes-sp.webp"
+                  srcset="<?php echo esc_url( get_theme_file_uri( '/images/box-sizes-sp.webp' ) ); ?>"
                   media="(max-width: 767px)"
                 />
                 <img
@@ -221,7 +221,7 @@ $requested_purchase_type = in_array( $requested_purchase_type, array( 'takuhai',
                   <span>
                     <span class="hb__p-form__kit-name">Sサイズ</span>
                     <span class="hb__p-form__kit-dim"
-                      >幅40cm × 奥行30cm × 高さ30cm</span
+                      >幅40cm × 奥行30cm × 高さ30cm ※内容量は10kg未満</span
                     >
                   </span>
                   <select name="box_s" aria-label="Sサイズの枚数">
@@ -237,7 +237,7 @@ $requested_purchase_type = in_array( $requested_purchase_type, array( 'takuhai',
                   <span>
                     <span class="hb__p-form__kit-name">Mサイズ</span>
                     <span class="hb__p-form__kit-dim"
-                      >幅50cm × 奥行30cm × 高さ40cm</span
+                      >幅50cm × 奥行30cm × 高さ40cm ※内容量は15kg未満</span
                     >
                   </span>
                   <select name="box_m" aria-label="Mサイズの枚数">
@@ -253,7 +253,7 @@ $requested_purchase_type = in_array( $requested_purchase_type, array( 'takuhai',
                   <span>
                     <span class="hb__p-form__kit-name">Lサイズ</span>
                     <span class="hb__p-form__kit-dim"
-                      >幅60cm × 奥行40cm × 高さ40cm</span
+                      >幅60cm × 奥行40cm × 高さ40cm ※内容量は20kg未満</span
                     >
                   </span>
                   <select name="box_l" aria-label="Lサイズの枚数">
@@ -269,7 +269,7 @@ $requested_purchase_type = in_array( $requested_purchase_type, array( 'takuhai',
                   <span>
                     <span class="hb__p-form__kit-name">LLサイズ</span>
                     <span class="hb__p-form__kit-dim"
-                      >幅65cm × 奥行55cm × 高さ40cm</span
+                      >幅65cm × 奥行55cm × 高さ40cm ※内容量は25kg未満</span
                     >
                   </span>
                   <select name="box_ll" aria-label="LLサイズの枚数">

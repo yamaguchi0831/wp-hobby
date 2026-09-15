@@ -300,6 +300,8 @@ get_header();
                 <p class="hb-single-purchase-record__p-faq-text">
                   はい、すべて無料です。査定金額にご納得いただけず返送される場合も、返送料は当社負担です。
                   「とりあえず査定だけ」というご相談も大歓迎ですので、お気軽にお申込みください。
+                  <br>
+                  ※ただし、査定合計5,000円未満時、送料及び返送料は無料対象外となりますのでご注意ください。
                 </p>
                 <?php get_template_part( 'template-parts/common/parts-cta' ); ?>
               </div>
