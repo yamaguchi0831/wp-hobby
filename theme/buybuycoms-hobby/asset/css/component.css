@@ -1296,7 +1296,8 @@
   letter-spacing: 0;
 }
 
-.hb__p-cases-title {
+.hb__p-cases-title,
+.hb__p-cases-body > .hb__p-cases-title {
   margin: 0;
   color: var(--hb-color-text-deep);
   font-size: var(--hb-font-size-h4);
@@ -1368,6 +1369,7 @@
   }
 
   .hb__p-cases-title,
+  .hb__p-cases-body > .hb__p-cases-title,
   .hb__p-cases-price {
     font-size: var(--hb-font-size-body--sm);
   }
@@ -1385,6 +1387,21 @@
 }
 
 /* Column purchase-records block. */
+.hb__p-column-purchase-records {
+  display: grid;
+  gap: var(--hb-space-lg);
+}
+
+.hb__p-column-purchase-records__title {
+  margin: var(--hb-space-lg) 0 0;
+  padding-left: var(--hb-space-md);
+  border-left: var(--hb-space-2xs) solid var(--hb-color-primary-500);
+  color: var(--hb-color-text-deep);
+  font-size: var(--hb-font-size-h2);
+  font-weight: 900;
+  line-height: 1.5;
+}
+
 .hb__p-cases-grid.hb__p-column-purchase-records-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }

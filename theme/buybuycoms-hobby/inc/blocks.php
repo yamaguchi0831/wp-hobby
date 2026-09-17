@@ -70,6 +70,26 @@ function buybuycoms_hobby_get_purchase_record_block_price( $post_id ) {
 }
 
 /**
+ * Return the current column ID for a dynamic block.
+ *
+ * @param WP_Block|null $block Parsed block instance.
+ * @return int
+ */
+function buybuycoms_hobby_get_column_block_post_id( $block = null ) {
+	$post_id = 0;
+
+	if ( $block instanceof WP_Block && ! empty( $block->context['postId'] ) ) {
+		$post_id = absint( $block->context['postId'] );
+	}
+
+	if ( ! $post_id ) {
+		$post_id = get_queried_object_id();
+	}
+
+	return $post_id && 'column' === get_post_type( $post_id ) ? $post_id : 0;
+}
+
+/**
  * Resolve purchase records displayed by the column purchase-records block.
  *
  * Selected records are shown first. Remaining slots are filled with the latest
@@ -110,17 +130,9 @@ function buybuycoms_hobby_get_column_purchase_record_ids( $attributes, $block = 
 		return $display_ids;
 	}
 
-	$post_id = 0;
-
-	if ( $block instanceof WP_Block && ! empty( $block->context['postId'] ) ) {
-		$post_id = absint( $block->context['postId'] );
-	}
+	$post_id = buybuycoms_hobby_get_column_block_post_id( $block );
 
 	if ( ! $post_id ) {
-		$post_id = get_queried_object_id();
-	}
-
-	if ( ! $post_id || 'column' !== get_post_type( $post_id ) ) {
 		return $display_ids;
 	}
 
@@ -174,21 +186,44 @@ function buybuycoms_hobby_get_column_purchase_record_ids( $attributes, $block = 
  */
 function buybuycoms_hobby_render_column_purchase_records_block( $attributes, $content = '', $block = null ) {
 	$purchase_record_ids = buybuycoms_hobby_get_column_purchase_record_ids( $attributes, $block );
+	$heading              = __( '買取価格表', 'buybuycoms-hobby' );
+	$post_id              = buybuycoms_hobby_get_column_block_post_id( $block );
 
-	if ( ! $purchase_record_ids ) {
-		return '<p class="hb__p-column-purchase-records__empty">' . esc_html__( '実績がありません', 'buybuycoms-hobby' ) . '</p>';
+	if ( $post_id && taxonomy_exists( 'genre' ) ) {
+		$genre_terms = get_the_terms( $post_id, 'genre' );
+
+		if ( ! is_wp_error( $genre_terms ) && $genre_terms ) {
+			$primary_genre = reset( $genre_terms );
+
+			if ( $primary_genre instanceof WP_Term ) {
+				/* translators: %s: Genre name. */
+				$heading = sprintf( __( '%sの買取価格表', 'buybuycoms-hobby' ), $primary_genre->name );
+			}
+		}
 	}
 
 	ob_start();
-	get_template_part(
-		'template-parts/common/purchase-records',
-		null,
-		array(
-			'posts_per_page' => count( $purchase_record_ids ),
-			'post_ids'       => $purchase_record_ids,
-			'grid_class'     => 'hb__p-column-purchase-records-grid',
-		)
-	);
+	?>
+	<div class="hb__p-column-purchase-records">
+		<h2 class="hb__p-column-purchase-records__title"><?php echo esc_html( $heading ); ?></h2>
+		<?php if ( $purchase_record_ids ) : ?>
+			<?php
+			get_template_part(
+				'template-parts/common/purchase-records',
+				null,
+				array(
+					'posts_per_page' => count( $purchase_record_ids ),
+					'post_ids'       => $purchase_record_ids,
+					'grid_class'     => 'hb__p-column-purchase-records-grid',
+					'card_title_tag' => 'p',
+				)
+			);
+			?>
+		<?php else : ?>
+			<p class="hb__p-column-purchase-records__empty"><?php esc_html_e( '実績がありません', 'buybuycoms-hobby' ); ?></p>
+		<?php endif; ?>
+	</div>
+	<?php
 
 	return (string) ob_get_clean();
 }
