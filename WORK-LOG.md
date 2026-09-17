@@ -1319,3 +1319,12 @@
 - 検証: スマホプレビューで両ボタンの縦グラデーションを目視し、計算済み`background-image`が共通トークンの値と一致すること、ブラウザコンソールエラーがないことを確認した。配布ZIP内の195ファイルがテーマ本体と一致し、更新後のグラデーショントークンを含むことを確認した。
 - 未完了事項: WordPress実行環境および実機での表示確認。
 - 次回の着手点: 実機でグラデーションの見え方と屋外・低輝度環境での白文字コントラストを確認する。
+
+# 2026-09-17 フォームページでスマホ固定CTAを非表示
+
+- 状態: 完了
+- 実施内容: 買取申し込みフォームでは画面下部の固定CTAを表示しないようにした。WordPressでは`contact`固定ページまたは`page-contact.php`使用時に固定CTAテンプレートの出力を停止し、フォームページでは固定CTA用の下余白も解除した。静的確認ページにも同じ非表示状態を反映した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/mobile-fixed-cta.php`、`theme/buybuycoms-hobby/asset/css/page.css`、`pages/page-contact.html`、`asset/css/page.css`、`WORK-LOG.md`
+- 検証: `page-contact.html`のスマホ表示で固定CTAが非表示かつ`body`下余白が0であること、トップページでは引き続き固定CTAが表示されること、変更したPHPの構文とGit差分の空白エラーを確認した。
+- 未完了事項: WordPress実行環境での条件分岐確認。
+- 次回の着手点: WordPressのフォームページとその他の主要ページをスマホ幅で開き、フォームだけ非表示になることを確認する。

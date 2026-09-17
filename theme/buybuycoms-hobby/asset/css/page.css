@@ -1090,3 +1090,18 @@
         grid-column: 1 / -1;
     }
 }
+
+/* ============================================================
+   Page: Contact
+============================================================ */
+
+@media (max-width: 767px) {
+    .hb-contact__page,
+    body.page-template-page-contact {
+        padding-bottom: 0;
+    }
+
+    .hb-contact__page .hb__p-mobile-fixed-cta {
+        display: none;
+    }
+}

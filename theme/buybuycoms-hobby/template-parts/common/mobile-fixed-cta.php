@@ -4,6 +4,10 @@
  *
  * @package BuyBuyComs_Hobby
  */
+
+if ( is_page( 'contact' ) || is_page_template( 'page-contact.php' ) ) {
+	return;
+}
 ?>
 <aside class="hb__p-mobile-fixed-cta" aria-label="<?php esc_attr_e( '無料査定メニュー', 'buybuycoms-hobby' ); ?>">
 	<div class="hb__p-mobile-fixed-cta__inner">
