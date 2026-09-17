@@ -1300,3 +1300,22 @@
 - 検証: 4サイズの重量注記が両ファイルで`strong`要素になっていること、`page-contact.php`のPHP構文、Git差分の空白エラーを確認した。
 - 未完了事項: WordPress実行環境でのPC・モバイル表示確認。
 - 次回の着手点: 宅配買取フォームで買取キット選択まで進み、4サイズすべての重量注記が太字で表示されることを確認する。
+
+# 2026-09-17 スマホ全画面共通の固定CTAを追加
+
+- 状態: 完了
+- 実施内容: 姉妹サイトの参考画像を基に、電話CTAを除いた「WEB査定」「LINE査定」の2分割固定CTAをスマホ表示へ追加した。WEB査定は既存のブランドオレンジ、LINE査定は既存のLINEグリーンとLINEアイコンを使用した。WordPressでは`footer.php`から共通テンプレートパーツを読み込み、全テンプレートへ適用した。静的確認用の`components/footer.html`にも同じ構成を反映した。固定CTAに隠れない本文下余白、端末セーフエリア、フォーカス表示、PC非表示を実装し、配布用テーマZIPを再生成した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/mobile-fixed-cta.php`、`theme/buybuycoms-hobby/footer.php`、`theme/buybuycoms-hobby/asset/css/component.css`、`components/footer.html`、`asset/css/component.css`、`theme/buybuycoms-hobby.zip`、`design-qa.md`
+- 検証: PHP構文、Git差分の空白エラー、390px相当のモバイル表示、1024pxのPC非表示、WEB査定リンク遷移、LINEリンク先、ブラウザコンソールエラー0件を確認した。参考画像と実装の比較結果は`design-qa.md`へ記録し、`final result: passed`とした。配布ZIP内の195ファイルがテーマ本体のファイル数と一致し、新規固定CTAテンプレートを含むことを確認した。
+- `THEME-COMPLETION-CHECKLIST.md`: 今回の変更に関係するスマホ表示、リンク、アクセシビリティ、共通パーツ化を確認。テーマ全体の完成チェックは未実施。
+- 未完了事項: WordPress実行環境および実機iPhone/Androidでの表示確認。
+- 次回の着手点: WordPress環境で主要テンプレートを開き、固定CTAの全ページ表示、端末セーフエリア、フォーム／LINE遷移を実機確認する。
+
+# 2026-09-17 固定CTAのグラデーションを既存CTAへ統一
+
+- 状態: 完了
+- 実施内容: 固定CTAのオレンジとLINEグリーンを、既存のフッターCTA・パーツCTAで使用している縦グラデーションへ変更した。重複していたグラデーション値を`--hb-gradient-cta-orange`と`--hb-gradient-cta-line`へ共通トークン化し、既存CTAと固定CTAの両方から参照する構成に整理した。配布用テーマZIPも再生成した。
+- 主な変更ファイル: `asset/css/tokens.css`、`asset/css/component.css`、`theme/buybuycoms-hobby/asset/css/tokens.css`、`theme/buybuycoms-hobby/asset/css/component.css`、`theme/buybuycoms-hobby.zip`、`design-qa.md`、`WORK-LOG.md`
+- 検証: スマホプレビューで両ボタンの縦グラデーションを目視し、計算済み`background-image`が共通トークンの値と一致すること、ブラウザコンソールエラーがないことを確認した。配布ZIP内の195ファイルがテーマ本体と一致し、更新後のグラデーショントークンを含むことを確認した。
+- 未完了事項: WordPress実行環境および実機での表示確認。
+- 次回の着手点: 実機でグラデーションの見え方と屋外・低輝度環境での白文字コントラストを確認する。

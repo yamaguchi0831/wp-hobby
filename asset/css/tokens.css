@@ -109,6 +109,18 @@
   --hb-gradient-primary-dark: linear-gradient(135deg, #001607 0%, #004213 100%);
   --hb-gradient-accent: linear-gradient(135deg, #ff9800 0%, #ffc107 100%);
   --hb-gradient-accent-dark: linear-gradient(135deg, #683c00 0%, #b86d00 100%);
+  --hb-gradient-cta-orange: linear-gradient(
+    180deg,
+    #ff8420 0%,
+    #f4791a 48%,
+    #ec6d12 100%
+  );
+  --hb-gradient-cta-line: linear-gradient(
+    180deg,
+    #48aa36 0%,
+    #3a992c 52%,
+    #2f8b25 100%
+  );
 
   /* Spacing */
   --hb-space-2xs: 4px;

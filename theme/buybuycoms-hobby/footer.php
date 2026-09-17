@@ -5,6 +5,7 @@
  * @package BuyBuyComs_Hobby
  */
 ?>
+<?php get_template_part( 'template-parts/common/mobile-fixed-cta' ); ?>
 <footer class="hb__l-footer" data-screen-label="Footer">
 	<div class="hb__l-container hb__p-footer">
 		<div class="hb__p-footer__brand">
