@@ -613,6 +613,7 @@
 }
 
 .hb__p-method-title {
+  display: block;
   margin: 0;
   padding: var(--hb-space-lg) var(--hb-space-lg) 0;
   color: var(--hb-color-text-deep);

@@ -1335,3 +1335,11 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/inc/blocks.php`、`theme/buybuycoms-hobby/template-parts/common/purchase-methods.php`、`WORK-LOG.md`
 - 未完了事項: WordPressのブロックエディターと公開画面で、見出しがなくカード表示とタブ操作が維持されることの確認。
 - 次回の着手点: コラム本文内の対象ブロックをPC・モバイル幅で確認する。
+
+# 2026-09-24 コラム用買取方法ブロックのカード名をspanへ変更
+
+- 状態: 完了
+- 実施内容: カスタムブロック「買取方法（コラム用）」の各カード名（宅配買取・出張買取・店頭買取）を`h3`から`span`へ変更した。既存の`hb__p-method-title` classを維持し、`display: block`を追加して従来の見出しと同じレイアウト・余白・文字スタイルを保持した。ほかのバリエーションで使用する`h3`は変更していない。
+- 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/purchase-methods.php`、`theme/buybuycoms-hobby/asset/css/component.css`、`WORK-LOG.md`
+- 未完了事項: WordPressのブロックエディターと公開画面で、PC・モバイルのカード名の表示確認。
+- 次回の着手点: コラム本文内の対象ブロックをPC・モバイル幅で開き、各カード名の見た目とタブ操作を確認する。

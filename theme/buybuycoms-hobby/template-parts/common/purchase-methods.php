@@ -73,7 +73,7 @@ if ( 'default' !== $purchase_methods_variant ) {
       data-method-panel="takuhai"
     >
       <?php if ( 'column-auto-tabs' === $purchase_methods_variant ) : ?>
-        <h3 class="hb__p-method-title">宅配買取</h3>
+        <span class="hb__p-method-title">宅配買取</span>
       <?php endif; ?>
       <figure class="hb__p-method-image">
         <img
@@ -107,7 +107,7 @@ if ( 'default' !== $purchase_methods_variant ) {
       data-method-panel="shuccho"
     >
       <?php if ( 'column-auto-tabs' === $purchase_methods_variant ) : ?>
-        <h3 class="hb__p-method-title">出張買取</h3>
+        <span class="hb__p-method-title">出張買取</span>
       <?php endif; ?>
       <figure class="hb__p-method-image">
         <img
@@ -140,7 +140,7 @@ if ( 'default' !== $purchase_methods_variant ) {
       data-method-panel="store"
     >
       <?php if ( 'column-auto-tabs' === $purchase_methods_variant ) : ?>
-        <h3 class="hb__p-method-title">店頭買取</h3>
+        <span class="hb__p-method-title">店頭買取</span>
       <?php endif; ?>
       <figure class="hb__p-method-image">
         <img
