@@ -4784,3 +4784,17 @@
     margin-top: var(--hb-space-2xl);
   }
 }
+
+/* Keep the Table of Contents Plus table from expanding a column article on mobile. */
+@media (max-width: 640px) {
+  .hb-single-column__p-content {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #toc_container {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+  }
+}

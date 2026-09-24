@@ -1343,3 +1343,12 @@
 - 主な変更ファイル: `theme/buybuycoms-hobby/template-parts/common/purchase-methods.php`、`theme/buybuycoms-hobby/asset/css/component.css`、`WORK-LOG.md`
 - 未完了事項: WordPressのブロックエディターと公開画面で、PC・モバイルのカード名の表示確認。
 - 次回の着手点: コラム本文内の対象ブロックをPC・モバイル幅で開き、各カード名の見た目とタブ操作を確認する。
+
+# 2026-09-24 コラム詳細ページのモバイル横はみ出しを修正
+
+- 状態: 実装完了
+- 実施内容: 公開中のコラム詳細ページを375px幅で調査し、Table of Contents Plusの`#toc_container`が`display: table`の最小幅で460pxまで広がり、本文グリッド全体を押し広げていることを特定した。モバイル時は本文グリッドの列を`minmax(0, 1fr)`で縮小可能にし、目次を幅100%のblock要素へ変更して、記事カード内に収まるようにした。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/page-static.css`、`WORK-LOG.md`
+- 検証: 公開ページ相当の375px幅で、本文列が326px幅、目次を含む記事内容がその幅を超えていないことを確認する。
+- 未完了事項: テーマを適用した公開環境でキャッシュを更新後、実機スマホ幅での目視確認。
+- 次回の着手点: 公開環境で本修正を反映し、当該コラムと目次を含む他コラムで横はみ出しがないことを確認する。
