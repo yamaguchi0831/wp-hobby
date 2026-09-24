@@ -8,6 +8,7 @@
 $purchase_methods_variant = isset( $args['variant'] ) && in_array( $args['variant'], array( 'column-tabs', 'column-auto-tabs' ), true ) ? $args['variant'] : 'default';
 $purchase_methods_class   = 'hb__p-method-ui hb__p-method--tabs';
 $purchase_methods_instance = isset( $args['instance'] ) ? sanitize_key( $args['instance'] ) : 'default';
+$purchase_methods_show_title = ! isset( $args['show_title'] ) || (bool) $args['show_title'];
 
 if ( '' === $purchase_methods_instance ) {
 	$purchase_methods_instance = 'default';
@@ -20,10 +21,12 @@ if ( 'default' !== $purchase_methods_variant ) {
 }
 ?>
 <?php if ( 'default' !== $purchase_methods_variant ) : ?>
-  <section class="hb__p-column-methods" aria-labelledby="<?php echo esc_attr( $purchase_methods_title_id ); ?>">
+  <<?php echo $purchase_methods_show_title ? 'section' : 'div'; ?> class="hb__p-column-methods"<?php if ( $purchase_methods_show_title ) : ?> aria-labelledby="<?php echo esc_attr( $purchase_methods_title_id ); ?>"<?php endif; ?>>
+    <?php if ( $purchase_methods_show_title ) : ?>
     <h2 class="hb__p-column-methods__title" id="<?php echo esc_attr( $purchase_methods_title_id ); ?>">
       <?php esc_html_e( 'あなたに合わせて選べる、3つの買取方法', 'buybuycoms-hobby' ); ?>
     </h2>
+    <?php endif; ?>
 <?php endif; ?>
 <div class="<?php echo esc_attr( $purchase_methods_class ); ?>">
   <div class="hb__p-method-tabs" role="tablist" aria-label="買取方法を選択">
@@ -165,5 +168,5 @@ if ( 'default' !== $purchase_methods_variant ) {
   </div>
 </div>
 <?php if ( 'default' !== $purchase_methods_variant ) : ?>
-  </section>
+  </<?php echo $purchase_methods_show_title ? 'section' : 'div'; ?>>
 <?php endif; ?>

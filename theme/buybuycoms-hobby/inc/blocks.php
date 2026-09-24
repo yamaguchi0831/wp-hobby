@@ -19,8 +19,9 @@ function buybuycoms_hobby_render_column_purchase_methods_block() {
 		'template-parts/common/purchase-methods',
 		null,
 		array(
-			'variant'  => 'column-auto-tabs',
-			'instance' => 'column-block-' . $instance,
+			'variant'    => 'column-auto-tabs',
+			'instance'   => 'column-block-' . $instance,
+			'show_title' => false,
 		)
 	);
 
