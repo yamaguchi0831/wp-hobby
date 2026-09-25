@@ -36,6 +36,7 @@
 				array(
 					'theme_location' => 'primary',
 					'container'      => false,
+					'menu_id'        => 'hb-primary-menu',
 					'menu_class'     => 'hb__p-header__nav-list',
 					'fallback_cb'    => 'buybuycoms_hobby_primary_menu_fallback',
 					'depth'          => 2,
@@ -56,5 +57,58 @@
 				<?php esc_html_e( '無料査定を申し込む', 'buybuycoms-hobby' ); ?>
 			</a>
 		</div>
+
+		<button
+			class="hb__p-header__menu-button"
+			type="button"
+			aria-controls="hb-mobile-menu"
+			aria-expanded="false"
+			aria-label="<?php esc_attr_e( 'メニューを開く', 'buybuycoms-hobby' ); ?>"
+			data-hb-mobile-menu-toggle
+		>
+			<span class="hb__p-header__menu-icon" aria-hidden="true"></span>
+		</button>
 	</div>
 </header>
+
+<div class="hb__p-header-drawer__overlay" data-hb-mobile-menu-close aria-hidden="true"></div>
+<aside
+	id="hb-mobile-menu"
+	class="hb__p-header-drawer"
+	aria-label="<?php esc_attr_e( 'モバイルメニュー', 'buybuycoms-hobby' ); ?>"
+	aria-hidden="true"
+	inert
+>
+	<div class="hb__p-header-drawer__header">
+		<p class="hb__p-header-drawer__title"><?php esc_html_e( 'メニュー', 'buybuycoms-hobby' ); ?></p>
+		<button
+			class="hb__p-header-drawer__close"
+			type="button"
+			data-hb-mobile-menu-close
+			aria-label="<?php esc_attr_e( 'メニューを閉じる', 'buybuycoms-hobby' ); ?>"
+		>×</button>
+	</div>
+
+	<nav class="hb__p-header-drawer__nav" aria-label="<?php esc_attr_e( 'モバイル用グローバルナビ', 'buybuycoms-hobby' ); ?>">
+		<?php
+		wp_nav_menu(
+			array(
+				'theme_location'    => 'primary',
+				'container'         => false,
+				'menu_id'           => 'hb-mobile-menu-list',
+				'menu_class'        => 'hb__p-header-drawer__nav-list',
+				'fallback_cb'       => 'buybuycoms_hobby_primary_menu_fallback',
+				'depth'             => 1,
+				'hb_menu_context'   => 'mobile',
+			)
+		);
+		?>
+	</nav>
+
+	<div class="hb__p-header-drawer__cta">
+		<span><?php esc_html_e( '24時間受付中・査定料無料', 'buybuycoms-hobby' ); ?></span>
+		<a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">
+			<?php esc_html_e( '無料査定を申し込む', 'buybuycoms-hobby' ); ?>
+		</a>
+	</div>
+</aside>

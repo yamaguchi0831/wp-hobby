@@ -10,8 +10,10 @@
  *
  * @return void
  */
-function buybuycoms_hobby_primary_menu_fallback() {
+function buybuycoms_hobby_primary_menu_fallback( $args = array() ) {
 	$column_archive_url = get_post_type_archive_link( 'column' );
+	$menu_class        = ! empty( $args['menu_class'] ) ? $args['menu_class'] : 'hb__p-header__nav-list';
+	$menu_id           = ! empty( $args['menu_id'] ) ? $args['menu_id'] : '';
 	$links = array(
 		home_url( '/flow/' )       => __( '買取方法', 'buybuycoms-hobby' ),
 		home_url( '/reason/' )     => __( '選ばれる理由', 'buybuycoms-hobby' ),
@@ -21,7 +23,11 @@ function buybuycoms_hobby_primary_menu_fallback() {
 		home_url( '/company/' )    => __( '会社概要', 'buybuycoms-hobby' ),
 	);
 
-	echo '<ul class="hb__p-header__nav-list">';
+	printf(
+		'<ul%1$s class="%2$s">',
+		$menu_id ? ' id="' . esc_attr( $menu_id ) . '"' : '',
+		esc_attr( $menu_class )
+	);
 	foreach ( $links as $url => $label ) {
 		printf(
 			'<li><a href="%1$s">%2$s</a></li>',
@@ -31,6 +37,24 @@ function buybuycoms_hobby_primary_menu_fallback() {
 	}
 	echo '</ul>';
 }
+
+/**
+ * Avoid duplicate menu item IDs when the primary menu is rendered in the mobile drawer.
+ *
+ * @param string   $menu_item_id Menu item ID attribute.
+ * @param WP_Post  $menu_item    Menu item object.
+ * @param stdClass $args         Navigation menu arguments.
+ * @param int      $depth        Menu item depth.
+ * @return string
+ */
+function buybuycoms_hobby_mobile_menu_item_id( $menu_item_id, $menu_item, $args, $depth ) {
+	if ( ! empty( $args->hb_menu_context ) && 'mobile' === $args->hb_menu_context ) {
+		return '';
+	}
+
+	return $menu_item_id;
+}
+add_filter( 'nav_menu_item_id', 'buybuycoms_hobby_mobile_menu_item_id', 10, 4 );
 
 /**
  * Rename the genre list item in the primary navigation.

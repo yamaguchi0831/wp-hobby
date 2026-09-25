@@ -25,6 +25,68 @@ const activateMethodTab = (section, target) => {
   return true;
 };
 
+const initializeMobileHeaderMenu = () => {
+  const menuButton = document.querySelector("[data-hb-mobile-menu-toggle]");
+  const drawer = document.querySelector(".hb__p-header-drawer");
+  const overlay = document.querySelector(".hb__p-header-drawer__overlay");
+
+  if (!menuButton || !drawer || !overlay) {
+    return;
+  }
+
+  let lastFocusedElement = null;
+
+  const setMenuState = (isOpen, restoreFocus = true) => {
+    menuButton.setAttribute("aria-expanded", String(isOpen));
+    menuButton.setAttribute(
+      "aria-label",
+      isOpen ? "メニューを閉じる" : "メニューを開く",
+    );
+    drawer.setAttribute("aria-hidden", String(!isOpen));
+    drawer.toggleAttribute("inert", !isOpen);
+    overlay.setAttribute("aria-hidden", String(!isOpen));
+    document.body.classList.toggle("hb__is-mobile-menu-open", isOpen);
+
+    if (isOpen) {
+      lastFocusedElement = document.activeElement;
+      const firstMenuLink = drawer.querySelector("nav a");
+      (firstMenuLink || drawer.querySelector("button"))?.focus();
+    } else if (restoreFocus && lastFocusedElement instanceof HTMLElement) {
+      lastFocusedElement.focus();
+    }
+  };
+
+  menuButton.addEventListener("click", () => {
+    setMenuState(menuButton.getAttribute("aria-expanded") !== "true");
+  });
+
+  document.querySelectorAll("[data-hb-mobile-menu-close]").forEach((element) => {
+    element.addEventListener("click", () => setMenuState(false));
+  });
+
+  drawer.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => setMenuState(false, false));
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (
+      event.key === "Escape" &&
+      menuButton.getAttribute("aria-expanded") === "true"
+    ) {
+      setMenuState(false);
+    }
+  });
+
+  const desktopMedia = window.matchMedia("(min-width: 961px)");
+  desktopMedia.addEventListener("change", (event) => {
+    if (event.matches && menuButton.getAttribute("aria-expanded") === "true") {
+      setMenuState(false, false);
+    }
+  });
+};
+
+initializeMobileHeaderMenu();
+
 const getHashTarget = (hash) => {
   if (!hash) {
     return null;
