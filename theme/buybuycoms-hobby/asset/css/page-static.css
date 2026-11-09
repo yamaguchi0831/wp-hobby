@@ -3317,6 +3317,8 @@
       .hb-single-column__p-content {
         display: grid;
         gap: var(--hb-space-lg);
+        min-width: 0;
+        overflow-wrap: anywhere;
       }
 
       .hb-single-column__p-content p {

@@ -1405,3 +1405,22 @@
 - 検証: Git差分を確認し、テーマ実装に必要なファイルが削除対象へ含まれていないことを確認した。
 - 未完了事項: なし。
 - 次回の着手点: 実際のWordPress環境でモバイルヘッダーメニューを最終確認する。
+
+# 2026-11-09 リポジトリのpullと同期確認
+
+- 状態: 完了
+- 実施内容: `main` を `origin/main` から fast-forward pull し、リモートの最新コミットとローカルの一致を確認した。
+- 主な変更ファイル: `WORK-LOG.md`（作業記録）
+- 検証: pull直後の作業ツリーはクリーン。`HEAD...origin/main` の左右コミット差はともに0件で、差分もなし。`git ls-remote` のリモートmainは `be237fc6f4a1a4ddaf213dd1f8d5898c02e2fe37`。
+- 未完了事項: 作業ログの追記分はローカルの未コミット変更として残る。
+- 次回の着手点: 作業ログを次回の適切なコミットに含める。
+
+# 2026-11-09 コラム本文の長いURLの折り返し修正
+
+- 状態: 実装完了
+- 実施内容: コラム詳細の本文に `min-width: 0` と `overflow-wrap: anywhere` を追加し、長いURLや連続文字列が記事幅からはみ出さないようにした。静的見本にも同じ指定を反映した。
+- 主な変更ファイル: `theme/buybuycoms-hobby/asset/css/page-static.css`、`pages/single-column.html`、`WORK-LOG.md`
+- 検証: テーマの `single-column.php` が `the_content()` を該当class内に出力し、変更したCSSがテーマからenqueueされることを確認。Git差分を確認した。
+- `THEME-COMPLETION-CHECKLIST.md`: コラム本文の長い文字列への対応を確認。テーマ全体の完成チェックは未実施。
+- 未完了事項: 実際のWordPress記事とユーザーのブラウザでのPC・モバイル表示確認。
+- 次回の着手点: 対象記事で長いURLを表示し、PC・モバイル両方の折り返しを確認する。
